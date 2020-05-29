@@ -1,0 +1,13 @@
+### 背景：公司项目集成使用Swagger插件自动生成接口文档
+### 需求：做接口测试时，需要对文档提供的参数，进行无限制cp/cv；如何才能减去反复的手工活动？
+### 推荐接口测试工具：JMeter/httprunner
+### 原理：都是模拟客户端向服务端发起请求，然后校验接口返回数据的过程
+### 实现一：python脚本对swagger接口文档返回的josn数据对象进行解析，提取关键信息，按规则写入excel组成测试用例，结合jmeter完成自动化测试
+### 实现二：httprunner框架的应用，生成的json格式的数据文件，在这个框架中，我们就叫测试用例，可以直接通过CLI执行的。
+### 项目结构说明：
+- logs存放脚本执行日志
+- properties存放配置信息
+- swagger存放json测试用例文件
+- swaggerLib脚本
+- utils工具包：实现json、excel、log、config的封装及使用
+- config.py为项目路径的拼接
