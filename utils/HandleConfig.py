@@ -69,7 +69,7 @@ class HandleConfig(object):
 from configparser import ConfigParser
 
 
-class SimplerConofig(ConfigParser):
+class SimplerConfig(ConfigParser):
     '''上面版本的优化'''
 
     def __init__(self, config_file, encoding="utf-8"):
