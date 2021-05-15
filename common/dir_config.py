@@ -26,3 +26,7 @@ back_path = os.path.join(baseth + "\\swagger\\baseback\\")
 xlsCase_path = os.path.join(baseth + "\\swagger\\Api_TestCases.xlsx")
 xlsback_path = os.path.join(
     baseth + "\\swagger\\xlsxbak\\Api_TestCases_bak.xlsx")
+
+if __name__ == '__main__':
+    print(xlsback_path)
+    pass
