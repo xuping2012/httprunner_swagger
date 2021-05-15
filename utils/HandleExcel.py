@@ -1,15 +1,17 @@
 # coding:utf-8
 
 import os
+import platform
 from collections import namedtuple
 
 from openpyxl import load_workbook, Workbook
 from openpyxl.styles import Font, colors
 
+from common.dir_config import bakCase_file_path
 
 class HandleExcel(object):
     """
-    封装excel写入
+    封装处理excel工具类；实现读写操作
     """
 
     def __init__(self, filename, sheetname=None):
@@ -51,37 +53,40 @@ class HandleExcel(object):
             print(1)
 
 
-class Write_excel(object):
-    """修改excel数据"""
+class Writexcel(object):
+    """数据写入excel"""
 
     def __init__(self, filename):
         '''初始化文件对象'''
         self.filename = filename
-        #         创建xlsx文件,如果不存在,顺便写上头
-        if not os.path.exists(self.filename):
-            self.wb = Workbook()
-            self.ws = self.wb.active  # 激活sheet
-            self.ws.cell(1, 1).value = "caseid"
-            self.ws.cell(1, 2).value = "title"
-            self.ws.cell(1, 3).value = "desc"
-            self.ws.cell(1, 4).value = "method"
-            self.ws.cell(1, 5).value = "host"
-            self.ws.cell(1, 6).value = "port"
-            self.ws.cell(1, 7).value = "uri"
-            self.ws.cell(1, 8).value = "params"
-            self.wb.save(filename)
-        else:
-            self.wb = Workbook()
-            self.ws = self.wb.active
+        # 获取当前系统，操作文件
+        if platform.system()=="Windows" and os.path.exists(self.filename):
+            os.remove(bakCase_file_path)
+            os.renames(self.filename,bakCase_file_path)
+        if platform.system()=="Linux" and os.path.exists(self.filename):
+            os.remove(bakCase_file_path)
+            os.renames(self.filename,bakCase_file_path)
+
+        self.wb = Workbook()
+        self.ws = self.wb.active  # 激活sheet
+        self.ws.cell(1, 1).value = "caseid"
+        self.ws.cell(1, 2).value = "title"
+        self.ws.cell(1, 3).value = "desc"
+        self.ws.cell(1, 4).value = "method"
+        self.ws.cell(1, 5).value = "host"
+        self.ws.cell(1, 6).value = "port"
+        self.ws.cell(1, 7).value = "uri"
+        self.ws.cell(1, 8).value = "params"
+        self.wb.save(filename)
 
     def write(self, row_n, col_n, value):
         """写入数据，如(2,3，"hello"),第二行第三列写入数据"hello\""""
-        ft = Font(color=colors.RED, size=12, bold=True)
+        ft = Font(color=colors.BLUE, size=12, bold=True)
         # 判断值为错误时添加字体样式
         if value in ['fail', 'error'] or col_n == 12:
             self.ws.cell(row_n, col_n).font = ft
         if value == 'pass':
-            ft = Font(color=colors.GREEN)
+            ft = Font(color=colors.BLACK)
             self.ws.cell(row_n, col_n).font = ft
         self.ws.cell(row_n, col_n).value = value
         self.wb.save(self.filename)

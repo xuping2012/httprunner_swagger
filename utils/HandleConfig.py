@@ -2,10 +2,9 @@
 Created on 2019年9月29日
 @author: qguan
 '''
-
 import configparser
-from utils.HandleLogging import log
 
+from common.dir_config import *
 
 class HandleConfig(object):
     """
@@ -21,7 +20,7 @@ class HandleConfig(object):
 
     def get_value(self, section, option):
         '''获取ini\conf配置文件的值'''
-        return self.conf.get(section, option)
+        return self.conf.get(section, option,raw=True)
 
     def get_boolean(self, section, option):
         '''获取ini\conf配置文件的值为bool类型'''
@@ -38,7 +37,6 @@ class HandleConfig(object):
     def set_section_value(self, section, option, value):
         '''设置section：option的值'''
         if not self.conf.has_section(section):
-            log.info("{}不存在，需要新增！".format(section))
             self.conf.add_section(section)
             self.conf.set(section, option, value)
             self.conf.write(open(self.file_path, "w"))
@@ -83,3 +81,9 @@ class SimplerConfig(ConfigParser):
         self.encoding = encoding
         # 读取指定配置文件
         self.read(self.config_file, encoding=self.encoding)
+
+
+if __name__ == '__main__':
+    conf = SimplerConfig(config_file=config_dir + "config.ini")
+    text = conf.get("logger", "level")
+    print(text)
