@@ -1,17 +1,16 @@
 #!/usr/bin/python3
 
-import config
-import shutil
-import os
 import difflib
+import os
+import shutil
 import sys
 from hashlib import md5
+
+from common import dir_config
 from utils.HandleLogging import log
-from celery.utils.sysinfo import df
 
-
-diffFile = os.path.join(config.report_path, '比较文件内容异同_diff.html')
-backupDiffFile = os.path.join(config.report_path, '比较文件内容异同_diff_back.html')
+diffFile = os.path.join(dir_config.report_path, '比较文件内容异同_diff.html')
+backupDiffFile = os.path.join(dir_config.report_path, '比较文件内容异同_diff_back.html')
 
 
 class HandleDirFile(object):
@@ -116,8 +115,8 @@ class HandleDirFile(object):
                 log.info(
                     "{}文件不存在于备份目录才执行".format(sf.split("\\")[len(sf.split("\\")) - 1]))
 #                 print(config.back_path + sf.split("\\")[len(sf.split("\\")) - 2] + '\\' + sf.split("\\")[len(sf.split("\\")) - 1])
-                destDir = config.back_path + \
-                    sf.split("\\")[len(sf.split("\\")) - 2] + "\\"
+                destDir = dir_config.back_path + \
+                          sf.split("\\")[len(sf.split("\\")) - 2] + "\\"
                 if not os.path.exists(destDir):
                     os.makedirs(destDir)
                 shutil.copyfile(

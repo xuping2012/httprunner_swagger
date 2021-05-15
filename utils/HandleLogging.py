@@ -2,10 +2,12 @@
 """
 @author: qguan
 """
-import os
-import config
 import logging
+import os
 import time
+
+from common import dir_config
+
 
 class HandleLogging(object):
     '''
@@ -31,7 +33,7 @@ class HandleLogging(object):
         self.logger.addHandler(out_console)
         
         # 定义记录日志输出路径+文件
-        path= config.log_path + self.file_name + '_' + time.strftime('%Y-%m-%d') + '.log'
+        path= dir_config.log_path + self.file_name + '_' + time.strftime('%Y-%m-%d') + '.log'
         # 设置日志输出渠道
         out_file=logging.FileHandler(path,encoding='utf-8')
         # 日志拆分处理器

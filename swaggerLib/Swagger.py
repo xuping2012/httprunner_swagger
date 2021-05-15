@@ -6,22 +6,24 @@
 格式建议:import一行一个
 from导入可以import后面用逗号分隔
 """
-import os
 import json
+import os
+
 import requests
-from utils.HandleLogging import log
-from utils.HandleJson import write_data
+
+from common import dir_config
 from utils.HandleConfig import HandleConfig
 from utils.HandleDirFile import HandleDirFile
 from utils.HandleExcel import Write_excel
-import config
+from utils.HandleJson import write_data
+from utils.HandleLogging import log
 
 # 创建可操作配置文件的对象
-conf = HandleConfig(config.config_path + "\common.conf")
+conf = HandleConfig(dir_config.config_path + "\common.conf")
 # 创建可操作目录及文件的对象
 handlefile = HandleDirFile()
 # 创建可操作xlsx文件的对象
-w = Write_excel(config.xlsCase_path)
+w = Write_excel(dir_config.xlsCase_path)
 
 
 class AnalysisSwaggerJson(object):
@@ -76,8 +78,8 @@ class AnalysisSwaggerJson(object):
         # 生成完整的json测试用例之后,开始备份接口数据 ,以备作为接口变更的依据
         if isDuplicated:
             # 备份文件,如果不存在备份目录则备份,否则的实现方案在其他方法内
-            if not os.path.exists(config.back_path):
-                handlefile.copy_dir(config.case_path, config.back_path)
+            if not os.path.exists(dir_config.back_path):
+                handlefile.copy_dir(dir_config.case_path, dir_config.back_path)
 
         self.data = res['paths']  # 取接口地址返回的path数据,包括了请求的路径
         self.basePath = res['basePath']  # 获取接口的根路径/hcp
@@ -101,7 +103,7 @@ class AnalysisSwaggerJson(object):
                 'testcase'] = 'testcases/' + tag + '.json'
             i += 1
 
-        suite_path = config.testsuites_path
+        suite_path = dir_config.testsuites_path
         # 测试用例集目录不存在,则创建
         if not os.path.exists(suite_path):
             os.makedirs(suite_path)
@@ -133,7 +135,7 @@ class AnalysisSwaggerJson(object):
                                 'interface path: {}, if name: {}, is deprecated.'.format(key, params['operationId']))
                             break
 
-                testcases_path = config.testcases_path
+                testcases_path = dir_config.testcases_path
 
                 # testcases目录不存在则创建
                 if not os.path.exists(testcases_path):
@@ -258,7 +260,7 @@ class AnalysisSwaggerJson(object):
             del http_interface['request']['params']
 
         # 定义接口测试用例
-        api_path = config.case_path
+        api_path = dir_config.case_path
         tags_path = os.path.join(api_path, tag).replace("/", "_")
 
         # 创建不存在的文件目录
@@ -333,7 +335,7 @@ if __name__ == '__main__':
 #     js.analysis_json_data()
 
 #     写入excel
-    js.write_excel(url, handlefile.get_file_list(config.case_path))
+    js.write_excel(url, handlefile.get_file_list(dir_config.case_path))
 
 #     文件夹下的文件对比
 #     handlefile.diff_dir_file(config.back_path,config.case_path)

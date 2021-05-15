@@ -43,10 +43,10 @@ python编写脚本对swagger接口文档返回的josn数据对象进行解析，
 那么也可以结合python/java等开发语言集合单元测试框架搭建自动化测试框架。
 ```
 #### 项目结构说明：
-- logs存放脚本执行日志
-- properties存放配置信息
-- swagger存放json测试用例文件
-- swaggerLib脚本
-- utils工具包：实现json、excel、log、config的封装及使用
-- common
-- - config.py为项目路径的拼接
+- logs：存放脚本执行日志
+- properties：存放配置信息
+- swagger：存放生成json测试用例文件
+- swaggerLib：解析swagger接口文档脚本
+- utils：封装工具包
+- common：
+- - dir_config.py：为项目拼接路径配置模块

@@ -2,10 +2,12 @@
 # -*- coding: utf-8 -*-
 # @desc    : 对比接口excel
 
+import time
+
 import xlrd
 import xlwt
-import time
-import config
+
+from common import dir_config
 from utils.HandleLogging import log
 
 
@@ -33,7 +35,7 @@ class DiffExcelFile():
         self.workbook.save(self.wb_name)
 
 
-xw = DiffExcelFile(wb_name=config.data_path + "test124.xlsx")
+xw = DiffExcelFile(wb_name=dir_config.data_path + "test124.xlsx")
 
 # 往日志文件中追加内容函数#个人感觉这个很鸡肋，实际以日志输出就可以
 
@@ -97,7 +99,7 @@ def diff_excel(src_file, des_file, check="caseid,url,params"):
             case_id = str(res1[r1][index])
             content = "".join([case_id, str(case)])
             datas.append(content)
-            write_file(config.log_path + "diff_data.log", content)
+            write_file(dir_config.log_path + "diff_data.log", content)
 
     for i in range(len(datas)):
         xw.write_excel(i + 1, 0, datas[i])
