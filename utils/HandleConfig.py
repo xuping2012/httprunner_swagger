@@ -8,7 +8,9 @@ from utils.HandleLogging import log
 
 
 class HandleConfig(object):
-    '''这个类封装的适合新手，一般情况下，只需要继承configparser，然后就可以默默的调用其中所有获取配置文件信息的方法'''
+    """
+    这个类封装的适合新手，一般情况下，只需要继承configparser，然后就可以默默的调用其中所有获取配置文件信息的方法
+    """
 
     def __init__(self, file_path, encoding="utf-8"):
         '''初始化读取配置文件，实例化文件参数'''
@@ -70,7 +72,9 @@ from configparser import ConfigParser
 
 
 class SimplerConfig(ConfigParser):
-    '''上面版本的优化'''
+    """
+    优化上面配置文件读取类
+    """
 
     def __init__(self, config_file, encoding="utf-8"):
         # 创建ConfigParser解析对象,继承ConfigParser

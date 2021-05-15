@@ -1,13 +1,15 @@
 # coding:utf-8
+
 import os
 from collections import namedtuple
+
 from openpyxl import load_workbook, Workbook
 from openpyxl.styles import Font, colors
 
 
 class HandleExcel(object):
     """
-            封装excel写入
+    封装excel写入
     """
 
     def __init__(self, filename, sheetname=None):
@@ -20,7 +22,7 @@ class HandleExcel(object):
         self.sheet_head_tuple = tuple(
             self.ws.iter_rows(max_row=self.ws.min_row, values_only=True))[0]
         self.cases_list = []  # 定义一个存放元组的对象
-        self.Cases = namedtuple("cases", self.sheet_head_tuple)   # 创建一个命名元组类
+        self.Cases = namedtuple("cases", self.sheet_head_tuple)  # 创建一个命名元组类
 
     def get_all_cases(self):
         '''获取excel所有行的测试用例'''
@@ -55,7 +57,7 @@ class Write_excel(object):
     def __init__(self, filename):
         '''初始化文件对象'''
         self.filename = filename
-#         创建xlsx文件,如果不存在,顺便写上头
+        #         创建xlsx文件,如果不存在,顺便写上头
         if not os.path.exists(self.filename):
             self.wb = Workbook()
             self.ws = self.wb.active  # 激活sheet

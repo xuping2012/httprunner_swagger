@@ -17,9 +17,10 @@ class HandleDirFile(object):
     """
     处理文件(夹)的工具类,主要用到shutil第三方库
     """
-#     def __init__(self,src_path,dest_path):
-#         self.srcPath=src_path
-#         self.destPath=dest_path
+
+    #     def __init__(self,src_path,dest_path):
+    #         self.srcPath=src_path
+    #         self.destPath=dest_path
 
     def read_json(self, filename):
         '''
@@ -35,7 +36,7 @@ class HandleDirFile(object):
 
     def md5_file(self, filename):
         '''
-                        比较两个文件内容的md5值
+        通过比较两个文件内容的md5值，来生成html异同
         '''
         m = md5()
         try:
@@ -87,7 +88,7 @@ class HandleDirFile(object):
         destPath:目标文件(夹)路径,必须不存在
         return: 
         '''
-#         判断目录是否存在
+        #         判断目录是否存在
         if os.path.isdir(destPath):
             log.info("{}存在则删除".format(destPath))
             shutil.rmtree(destPath)
@@ -114,7 +115,7 @@ class HandleDirFile(object):
             if sf.split("\\")[len(sf.split("\\")) - 1] not in file_list:
                 log.info(
                     "{}文件不存在于备份目录才执行".format(sf.split("\\")[len(sf.split("\\")) - 1]))
-#                 print(config.back_path + sf.split("\\")[len(sf.split("\\")) - 2] + '\\' + sf.split("\\")[len(sf.split("\\")) - 1])
+                #                 print(config.back_path + sf.split("\\")[len(sf.split("\\")) - 2] + '\\' + sf.split("\\")[len(sf.split("\\")) - 1])
                 destDir = dir_config.back_path + \
                           sf.split("\\")[len(sf.split("\\")) - 2] + "\\"
                 if not os.path.exists(destDir):
@@ -138,7 +139,7 @@ class HandleDirFile(object):
         else:
             log.info("no such file:%s" % diffFile)
 
-#         获取目录下的所有文件,返回list
+        #         获取目录下的所有文件,返回list
         srcfile = self.get_file_list(srcPath)
         destfile = self.get_file_list(destPath)
 
@@ -146,7 +147,7 @@ class HandleDirFile(object):
             for df in destfile:
                 if sf.split("\\")[len(sf.split("\\")) - 1] == df.split("\\")[len(df.split("\\")) - 1]:
                     self.diff_json(sf, df)
-#                     log.info("他们名字一样,内容才可以比较：{}=={}".format(sf.split("\\")[len(sf.split("\\"))-1],df.split("\\")[len(df.split("\\"))-1]))
+                #                     log.info("他们名字一样,内容才可以比较：{}=={}".format(sf.split("\\")[len(sf.split("\\"))-1],df.split("\\")[len(df.split("\\"))-1]))
 
     def get_file_list(self, filepath):
         '''
@@ -159,7 +160,7 @@ class HandleDirFile(object):
             #             print('root_dir:', root_dir)  # 当前目录路径
             #             print('sub_dirs:', sub_dir)  # 当前路径下所有子目录
             log.info(sub_dir)
-    #             print('file_name:', files)  # 当前路径下所有非目录子文件
+            #             print('file_name:', files)  # 当前路径下所有非目录子文件
             for i in range(0, len(files)):
                 filepath_list.append(root_dir + "\\" + files[i])
 

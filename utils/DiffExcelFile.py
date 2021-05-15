@@ -12,30 +12,31 @@ from utils.HandleLogging import log
 
 
 class DiffExcelFile():
+    """
+    用来比较excel前后两次文件的内容，生成html报告
+    """
 
     def __init__(self, wb_name="Excel_Workbook.xlsx", sheet_name="Sheet1"):
         #         创建工作簿对象
         self.workbook = xlwt.Workbook()  # encoding = 'ascii'本身就是默认值
-#         实例属性
+        #         实例属性
         self.wb_name = wb_name
         self.sheet_name = sheet_name
-#         添加表单对象
+        #         添加表单对象
         self.worksheet = self.workbook.add_sheet(self.sheet_name)
 
     def write_excel(self, row, col, content, style='pattern: pattern solid, fore_colour yellow; font: bold on'):
         #     设置表单样式
         style = xlwt.easyxf(style)
-    #     写入表单
+        #     写入表单
         # Apply the Style to the Cell
         self.worksheet.write(row, col, label=content, style=style)
-    #     保存表单
+        #     保存表单
         self.save_excel()
 
     def save_excel(self):
         self.workbook.save(self.wb_name)
 
-
-xw = DiffExcelFile(wb_name=dir_config.data_path + "test124.xlsx")
 
 # 往日志文件中追加内容函数#个人感觉这个很鸡肋，实际以日志输出就可以
 
@@ -57,7 +58,7 @@ def read_excel(file_path, sheet_name="Sheet1"):
     datas = []  # 储存xlsx文件的所有数据
     xlsx_file = {}  # 存储源xls文件
     wb = xlrd.open_workbook(file_path)  # 打开目标文件
-#     sheet_num = len(wb.sheets())     #获取xlsx表单数量
+    #     sheet_num = len(wb.sheets())     #获取xlsx表单数量
     sheet_name_list = wb.sheet_names()  # 获取xlsx表单名字
 
     if sheet_name in sheet_name_list:
