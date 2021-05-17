@@ -9,6 +9,7 @@ config_dir = baseth.replace("common", "properties\\")  # 配置文件中心
 log_dir = baseth.replace("common", "logs\\")  # 日志目录
 swagger_dir = baseth.replace("common", "swagger")
 
+back_dir=swagger_dir.replace("swagger","swaggerbak")
 # 初始化测试用例集合的目录
 testsuites_dir = os.path.join(swagger_dir + "\\testsuites")
 testcases_dir = os.path.join(swagger_dir + "\\testcases")

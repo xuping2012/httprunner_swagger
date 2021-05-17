@@ -6,6 +6,7 @@
 格式建议:import一行一个
 from导入可以import后面用逗号分隔
 """
+import re
 import os
 import json
 
@@ -25,6 +26,14 @@ handlefile = HandleDirFile()
 # 创建可操作xlsx文件的对象
 w = Writexcel(xlsCase_file_path)
 
+
+def re_pattern(content,pattern=r'[^\*" /:?\\|<>]'):
+    """
+    去除匹配规则的字符
+    """
+    text=re.findall(pattern, content, re.S)
+    content="".join(text)
+    return content
 
 class AnalysisSwaggerJson(object):
     """
@@ -80,7 +89,8 @@ class AnalysisSwaggerJson(object):
         # 追加模块名
         for tag_dict in res['tags']:
             # 友情提示，在开发不注意的时候会使用一些特殊符号，如空格、冒号、美元符、反斜杠
-            tag_name = tag_dict.get("name").replace('/', '_').replace(" ", "_").replace(":", "_")
+            tag_name = tag_dict.get("name")#.replace('/', '_').replace(" ", "_").replace(":", "_")
+            tag_name=re_pattern(tag_name)
             self.tags_list.append(tag_name)
 
         i = 0
@@ -111,7 +121,8 @@ class AnalysisSwaggerJson(object):
                         # 从初始数据解析，通过tag标识找到对应的api
                         params = value[method]
                         # 过滤，特殊符号替换成连接符
-                        p_tag = params['tags'][0].replace('/', '_').replace(" ", "_").replace(":", "_")
+                        p_tag = params['tags'][0]#.replace('/', '_').replace(" ", "_").replace(":", "_")
+                        p_tag=re_pattern(p_tag)
                         # deprecated字段标识：接口是否被弃用，暂时无法判断，使用consumes偷换
                         if not 'deprecated' in value.keys():
                             if p_tag == tag:
@@ -160,7 +171,8 @@ class AnalysisSwaggerJson(object):
         }, "validate": [], "extract": [], "output": []}
 
         # 这里的问题需要具体来分析,开发有时概要使用其他符号分割///分割符号需要替换
-        case_name = params['summary'].replace('/', '_').replace(" ", "_").replace(":", "_")
+        case_name = params['summary']#.replace('/', '_').replace(" ", "_").replace(":", "_")
+        case_name=re_pattern(case_name)
         # 用例名称
         http_interface['name'] = case_name
         http_api_testcase['name'] = case_name
