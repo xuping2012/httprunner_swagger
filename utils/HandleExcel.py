@@ -59,12 +59,13 @@ class Writexcel(object):
     def __init__(self, filename):
         '''初始化文件对象'''
         self.filename = filename
+        # 备份excel如果存在则删除
+        if os.path.exists(bakCase_file_path):
+            os.remove(bakCase_file_path)
         # 获取当前系统，操作文件
         if platform.system()=="Windows" and os.path.exists(self.filename):
-            os.remove(bakCase_file_path)
             os.renames(self.filename,bakCase_file_path)
         if platform.system()=="Linux" and os.path.exists(self.filename):
-            os.remove(bakCase_file_path)
             os.renames(self.filename,bakCase_file_path)
 
         self.wb = Workbook()

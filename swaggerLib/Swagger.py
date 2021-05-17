@@ -6,24 +6,24 @@
 格式建议:import一行一个
 from导入可以import后面用逗号分隔
 """
-import json
 import os
+import json
 
 import requests
 
-from common import dir_config
 from utils.HandleConfig import HandleConfig
 from utils.HandleDirFile import HandleDirFile
 from utils.HandleExcel import Writexcel
 from utils.HandleJson import write_data
 from utils.HandleLogging import log
+from common.dir_config import testsuites_dir, config_dir, xlsCase_file_path, testcases_dir, case_dir
 
 # 创建可操作配置文件的对象
-conf = HandleConfig(dir_config.config_dir + "\config.ini")
+conf = HandleConfig(config_dir + "\config.ini")
 # 创建可操作目录及文件的对象
 handlefile = HandleDirFile()
 # 创建可操作xlsx文件的对象
-w = Writexcel(dir_config.xlsCase_file_path)
+w = Writexcel(xlsCase_file_path)
 
 
 class AnalysisSwaggerJson(object):
@@ -32,49 +32,34 @@ class AnalysisSwaggerJson(object):
     """
 
     def __init__(self, url):
-        '''
-           初始化类,指定请求的swagger接口地址
-        '''
-        self.url = url
-        self.interface = {}  # json接口测试用例类型
-        self.case_list = []  # 测试用例的名称
-        self.tags_list = []  # 测试用例的标签
+        """
+        初始化类,指定请求的swagger接口地址
+        """
+        self.url = url    # 初始化解析swagger接口文档地址
+        self.interface = {}    # json接口测试用例类型
+        self.case_list = []    # 测试用例名称
+        self.tags_list = []    # 测试模块标签
+        
         # 定义测试用例集格式
         self.http_suite = {"config": {"name": "", "base_url": "", "variables": {}},
                            "testcases": []}
         # 定义测试用例格式
         self.http_testcase = {"name": "", "testcase": "", "variables": {}}
 
-        # 这些目录的存放,需要统一规划,存在多个不同目录下的文件目录不方便管理,在执行时容易串门;
-        # 需要提示:在请求swagger接口文档地址的时候,记得去config配置文件下修改对应的路径
-
-    #         # 生成api测试用例地址,不存在则创建
-    #         if not os.path.exists(config.case_path):
-    #             os.mkdir(config.case_path)
-    #
-
     def analysis_json_data(self, isDuplicated=False):
         """
-                       解析json格式数据的主函数
+        解析json格式数据的主函数
         :return:
         """
         # swagger接口文档地址,其中运营后台的接口地址,请求分模块,全量或者其他服务菜单
-        if "9527" in self.url:
-            try:
-                # 这才是swagger接口请求的地址
-                res = requests.get(self.url + '/v2/api-docs?group=全量接口').json()
-                write_data(res, 'data.json')
-            except Exception as e:
-                log.error('请求swagger地址错误. 异常如下: {}'.format(e))
-                raise e
-        else:
-            try:
-                # 这才是swagger接口请求的地址
-                res = requests.get(self.url + '/v2/api-docs').json()
-                write_data(res, 'data.json')
-            except Exception as e:
-                log.error('请求swagger地址错误. 异常如下: {}'.format(e))
-                raise e
+        host = self.url + '/v2/api-docs?group=全量接口' if "9527" in self.url else self.url + '/v2/api-docs'
+        try:
+            res = requests.get(host).json()
+            write_data(res, 'swagger-api.json')
+        except Exception as e:
+            log.error('请求swagger地址错误. 异常如下: {}'.format(e))
+            raise e
+        
 
         # 生成完整的json测试用例之后,开始备份接口数据 ,以备作为接口变更的依据
         # if isDuplicated:
@@ -82,79 +67,83 @@ class AnalysisSwaggerJson(object):
         #     if not os.path.exists(dir_config.back_path):
         #         handlefile.copy_dir(dir_config.case_path, dir_config.back_path)
 
-        self.data = res['paths']  # 取接口地址返回的path数据,包括了请求的路径
-        self.basePath = res['basePath']  # 获取接口的根路径/hcp
+        self.data = res['paths']    # 取接口地址返回的path数据,包括了请求的路径
+        self.basePath = res['basePath']    # 获取接口的根路径
         # 第一错，swagger文档是ip地址，使用https协议会错误,注意接口地址的请求协议
         self.url = 'http://' + res['host']
-        self.title = res['info']['title']  # 获取接口的标题
-        self.http_suite['config']['name'] = self.title  # 在初始化用例集字典更新值
-        self.http_suite['config']['base_url'] = self.url
+        self.title = res['info']['title']    # 获取接口的标题
+        self.http_suite['config']['name'] = self.title    # 在初始化用例集字典更新值
+        self.http_suite['config']['base_url'] = self.url    # 全局url
 
-        self.definitions = res['definitions']  # body参数
-
+        self.definitions = res['definitions']    # body参数
+        
+        # 追加模块名
         for tag_dict in res['tags']:
-            self.tags_list.append(tag_dict['name'])
+            # 友情提示，在开发不注意的时候会使用一些特殊符号，如空格、冒号、美元符、反斜杠
+            tag_name = tag_dict.get("name").replace('/', '_').replace(" ", "_").replace(":", "_")
+            self.tags_list.append(tag_name)
 
         i = 0
         for tag in self.tags_list:
-            self.http_suite['testcases'].append(
-                {"name": "", "testcase": "", "variables": {}})
+            # 丰富测试套件
+            self.http_suite['testcases'].append({"name": "", "testcase": "", "variables": {}})
             self.http_suite['testcases'][i]['name'] = tag
-            self.http_suite['testcases'][i][
-                'testcase'] = 'testcases/' + tag + '.json'
+            self.http_suite['testcases'][i]['testcase'] = 'testcases/' + tag + '.json'
             i += 1
-
-        suite_path = dir_config.testsuites_dir
+        
         # 测试用例集目录不存在,则创建
-        if not os.path.exists(suite_path):
-            os.makedirs(suite_path)
-
-        testsuite_json_path = os.path.join(
-            suite_path, '{}_testsuites.json'.format(self.title))
-        # 数据写入
+        if not os.path.exists(testsuites_dir):
+            os.makedirs(testsuites_dir)
+        
+        # 拼接用例套件路径
+        testsuite_json_path = os.path.join(testsuites_dir, '{}_testsuites.json'.format(self.title))
+        # 测试套件数据写入json
         write_data(self.http_suite, testsuite_json_path)
-
-        if isinstance(self.data, dict):  # 判断接口返回的paths数据类型是否dict类型
+        
+        # 解析用例参数
+        if isinstance(self.data, dict):    # 判断接口返回的paths数据类型是否dict类型
             # 前面已经把接口返回的结果tags分别写入了tags_list空列表,再从json对应的tag往里面插入数据
             for tag in self.tags_list:
-                self.http_case = {
-                    "config": {"name": "", "base_url": "", "variables": {}}, "teststeps": []}
+                # 测试用例json格式初始化
+                self.http_case = {"config": {"name": "", "base_url": "", "variables": {}}, "teststeps": []}
                 for key, value in self.data.items():
                     for method in list(value.keys()):
+                        # 从初始数据解析，通过tag标识找到对应的api
                         params = value[method]
+                        # 过滤，特殊符号替换成连接符
+                        p_tag = params['tags'][0].replace('/', '_').replace(" ", "_").replace(":", "_")
                         # deprecated字段标识：接口是否被弃用，暂时无法判断，使用consumes偷换
                         if not 'deprecated' in value.keys():
-                            if params['tags'][0] == tag:
+                            if p_tag == tag:
                                 self.http_case['config'][
                                     'name'] = params['tags'][0]
                                 self.http_case['config']['base_url'] = self.url
-                                case = self.wash_params(
-                                    params, key, method, tag)
+                                # 参数清洗，生成测试用例
+                                case = self.wash_params(params, key, method, tag)
                                 self.http_case['teststeps'].append(case)
                         else:
                             log.info(
                                 'interface path: {}, if name: {}, is deprecated.'.format(key, params['operationId']))
                             break
 
-                testcases_path = dir_config.testcases_dir
 
                 # testcases目录不存在则创建
-                if not os.path.exists(testcases_path):
-                    os.makedirs(testcases_path)
-
+                if not os.path.exists(testcases_dir):
+                    os.makedirs(testcases_dir)
+                # 拼接测试用例路径
                 testcase_json_path = os.path.join(
-                    testcases_path, tag + '.json')
-                #                 生成testcase文件
+                    testcases_dir, tag + '.json')
+                # 生成json用例文件
                 write_data(
-                    self.http_case, testcase_json_path.replace("/", "_"))
+                    self.http_case, testcase_json_path)
 
         else:
-            log.error('解析接口数据异常！url 返回值 paths 中不是字典.')
+            log.error('解析接口数据异常！url 返回值 paths 中不是dict.')
             return 'error'
 
     def wash_params(self, params, api, method, tag):
         """
-                        清洗数据json，把每个接口数据都加入到一个字典中
+        清洗数据json，把每个接口数据都加入到一个字典中
         :param params:
         :param params_key:
         :param method:
@@ -170,24 +159,26 @@ class AnalysisSwaggerJson(object):
         http_api_testcase = {"name": "", "api": "", "variables": {
         }, "validate": [], "extract": [], "output": []}
 
-        # 这里的问题需要具体来分析,开发有时概要使用其他符号分割
-        name = params['summary'].replace('/', '_')
-        http_interface['name'] = name
-        http_api_testcase['name'] = name
+        # 这里的问题需要具体来分析,开发有时概要使用其他符号分割///分割符号需要替换
+        case_name = params['summary'].replace('/', '_').replace(" ", "_").replace(":", "_")
+        # 用例名称
+        http_interface['name'] = case_name
+        http_api_testcase['name'] = case_name
         # 这是写入testcasejson下的名字,不是生成api的目录
-        http_api_testcase['api'] = 'api/{}/{}.json'.format(tag, name)
+        http_api_testcase['api'] = 'api/{}/{}.json'.format(tag, case_name)
+        # 所有方法大写
         http_interface['request']['method'] = method.upper()
         # 这个是替换uri中的/get请求的拼接方式,有些是?参数=&参数拼接,需要另外解析
         http_interface['request']['url'] = api.replace(
             '{', '$').replace('}', '')
-        parameters = params.get('parameters')  # 未解析的参数字典
-        responses = params.get('responses')
-
-        if not parameters:  # 确保参数字典存在
+        parameters = params.get('parameters')    # 未解析的请求参数
+        responses = params.get('responses')    # 未解析的响应参数
+        if not parameters:    # 确保参数字典存在
             parameters = {}
+            
         # 给测试用例字典,加入解析出来的参数
         for each in parameters:
-            if each.get('in') == 'body':  # body 和 query 不会同时出现
+            if each.get('in') == 'body':    # body 和 query 不会同时出现
                 schema = each.get('schema')
                 if schema:
                     ref = schema.get('$ref')
@@ -202,14 +193,16 @@ class AnalysisSwaggerJson(object):
                             else:
                                 http_interface['request'][
                                     'json'].update({key: ''})
-
+            
+            # 实际是请求方法或者是请求参数的格式
             elif each.get('in') == 'query':
                 name = each.get('name')
                 for key in each.keys():
-                    if not 'example' in key:  # 取反，要把在query的参数写入json测试用例
+                    if not 'example' in key:    # 取反，要把在query的参数写入json测试用例
                         http_interface['request'][
                             'params'].update({name: each[key]})
-
+        
+        # 解析接口文档请求参数
         for each in parameters:
             if each.get('in') == 'header':
                 name = each.get('name')
@@ -224,7 +217,8 @@ class AnalysisSwaggerJson(object):
                         else:
                             http_interface['request'][
                                 'headers'].update({name: ''})
-
+                                
+        # 解析接口文档响应参数
         for key, value in responses.items():
             schema = value.get('schema')
             if schema:
@@ -252,34 +246,33 @@ class AnalysisSwaggerJson(object):
             else:
                 if len(http_interface['validate']) != 1:
                     http_interface['validate'].append({"eq": []})
-
+        
+        # 判断如果断言为空，则默认添加http状态断言
+        if http_interface.get("validate"):
+            http_interface.get("validate")[0].update({"eq":["status_code", 200]})
+        
         # 测试用例的请求参数为空字典，则删除这些key
         if http_interface['request']['json'] == {}:
             del http_interface['request']['json']
-
         if http_interface['request']['params'] == {}:
             del http_interface['request']['params']
-
         # 定义接口测试用例
-        api_path = dir_config.case_dir
-        tags_path = os.path.join(api_path, tag).replace("/", "_").replace(" ", "_")
-
-        # 创建不存在的文件目录
-        if not os.path.exists(api_path):
-            os.mkdir(api_path)
-
+        tags_path = os.path.join(case_dir, tag).replace("/", "_").replace(" ", "_")
+        # 创建不存在的文件目录,递归创建
         if not os.path.exists(tags_path):
-            os.mkdir(tags_path)
-
-        json_path = os.path.join(tags_path, http_interface['name'].split(":")[0] + '.json')
-        write_data(http_interface, json_path)  # 写入数据
-
+            os.makedirs(tags_path)
+            
+        # 拼接api用例路径
+        json_path = os.path.join(tags_path, case_name + '.json')
+        # testcases/写入数据
+        write_data(http_interface, json_path)
+        
         return http_api_testcase
 
     def write_excel(self, url, filelist):
-        '''
-           将生成的json格式的数据,转换成xlsx写入文件
-        '''
+        """
+        将生成的json格式的数据,转换成xlsx写入文件
+        """
         li1 = url.split(":")
         host = li1[1].replace("/", "")
         port = li1[2][:4]
@@ -297,24 +290,24 @@ class AnalysisSwaggerJson(object):
                 text = json.load(rdfile)
                 title = inter_name + '-' + text['name']
                 method = text['request']['method'].upper()
-                w.write(count, 1, "apiTest_" + str(caseId))
+                w.write(count, 1, "TestCase_" + str(caseId))
                 w.write(count, 2, title)
                 w.write(count, 4, method)
                 w.write(count, 5, host)
                 w.write(count, 6, port)
-                if 'json' in text['request'].keys():  # post请求的接口相关数据写入excel
+                if 'json' in text['request'].keys():    # post请求的接口相关数据写入excel
                     url = text['request']['url']
                     params = text['request']['json']
                     w.write(count, 7, url)
                     w.write(count, 8, json.dumps(params))
-                elif 'params' in text['request'].keys():  # get请求的接口参数写入
+                elif 'params' in text['request'].keys():    # get请求的接口参数写入
                     url = text['request']['url']
                     jsonp = str(text['request']['params'])
                     join_text = jsonp.replace("{", "").replace("}", "").replace(
                         ":", "=").replace("'", "").replace(",", "&").replace(" ", "")
                     w.write(count, 7, uri + url)
                     w.write(count, 8, join_text)
-                else:  # 将url中包含$符号的get请求的参数单独提取出来写入params
+                else:    # 将url中包含$符号的get请求的参数单独提取出来写入params
                     url = text['request']['url'].replace(
                         '{', '$').replace('}', '')
                     start_index = url.find("$")
@@ -329,16 +322,9 @@ if __name__ == '__main__':
     url = conf.get_value("swaggerUrl", "baseSever_url")
     js = AnalysisSwaggerJson(url)
     js.analysis_json_data(isDuplicated=False)
-
-    #     for i in url.split(","):
-    #         AnalysisSwaggerJson(i).AnalysisJsonData()
-    #     js.analysis_json_data()
-
-    #     写入excel
-    js.write_excel(url, handlefile.get_file_list(dir_config.case_dir))
+    js.write_excel(url, handlefile.get_file_list(case_dir))
 
 # 文件夹下的文件对比
 #     handlefile.diff_dir_file(config.back_path,config.case_path)
-
 #     对比excel
 #     read_excel(config.xlsCase_path,config.xlsback_path,"Sheet")
