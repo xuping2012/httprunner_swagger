@@ -46,7 +46,7 @@ python编写脚本对swagger接口文档返回的josn数据对象进行解析，
 - logs：存放脚本执行日志
 - properties：存放配置信息
 - swagger：存放生成json测试用例文件
-- swaggerLib：解析swagger接口文档脚本
+- swaggerLib：解析swagger接口文档脚本，包含一个testsuite脚本生成的用例格式可与httprunnermanager批量导入有效
 - utils：封装工具包
 - common：
 - - dir_config.py：为项目拼接路径配置模块
