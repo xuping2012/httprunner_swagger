@@ -7,7 +7,7 @@ import sys
 from hashlib import md5
 
 from common import dir_config
-from utils.HandleLogging import log
+from utils.logger import log
 
 diffFile = os.path.join(dir_config.report_dir, '比较文件内容异同_diff.html')
 backupDiffFile = os.path.join(dir_config.report_dir, '比较文件内容异同_diff_back.html')

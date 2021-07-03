@@ -7,7 +7,7 @@ import os
 import time
 
 from common import dir_config
-from utils.HandleConfig import HandleConfig
+from utils.handle_config import HandleConfig
 
 conf = HandleConfig(file_path=dir_config.config_dir + "config.ini")
 # 默认所有输出日志记录以封装的日志模块名称

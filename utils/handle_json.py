@@ -5,7 +5,7 @@ import json
 
 import yaml
 
-from utils.HandleLogging import log as logger
+from utils.logger import log as logger
 
 
 def get_json(path, field=''):

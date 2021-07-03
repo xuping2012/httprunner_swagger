@@ -11,13 +11,13 @@ import json
 
 import requests
 
-from utils.HandleConfig import HandleConfig
-from utils.HandleJson import write_data
-from utils.HandleLogging import log
+from utils.handle_config import HandleConfig
+from utils.handle_json import write_data
+from utils.logger import log
 from common.dir_config import config_dir
 
 # 创建可操作配置文件的对象
-conf = HandleConfig(config_dir + "\common.ini")
+conf = HandleConfig(config_dir + "\config.ini")
 
 def re_pattern(content,pattern=r'[^\*" /:?\\|<>]'):
     """

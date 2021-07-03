@@ -12,11 +12,11 @@ import json
 
 import requests
 
-from utils.HandleConfig import HandleConfig
-from utils.HandleDirFile import HandleDirFile
-from utils.HandleExcel import Writexcel
-from utils.HandleJson import write_data
-from utils.HandleLogging import log
+from utils.handle_config import HandleConfig
+from utils.handle_folder import HandleDirFile
+from utils.handle_excel import Writexcel
+from utils.handle_json import write_data
+from utils.logger import log
 from common.dir_config import testsuites_dir, config_dir, xlsCase_file_path, testcases_dir, case_dir
 
 # 创建可操作配置文件的对象

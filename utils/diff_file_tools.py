@@ -8,7 +8,7 @@ import xlrd
 import xlwt
 
 from common import dir_config
-from utils.HandleLogging import log
+from utils.logger import log
 
 
 class DiffExcelFile():
