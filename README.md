@@ -56,7 +56,7 @@ python编写脚本对swagger接口文档返回的josn数据对象进行解析，
 - - dir_config.py：为项目拼接路径配置模块
 
 ### 使用说明
-1、因为项目中swagger.py脚本已经引用了dir_config工程结构，会先创建目录
-2、确认config.ini配置文件需要解析的接口文档地址；
-3、执行程序入口在swagger脚本main代码块，也可以使用单独抽取出来。
-4、SwaggerTestSuites生成json格式数据是给httprunnermanager这个项目批量导入接口使用的。
+- 因为项目中swagger.py脚本已经引用了dir_config工程结构，会先创建目录
+- 确认config.ini配置文件需要解析的接口文档地址；
+- 执行程序入口在swagger脚本main代码块，也可以使用单独抽取出来。
+- SwaggerTestSuites生成json格式数据是给httprunnermanager这个项目批量导入接口使用的。
