@@ -19,7 +19,7 @@ LEVEL = conf.get_value("logger", "level")
 
 class HandleLogging(object):
     '''
-    classdocs
+    classdocs:logger
     '''
 
     def __init__(self, file_name):

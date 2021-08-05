@@ -329,6 +329,7 @@ class AnalysisSwaggerJson(object):
                     w.write(count, 7, url1)
                     if "$" in params:
                         w.write(count, 8, params)
+        # last save file
         w.save()
 
 

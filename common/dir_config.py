@@ -22,6 +22,7 @@ case_dir = os.path.join(swagger_dir + "\\api")
 xlsCase_file_path = os.path.join(swagger_dir + "\\Api_TestCases.xlsx")
 # 备份上一次的excel测试用例文件，以时间区分
 now = time.strftime('%Y-%m-%d_%H-%m')
+
 bakCase_file_path = os.path.join(swagger_dir + "\\Api_TestCases_bak_{}.xlsx".format(now))
 
 dir_lis = [report_dir, config_dir, log_dir, swagger_dir, back_dir]
