@@ -4,13 +4,12 @@
 import json
 
 import yaml
-
 from utils.logger import log as logger
 
 
 def get_json(path, field=''):
     """
-    获取json文件中的值，data.json和res.json可共用
+    get json file datas
     :param path:
     :param field:
     :return:
@@ -26,7 +25,7 @@ def get_json(path, field=''):
 
 def write_data(res, json_path):
     """
-            把处理后的参数写入json文件
+    handle params write data to json file
     :param res:
     :param json_path:
     :return:
@@ -41,7 +40,7 @@ def write_data(res, json_path):
 
 def json_to_yaml(json_file):
     """
-    支持json格式转yaml
+    supported json to yaml file
     """
     if json_file.endswith("json"):
         with open(json_file, "r") as pf:
@@ -49,23 +48,23 @@ def json_to_yaml(json_file):
         yaml_file = json_file.replace(".json", ".yaml")
         with open(yaml_file, "w") as fp:
             yaml.safe_dump(json_to_dict, stream=fp, default_flow_style=False)
-            print("json转yaml成功!!!")
+            logger.info("json  to yaml success!!!")
     else:
-        print("不是json结尾的文件!!!")
+        logger.info("The file does not end with a JSON suffix!!!")
 
 
-def yaml_to_yaml(yaml_file):
+def yaml_to_json(yaml_file):
     """
-    支持json格式转yaml
+    yaml to json file
     """
     if yaml_file.endswith("yaml"):
         with open(yaml_file, "r") as pf:
-            # 先将yaml转换为dict格式
+            # First convert yaml to dict format
             yaml_to_dict = yaml.load(pf, Loader=yaml.FullLoader)
             dict_to_json = json.dumps(yaml_to_dict, sort_keys=False, indent=4, separators=(',', ': '))
         json_file = yaml_file.replace(".yaml", ".json")
         with open(json_file, "w") as fp:
             fp.write(dict_to_json)
-            print("yaml转json成功!!!")
+            logger.info("yaml to json success!!!")
     else:
-        print("不是yaml结尾的文件!!!")
+        logger.info("The file does not end with a YAML suffix!!!")

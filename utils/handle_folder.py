@@ -9,13 +9,13 @@ from hashlib import md5
 from common import dir_config
 from utils.logger import log
 
-diffFile = os.path.join(dir_config.report_dir, '比较文件内容异同_diff.html')
-backupDiffFile = os.path.join(dir_config.report_dir, '比较文件内容异同_diff_back.html')
+diffFile = os.path.join(dir_config.report_dir, 'Compare_the_file_diff.html')
+backupDiffFile = os.path.join(dir_config.report_dir, 'Compare_the_file_diff_back.html')
 
 
 class HandleDirFile(object):
     """
-    处理文件(夹)的工具类,主要用到shutil第三方库
+    The tool class for processing files (folders) mainly uses the shutil third-party library
     """
 
     #     def __init__(self,src_path,dest_path):
@@ -23,9 +23,9 @@ class HandleDirFile(object):
     #         self.destPath=dest_path
 
     def read_json(self, filename):
-        '''
-        读取json格式文件的数据,进行内容分割
-        '''
+        """
+        Read the data of JSON format file for content segmentation
+        """
         try:
             with open(filename, 'r', encoding='utf-8') as fileHandle:
                 text = fileHandle.read().splitlines()
@@ -35,9 +35,9 @@ class HandleDirFile(object):
             sys.exit()
 
     def md5_file(self, filename):
-        '''
+        """
         通过比较两个文件内容的md5值，来生成html异同
-        '''
+        """
         m = md5()
         try:
             with open(filename, 'rb') as a_file:  # 需要使用二进制格式读取文件内容
@@ -47,9 +47,9 @@ class HandleDirFile(object):
         return m.hexdigest()
 
     def diff_json(self, filename1, filename2):
-        '''
+        """
         比较两个文件内容的md5值；比较两个文件并输出到html文件中
-        '''
+        """
         file1Md5 = self.md5_file(filename1)
         file2Md5 = self.md5_file(filename2)
 
@@ -70,24 +70,24 @@ class HandleDirFile(object):
                 log.error("写入文件失败:" + e)
 
     def move_file(self, srcPath, destPath):
-        '''
+        """
         move文件(夹)移动，可覆盖
         srcPath:源文件(夹)路径
         destPath:目标文件(夹)路径
         return:
-        '''
+        """
         try:
             shutil.move(srcPath, destPath)
         except Exception as e:
             raise e
 
     def copy_dir(self, srcPath, destPath):
-        '''
+        """
         copytree:文件(夹)移动，不可覆盖
         srcPath:源文件(夹)路径
         destPath:目标文件(夹)路径,必须不存在
         return: 
-        '''
+        """
         #         判断目录是否存在
         if os.path.isdir(destPath):
             log.info("{}存在则删除".format(destPath))
@@ -98,11 +98,11 @@ class HandleDirFile(object):
             raise e
 
     def copy_file(self, srcPath, destPath):
-        '''
+        """
         srcPath:源文件(夹)路径
         destPath:目标文件(夹)路径,必须不存在
         return: 
-        '''
+        """
 
         destfile = self.get_file_list(destPath)
         srcfile = self.get_file_list(srcPath)
@@ -124,9 +124,9 @@ class HandleDirFile(object):
                     sf, destDir + sf.split("\\")[len(sf.split("\\")) - 1])
 
     def diff_dir_file(self, srcPath, destPath):
-        '''
+        """
         比较两个文件夹及子目录下的文件
-        '''
+        """
 
         if os.path.isfile(diffFile):
             try:
@@ -147,20 +147,20 @@ class HandleDirFile(object):
             for df in destfile:
                 if sf.split("\\")[len(sf.split("\\")) - 1] == df.split("\\")[len(df.split("\\")) - 1]:
                     self.diff_json(sf, df)
-                #                     log.info("他们名字一样,内容才可以比较：{}=={}".format(sf.split("\\")[len(sf.split("\\"))-1],df.split("\\")[len(df.split("\\"))-1]))
+                # log.info("They have the same name, the content can be compared：{}=={}".format(sf.split("\\")[len(sf.split("\\"))-1],df.split("\\")[len(df.split("\\"))-1]))
 
     def get_file_list(self, filepath):
-        '''
-                    获取文件夹下所有文件名
-        filepath：文件路径
-        return：返回文件夹下及子目录的所有文件
-        '''
+        """
+        Get all file names under the folder
+        filepath：
+        return：file_list
+        """
         filepath_list = []
         for root_dir, sub_dir, files in os.walk(filepath):
-            #             print('root_dir:', root_dir)  # 当前目录路径
-            #             print('sub_dirs:', sub_dir)  # 当前路径下所有子目录
+            # log.info('root_dir:', root_dir)  # Current directory path
+            # log.info('sub_dirs:', sub_dir)  # All subdirectories under the current path
             log.info(sub_dir)
-            #             print('file_name:', files)  # 当前路径下所有非目录子文件
+            # log.info('file_name:', files)  # All non directory sub files under the current path
             for i in range(0, len(files)):
                 filepath_list.append(root_dir + "\\" + files[i])
 

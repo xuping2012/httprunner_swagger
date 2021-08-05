@@ -1,7 +1,9 @@
-@[toc]
+@[toc] 使用手册请参考最后说明！
+
 #### 背景
 ```
-鉴于大多数互联网公司均采用java作为后台开发语言，且习惯使用Swagger插件自动生成接口文档；本项目开发依赖此文档完成接口测试。
+鉴于大多数互联网公司均采用java作为后台开发语言，且习惯使用Swagger插件自动生成接口文档；
+本项目开发，解决接口文档做接口测试的重复劳动。
 ```
 #### 需求
 - 为什么要做接口测试
@@ -30,11 +32,13 @@
 #### 实现一
 ```
 python编写脚本对swagger接口文档返回的josn数据对象进行解析，提取接口信息，
-按规则写入excel组成测试用例，excel转成csv结合jmeter实现数据驱动接口自动化测试。
+按规则写入excel组成测试用例，excel转成csv结合jmeter实现数据驱动接口自动化测试；
+
+2021-08-05，使用pandas模块将生成xlsx用例文件转成csv文件
 ```
 #### 实现二
 ```
-引入大疆httprunner框架，同样是通过swagger接口文档生成的json格式的数据文件
+引入大疆httprunner框架，同样是通过swagger接口文档生成的json格式的数据文件：本项目不包含httprunner框架，需要用户自己安装；
 <亦可通过charles抓包工具导出har文件，再通过har2case转换json测试用例>，可以直接通过CLI执行；
 ```
 #### 实现三
@@ -50,3 +54,9 @@ python编写脚本对swagger接口文档返回的josn数据对象进行解析，
 - utils：封装工具包
 - common：
 - - dir_config.py：为项目拼接路径配置模块
+
+### 使用说明
+1、因为项目中swagger.py脚本已经引用了dir_config工程结构，会先创建目录
+2、确认config.ini配置文件需要解析的接口文档地址；
+3、执行程序入口在swagger脚本main代码块，也可以使用单独抽取出来。
+4、SwaggerTestSuites生成json格式数据是给httprunnermanager这个项目批量导入接口使用的。

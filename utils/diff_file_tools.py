@@ -1,73 +1,72 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-# @desc    : 对比接口excel
+# @desc    : compare excel
 
 import time
 
-import xlrd
-import xlwt
-
 from common import dir_config
 from utils.logger import log
+import xlrd
+import xlwt
 
 
 class DiffExcelFile():
     """
-    用来比较excel前后两次文件的内容，生成html报告
+    It is used to compare the contents of two files before and after excel and generate HTML report
     """
 
     def __init__(self, wb_name="Excel_Workbook.xlsx", sheet_name="Sheet1"):
-        #         创建工作簿对象
-        self.workbook = xlwt.Workbook()  # encoding = 'ascii'本身就是默认值
-        #         实例属性
+        # Create workbook object
+        self.workbook = xlwt.Workbook()  # encoding = 'ascii' default
+        # Instance properties        
         self.wb_name = wb_name
         self.sheet_name = sheet_name
-        #         添加表单对象
+        # Add form object
         self.worksheet = self.workbook.add_sheet(self.sheet_name)
 
     def write_excel(self, row, col, content, style='pattern: pattern solid, fore_colour yellow; font: bold on'):
-        #     设置表单样式
+        # Set form style
         style = xlwt.easyxf(style)
-        #     写入表单
+        # Write form
         # Apply the Style to the Cell
         self.worksheet.write(row, col, label=content, style=style)
-        #     保存表单
+        # Save form
         self.save_excel()
 
     def save_excel(self):
         self.workbook.save(self.wb_name)
 
 
-# 往日志文件中追加内容函数#个人感觉这个很鸡肋，实际以日志输出就可以
+# The function of adding content to the log file # personally feels that this is a chicken rib. In fact, it can be output as a log
 
 
 def write_file(filename, content):
-    '''
-           写入文件，将对比不同的测试用例写入日志
-    '''
+    """
+           Write the file and write the comparison of different test cases to the log
+    """
     if not isinstance(content, str):
         content = str(content)
 
-    with open(filename, 'a', encoding='utf-8') as file:  # 以追加方式打开日志文件
-        time_now = time.strftime("%Y-%m-%d", time.localtime())  # 系统时间格式化
-        file.write(time_now + ':变更的接口及参数==>' + content + '\n')  # 写入内容
+    with open(filename, 'a', encoding='utf-8') as file:  # Open log file in append modes
+        time_now = time.strftime("%Y-%m-%d", time.localtime())  # System time formatting
+        file.write(time_now + ':Changed interfaces and parameters==>' + content + '\n')  # Write content
 
 
 def read_excel(file_path, sheet_name="Sheet1"):
-    '''读取excel表格'''
-    datas = []  # 储存xlsx文件的所有数据
-    xlsx_file = {}  # 存储源xls文件
-    wb = xlrd.open_workbook(file_path)  # 打开目标文件
-    #     sheet_num = len(wb.sheets())     #获取xlsx表单数量
-    sheet_name_list = wb.sheet_names()  # 获取xlsx表单名字
+    """Read excel table"""
+    datas = []  # Store all data of xlsx file
+    xlsx_file = {}  # Store source XLS files
+    wb = xlrd.open_workbook(file_path)  # open the target file
+    #     sheet_num = len(wb.sheets())     #Get xlsx number of forms
+    sheet_name_list = wb.sheet_names()  # Get xlsx form name
 
     if sheet_name in sheet_name_list:
         sheet_name = wb.sheet_by_name(sheet_name)
         for rows in range(0, sheet_name.nrows):
-            orign_list = sheet_name.row_values(rows)  # 源表i行数据
-            xlsx_file[rows] = orign_list  # 源表写入字典
+            orign_list = sheet_name.row_values(rows)  # Source table I row data
+            xlsx_file[rows] = orign_list  # Source table write dictionary
     else:
-        log.info("{}子表名不存在{}文件中！".format(sheet_name, file_path))
+        log.info("{}The child table name does not exist in the {} file！".format(sheet_name, file_path))
 
     for row in range(1, len(xlsx_file)):
         data = dict(zip(xlsx_file[0], xlsx_file[row]))
@@ -77,8 +76,8 @@ def read_excel(file_path, sheet_name="Sheet1"):
 
 
 def diff_excel(src_file, des_file, check="caseid,url,params"):
-    '''对比文件的数据某个字段的值，默认sheet_name=Sheet1'''
-    fail = 0  # 记录变更的数据
+    """The value of a field in the data of the reference file，sheet_name default Sheet1"""
+    fail = 0  # Record changed data
     res1 = read_excel(src_file)
     res2 = read_excel(des_file)
 
@@ -95,12 +94,12 @@ def diff_excel(src_file, des_file, check="caseid,url,params"):
     for r1 in range(len(res1)):
         case = [res1[r1][check1], res1[r1][check2]]
         if case not in data:
-            log.info("新增/变更数据：{}".format(case))
+            log.info("New / changed data：{}".format(case))
             fail += 1
             case_id = str(res1[r1][index])
             content = "".join([case_id, str(case)])
             datas.append(content)
-            write_file(dir_config.log_path + "diff_data.log", content)
+            write_file(dir_config.log_dir + "diff_data.log", content)
 
     for i in range(len(datas)):
-        xw.write_excel(i + 1, 0, datas[i])
+        DiffExcelFile.write_excel(i + 1, 0, datas[i])

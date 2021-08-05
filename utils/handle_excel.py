@@ -1,47 +1,48 @@
 # coding:utf-8
 
+from collections import namedtuple
 import os
 import platform
-from collections import namedtuple
 
 from openpyxl import load_workbook, Workbook
 from openpyxl.styles import Font, colors
 
-from common.dir_config import bakCase_file_path
+from common.dir_config import bakCase_file_path, csv_file_path
+import pandas as pd
+
 
 class HandleExcel(object):
     """
-    封装处理excel工具类；实现读写操作
+    Encapsulate excel tools; Implement read and write operations
     """
 
     def __init__(self, filename, sheetname=None):
-        '''实例化文件属性，初始化操作文件对象'''
+        """Instantiate file attributes and initialize operation file objects"""
         self.filename = filename
         self.sheetname = sheetname
         self.wb = load_workbook(self.filename)
         self.ws = self.wb[
-            self.sheetname] if self.sheetname is not None else self.wb.active  # 获取第一个表单
+            self.sheetname] if self.sheetname is not None else self.wb.active    # get first sheet
         self.sheet_head_tuple = tuple(
             self.ws.iter_rows(max_row=self.ws.min_row, values_only=True))[0]
-        self.cases_list = []  # 定义一个存放元组的对象
-        self.Cases = namedtuple("cases", self.sheet_head_tuple)  # 创建一个命名元组类
+        self.cases_list = []    # Define an object to store tuples
+        self.Cases = namedtuple("cases", self.sheet_head_tuple)    # Create a namedtuple class
 
     def get_all_cases(self):
-        '''获取excel所有行的测试用例'''
-        for tuple_data in self.ws.iter_rows(min_row=self.ws.min_row + 1, values_only=True):  # 每次遍历，返回由某行所有单元格值组成的一个元组
+        """Get test cases of all rows in Excel"""
+        for tuple_data in self.ws.iter_rows(min_row=self.ws.min_row + 1, values_only=True):    # Each traversal returns a tuple composed of all cell values in a row
             self.cases_list.append(self.Cases(*tuple_data))
         return self.cases_list
 
     def get_one_case(self, row):
-        '''指定返回某一行的测试用例，是不是以后哪一条测试用例执行失败，可以通过获取caseid来重试'''
+        """Specify whether the test case that returns a line fails to execute in the future. You can try again by obtaining the caseid"""
         if isinstance(row, int) and (self.ws.min_row + 1 <= row <= self.ws.max_row):
             return tuple(self.ws.iter_rows(min_row=row, max_row=row, values_only=True))[0]
         else:
-            #             self.logger.error("传入行号不正确，应为大于1的整数！")
-            print(0)
+            self.logger.error("The incoming line number is incorrect. It should be an integer greater than 1...")
 
     def write_file(self, row, actul_result, result_status):
-        '''执行用例结果写入excel，并保存'''
+        """The execution case results are written into excel and saved"""
         if isinstance(row, int) and (self.ws.min_row + 1 <= row <= self.ws.max_row):
             self.ws.cell(row=row, column=self.sheet_head_tuple.index(
                 "actual") + 1, value=actul_result)
@@ -49,27 +50,27 @@ class HandleExcel(object):
                 "result") + 1, value=result_status)
             self.wb.save(self.filename)
         else:
-            #             self.logger.error("写入文件失败，请确认文件有该单元格！")
-            print(1)
+            self.logger.error("Failed to write file, please make sure the file has this cell...")
 
 
 class Writexcel(object):
-    """数据写入excel"""
+    """write datas to excel"""
 
     def __init__(self, filename):
-        '''初始化文件对象'''
+        """Initializing file object"""
         self.filename = filename
-        # 备份excel如果存在则删除
+        # If excel backup exists, delete it
         if os.path.exists(bakCase_file_path):
             os.remove(bakCase_file_path)
-        # 获取当前系统，操作文件
-        if platform.system()=="Windows" and os.path.exists(self.filename):
-            os.renames(self.filename,bakCase_file_path)
-        if platform.system()=="Linux" and os.path.exists(self.filename):
-            os.renames(self.filename,bakCase_file_path)
+        # Get the current system operation file
+        if platform.system() == "Windows" and os.path.exists(self.filename):
+            os.renames(self.filename, bakCase_file_path)
+            
+        if platform.system() == "Linux" and os.path.exists(self.filename):
+            os.renames(self.filename, bakCase_file_path)
 
         self.wb = Workbook()
-        self.ws = self.wb.active  # 激活sheet
+        self.ws = self.wb.active    # activate sheet
         self.ws.cell(1, 1).value = "caseid"
         self.ws.cell(1, 2).value = "title"
         self.ws.cell(1, 3).value = "desc"
@@ -78,16 +79,22 @@ class Writexcel(object):
         self.ws.cell(1, 6).value = "port"
         self.ws.cell(1, 7).value = "uri"
         self.ws.cell(1, 8).value = "params"
-        self.wb.save(filename)
 
     def write(self, row_n, col_n, value):
-        """写入数据，如(2,3，"hello"),第二行第三列写入数据"hello\""""
+        """Write data, such as (2,3, "hello"), and write data in the second row and the third column"hello\""""
         ft = Font(color=colors.BLUE, size=12, bold=True)
-        # 判断值为错误时添加字体样式
+        # Add font style when the judgment value is wrong
         if value in ['fail', 'error'] or col_n == 12:
             self.ws.cell(row_n, col_n).font = ft
         if value == 'pass':
             ft = Font(color=colors.BLACK)
             self.ws.cell(row_n, col_n).font = ft
         self.ws.cell(row_n, col_n).value = value
+    
+    def xlsx_to_csv_pd(self):
+        """xlsx to csv"""
+        data_xls = pd.read_excel(self.filename, index_col=0)
+        data_xls.to_csv(csv_file_path, encoding='utf-8_sig') # encoding,utf-8
+    
+    def save(self):
         self.wb.save(self.filename)

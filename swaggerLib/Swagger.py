@@ -9,7 +9,6 @@ from导入可以import后面用逗号分隔
 import re
 import os
 import json
-
 import requests
 
 from utils.handle_config import HandleConfig
@@ -26,13 +25,12 @@ handlefile = HandleDirFile()
 # 创建可操作xlsx文件的对象
 w = Writexcel(xlsCase_file_path)
 
-
-def re_pattern(content,pattern=r'[^\*" /:?\\|<>]'):
+def re_pattern(content, pattern=r'[^\*" /:?\\|<>]'):
     """
     去除匹配规则的字符
     """
-    text=re.findall(pattern, content, re.S)
-    content="".join(text)
+    text = re.findall(pattern, content, re.S)
+    content = "".join(text)
     return content
 
 class AnalysisSwaggerJson(object):
@@ -89,8 +87,8 @@ class AnalysisSwaggerJson(object):
         # 追加模块名
         for tag_dict in res['tags']:
             # 友情提示，在开发不注意的时候会使用一些特殊符号，如空格、冒号、美元符、反斜杠
-            tag_name = tag_dict.get("name")#.replace('/', '_').replace(" ", "_").replace(":", "_")
-            tag_name=re_pattern(tag_name)
+            tag_name = tag_dict.get("name")    # .replace('/', '_').replace(" ", "_").replace(":", "_")
+            tag_name = re_pattern(tag_name)
             self.tags_list.append(tag_name)
 
         i = 0
@@ -121,8 +119,8 @@ class AnalysisSwaggerJson(object):
                         # 从初始数据解析，通过tag标识找到对应的api
                         params = value[method]
                         # 过滤，特殊符号替换成连接符
-                        p_tag = params['tags'][0]#.replace('/', '_').replace(" ", "_").replace(":", "_")
-                        p_tag=re_pattern(p_tag)
+                        p_tag = params['tags'][0]    # .replace('/', '_').replace(" ", "_").replace(":", "_")
+                        p_tag = re_pattern(p_tag)
                         # deprecated字段标识：接口是否被弃用，暂时无法判断，使用consumes偷换
                         if not 'deprecated' in value.keys():
                             if p_tag == tag:
@@ -171,8 +169,8 @@ class AnalysisSwaggerJson(object):
         }, "validate": [], "extract": [], "output": []}
 
         # 这里的问题需要具体来分析,开发有时概要使用其他符号分割///分割符号需要替换
-        case_name = params['summary']#.replace('/', '_').replace(" ", "_").replace(":", "_")
-        case_name=re_pattern(case_name)
+        case_name = params['summary']    # .replace('/', '_').replace(" ", "_").replace(":", "_")
+        case_name = re_pattern(case_name)
         # 用例名称
         http_interface['name'] = case_name
         http_api_testcase['name'] = case_name
@@ -188,7 +186,7 @@ class AnalysisSwaggerJson(object):
         if not parameters:    # 确保参数字典存在
             parameters = {}
             
-        # 给测试用例字典,加入解析出来的参数
+        # 解析接口文档《请求参数》
         for each in parameters:
             if each.get('in') == 'body':    # body 和 query 不会同时出现
                 schema = each.get('schema')
@@ -197,14 +195,16 @@ class AnalysisSwaggerJson(object):
                     if ref:
                         # 这个uri拆分，根据实际情况来取第几个/反斜杠
                         param_key = ref.split('/', 2)[-1]
-                        param = self.definitions[param_key]['properties']
-                        for key, value in param.items():
-                            if 'example' in value.keys():
-                                http_interface['request']['json'].update(
-                                    {key: value['example']})
-                            else:
-                                http_interface['request'][
-                                    'json'].update({key: ''})
+                        param = self.definitions[param_key].get('properties')
+                        # 这里可能出现了key不存在的错误，使用dict的get方法，否则返回None
+                        if param:
+                            for key, value in param.items():
+                                if 'example' in value.keys():
+                                    http_interface['request']['json'].update(
+                                        {key: value['example']})
+                                else:
+                                    http_interface['request'][
+                                        'json'].update({key: ''})
             
             # 实际是请求方法或者是请求参数的格式
             elif each.get('in') == 'query':
@@ -214,7 +214,7 @@ class AnalysisSwaggerJson(object):
                         http_interface['request'][
                             'params'].update({name: each[key]})
         
-        # 解析接口文档请求参数
+        # 解析接口文档《请求头参数》
         for each in parameters:
             if each.get('in') == 'header':
                 name = each.get('name')
@@ -230,7 +230,7 @@ class AnalysisSwaggerJson(object):
                             http_interface['request'][
                                 'headers'].update({name: ''})
                                 
-        # 解析接口文档响应参数
+        # 解析接口文档《响应参数》
         for key, value in responses.items():
             schema = value.get('schema')
             if schema:
@@ -268,6 +268,7 @@ class AnalysisSwaggerJson(object):
             del http_interface['request']['json']
         if http_interface['request']['params'] == {}:
             del http_interface['request']['params']
+            
         # 定义接口测试用例
         tags_path = os.path.join(case_dir, tag).replace("/", "_").replace(" ", "_")
         # 创建不存在的文件目录,递归创建
@@ -328,6 +329,7 @@ class AnalysisSwaggerJson(object):
                     w.write(count, 7, url1)
                     if "$" in params:
                         w.write(count, 8, params)
+        w.save()
 
 
 if __name__ == '__main__':
@@ -335,7 +337,8 @@ if __name__ == '__main__':
     js = AnalysisSwaggerJson(url)
     js.analysis_json_data(isDuplicated=False)
     js.write_excel(url, handlefile.get_file_list(case_dir))
-
+    w.xlsx_to_csv_pd()
+    
 # 文件夹下的文件对比
 #     handlefile.diff_dir_file(config.back_path,config.case_path)
 #     对比excel
