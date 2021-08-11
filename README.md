@@ -1,6 +1,6 @@
 @[toc] 使用手册请参考最后说明！
-@[author]wx:oupoor
-
+@[author] wx:oupoor
+@[swagger] 仅支持swagger2.0版本，3.0部分数据存在解析错误
 #### 背景介绍
 ```
 鉴于大多数互联网公司均采用java作为后台开发语言，且习惯使用Swagger插件自动生成接口文档；
