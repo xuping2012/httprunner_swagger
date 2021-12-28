@@ -1,4 +1,8 @@
-from swaggerLib.getvalues import *
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+# @File    : get_file.py
+
+from common.get_values import *
 import json
 import copy
 import jsonpath

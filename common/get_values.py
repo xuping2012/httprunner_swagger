@@ -1,3 +1,7 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+# @File    : get_values.py
+
 import time
 import copy
 

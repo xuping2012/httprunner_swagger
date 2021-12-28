@@ -12,7 +12,7 @@ import re
 import requests
 
 from common.dir_config import testsuites_dir, config_dir, xlsCase_file_path, testcases_dir, case_dir
-from  swaggerLib.get_file import *
+from  common.get_file import *
 from utils.handle_config import HandleConfig
 from utils.handle_excel import Writexcel
 from utils.handle_folder import HandleDirFile
