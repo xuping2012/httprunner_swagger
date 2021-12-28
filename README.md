@@ -4,11 +4,32 @@
 
 @[swagger] 仅支持swagger2.0版本，3.0部分数据存在解析错误
 
+#### 使用说明
+- 本地安装python开发环境
+- 克隆项目到本地：git clone
+- 安装项目依赖:pip install -r requirements.txt
+- 因为项目中swagger.py脚本已经引用了`dirConfig`工程结构，会先创建目录对应目录
+- 确认config.ini配置文件需要解析的接口文档地址
+- 执行程序入口在swagger脚本main代码块，也可以使用单独抽取出来放在项目根路径
+- SwaggerTestSuites生成json格式数据是给httprunnermanager这个项目批量导入接口使用的
+
+
+#### 项目结构说明：
+- logs：存放脚本执行日志
+- properties：存放配置信息
+- swagger：存放生成json测试用例文件
+- swaggerLib：解析swagger接口文档脚本，包含一个testsuite脚本生成的用例格式可与httprunnermanager批量导入有效
+- utils：封装工具包
+- common：
+- - dir_config.py：为项目拼接路径配置模块
+
+
 #### 背景介绍
 ```
 鉴于大多数互联网公司均采用java作为后台开发语言，且习惯使用Swagger插件生成接口文档；
 本项目的开发，是为解决测试人员依赖swagger接口文档做接口测试需要cv/cp的重复手工劳动。
 ```
+
 #### 项目需求
 - 为什么要做接口测试？
 ```
@@ -33,6 +54,7 @@
 推荐接口测试工具：jmeter/httprunner/postman/rf，不排除其他框架，它们都能向往着DDT的方向发展;
 接口测试工具原理：都是通过脚本/工具实现模拟客户端向服务端发起请求，然后校验服务器返回数据的过程。
 ```
+
 #### 实现一
 ```
 python编写脚本对swagger2.x接口文档返回的josn数据对象进行解析，提取接口信息，
@@ -52,20 +74,6 @@ python编写脚本对swagger2.x接口文档返回的josn数据对象进行解析
 既然已知swagger接口文档并且能解析数据形成excel或者json格式的测试用例，
 那么也可以结合python/java等开发语言集合单元测试框架搭建自动化测试框架。
 ```
-#### 项目结构说明：
-- logs：存放脚本执行日志
-- properties：存放配置信息
-- swagger：存放生成json测试用例文件
-- swaggerLib：解析swagger接口文档脚本，包含一个testsuite脚本生成的用例格式可与httprunnermanager批量导入有效
-- utils：封装工具包
-- common：
-- - dir_config.py：为项目拼接路径配置模块
 
-### 使用说明
-- 本地安装python开发环境
-- 克隆项目到本地：git clone
-- 安装项目依赖:pip install -r requirements.txt
-- 因为项目中swagger.py脚本已经引用了dir_config工程结构，会先创建目录对应目录
-- 确认config.ini配置文件需要解析的接口文档地址
-- 执行程序入口在swagger脚本main代码块，也可以使用单独抽取出来放在项目根路径
-- SwaggerTestSuites生成json格式数据是给httprunnermanager这个项目批量导入接口使用的
+#### 最后
+欢迎各位大佬使用并提出改善意见，十分感谢！
