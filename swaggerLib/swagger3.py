@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 # @File    : swagger3.py
 """
-导库顺序:优先基础库\第三方库\自定义封装
-格式建议:import一行一个
-from导入可以import后面用逗号分隔
+Library import order: priority basic library \ third party library \ custom encapsulation
+Format suggestion: import one line at a time
+From import can be separated by commas after import
 """
 import os
 import re
@@ -31,7 +31,7 @@ api_list = []
 
 def re_pattern(content, pattern=r'[^\*" /:?\\|<>]'):
     """
-    去除匹配规则的字符
+    Remove characters matching rules
     """
     text = re.findall(pattern, content, re.S)
     content = "".join(text)
@@ -39,7 +39,7 @@ def re_pattern(content, pattern=r'[^\*" /:?\\|<>]'):
 
 
 def featch_body(path, rescomponents):
-    """获取参数路径#/components/parameters/Accept解析"""
+    """Get parameter path # / components / parameters / accept resolution"""
     data = rescomponents
     arr = path.split('/')
     ress = data
@@ -50,12 +50,12 @@ def featch_body(path, rescomponents):
 
 class AnalysisSwaggerJson(object):
     """
-    swagger自动生成接口测试用例的工具类,此类以生成json格式的测试用例
+    Swagger automatically generates tool classes for interface test cases, which are used to generate test cases in JSON format
     """
 
     def __init__(self, url):
         """
-        初始化类,指定请求的swagger接口地址
+        Initialize the class and specify the address of the requested swagger interface
         """
         self.url = url    # 初始化解析swagger接口文档地址
         self.interface = {}    # json接口测试用例类型
@@ -69,7 +69,7 @@ class AnalysisSwaggerJson(object):
 
     def analysis_json_data(self, isDuplicated=False):
         """
-        解析json格式数据的主函数
+        Main function for parsing JSON format data
         :return:
         """
         # swagger接口文档地址,其中运营后台的接口地址,请求分模块,全量或者其他服务菜单
@@ -77,7 +77,7 @@ class AnalysisSwaggerJson(object):
             res = requests.get(self.url+"/v3/api-docs").json()
             write_data(res, 'swagger-api.json')
         except Exception as e:
-            log.error('请求swagger地址错误. 异常如下: {}'.format(e))
+            log.error('Error requesting swagger address The exceptions are as follows: {}'.format(e))
             raise e
 
 
@@ -154,7 +154,7 @@ class AnalysisSwaggerJson(object):
 
     def wash_params(self, params, api, method, tag, res):
         """
-        清洗数据json，把每个接口数据都加入到一个字典中
+        Clean the data JSON and add each interface data to a dictionary
         :param params:
         :param params_key:
         :param method:
@@ -271,7 +271,7 @@ class AnalysisSwaggerJson(object):
 
     def write_excel(self, url, filelist):
         """
-        将生成的json格式的数据,转换成xlsx写入文件
+        Convert the generated JSON format data into xlsx and write it to a file
         """
         li1 = url.split(":")
         host = li1[1].split("/")[2]

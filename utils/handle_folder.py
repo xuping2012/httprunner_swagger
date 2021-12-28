@@ -14,6 +14,7 @@ from hashlib import md5
 from common import dir_config
 from utils.logger import log
 
+
 diffFile = os.path.join(dir_config.report_dir, 'Compare_the_file_diff.html')
 backupDiffFile = os.path.join(dir_config.report_dir, 'Compare_the_file_diff_back.html')
 

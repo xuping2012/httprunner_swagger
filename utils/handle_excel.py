@@ -9,11 +9,12 @@ from collections import namedtuple
 import os
 import platform
 
+import pandas as pd
+
 from openpyxl import load_workbook, Workbook
 from openpyxl.styles import Font, colors
 
 from common.dir_config import bakCase_file_path, csv_file_path
-import pandas as pd
 
 
 class HandleExcel(object):

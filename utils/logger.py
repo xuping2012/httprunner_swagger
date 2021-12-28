@@ -10,6 +10,7 @@ import time
 from common import dir_config
 from utils.handle_config import HandleConfig
 
+
 conf = HandleConfig(file_path=dir_config.config_dir + "config.ini")
 # By default, all output log records are encapsulated by the log module name
 # os.path.splitext(os.path.basename(__file__))[0]
