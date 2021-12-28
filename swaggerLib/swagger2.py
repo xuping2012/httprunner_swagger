@@ -6,17 +6,20 @@ Library import order: priority basic library \ third party library \ custom enca
 Format suggestion: import one line at a time
 From import can be separated by commas after import
 """
-import re
-import os
 import json
+import os
+import re
+
 import requests
 
+from common.dir_config import testsuites_dir, config_dir, xlsCase_file_path, testcases_dir, case_dir, \
+    swagger_dir
 from utils.handle_config import HandleConfig
-from utils.handle_folder import HandleDirFile
 from utils.handle_excel import Writexcel
+from utils.handle_folder import HandleDirFile
 from utils.handle_json import write_data
 from utils.logger import log
-from common.dir_config import testsuites_dir, config_dir, xlsCase_file_path, testcases_dir, case_dir
+
 
 # 创建可操作配置文件的对象
 conf = HandleConfig(config_dir + "\config.ini")
@@ -62,7 +65,7 @@ class AnalysisSwaggerJson(object):
         host = self.url + '/v2/api-docs?group=全量接口' if "9527" in self.url else self.url + '/v2/api-docs'
         try:
             res = requests.get(host).json()
-            write_data(res, 'swagger-api.json')
+            write_data(res, swagger_dir+'swagger-api.json')
         except Exception as e:
             log.error('Error requesting swagger address The exceptions are as follows: {}'.format(e))
             raise e
