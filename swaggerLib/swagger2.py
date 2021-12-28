@@ -339,8 +339,3 @@ if __name__ == '__main__':
     js.analysis_json_data(isDuplicated=False)
     js.write_excel(url, handlefile.get_file_list(case_dir))
     w.xlsx_to_csv_pd()
-    
-# 文件夹下的文件对比
-#     handlefile.diff_dir_file(config.back_path,config.case_path)
-#     对比excel
-#     read_excel(config.xlsCase_path,config.xlsback_path,"Sheet")

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-# @File    : swagger.py
+# @File    : SwaggerForHttprunnerManager.py
 """
 导库顺序:优先基础库\第三方库\自定义封装
 格式建议:import一行一个
@@ -16,6 +16,7 @@ from utils.handle_json import write_data
 from utils.logger import log
 from common.dir_config import config_dir
 
+
 # 创建可操作配置文件的对象
 conf = HandleConfig(config_dir + "\config.ini")
 
@@ -30,7 +31,8 @@ def re_pattern(content,pattern=r'[^\*" /:?\\|<>]'):
 
 class AnalysisSwaggerJson(object):
     """
-    swagger自动生成接口测试用例的工具类,此类以生成json格式的测试用例
+    swagger自动生成接口测试用例的工具类,此类以生成json格式的测试用例;
+    当前脚本适用于生成符合httprunnermanager项目的json文件，方便批量导入。
     """
 
     def __init__(self, url):
