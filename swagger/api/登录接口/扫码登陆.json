@@ -1,0 +1,25 @@
+{
+    "name": "扫码登陆",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "deviceid": "",
+            "loginType": "",
+            "mobile": "",
+            "password": "",
+            "zone": ""
+        },
+        "method": "POST",
+        "url": "/apiLogin/scanCodeLogin"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

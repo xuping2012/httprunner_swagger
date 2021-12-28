@@ -1,0 +1,31 @@
+{
+    "name": "一键登录(只针对三大运营商的号码有效)",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "appId": "",
+            "appKey": "",
+            "appVersion": "",
+            "channel": "",
+            "deviceName": "",
+            "deviceType": "",
+            "deviceid": "",
+            "loginType": "",
+            "pushToken": "",
+            "token": "",
+            "visitorUserId": ""
+        },
+        "method": "POST",
+        "url": "/user/flashMobile/login"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

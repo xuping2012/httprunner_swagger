@@ -1,0 +1,22 @@
+{
+    "name": "修改用户头像-不推荐使用，即将废弃",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "POST",
+        "params": {
+            "source": "int32",
+            "token": "string"
+        },
+        "url": "/userInfo/updateAvatar"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

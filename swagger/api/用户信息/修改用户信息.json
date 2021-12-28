@@ -1,0 +1,29 @@
+{
+    "name": "修改用户信息",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "avatar": "",
+            "birthday": "",
+            "id": "",
+            "pushToken": "",
+            "sex": "",
+            "tmpUsername": "",
+            "updateInvalid": false,
+            "userName": "",
+            "userType": ""
+        },
+        "method": "POST",
+        "url": "/userInfo/updateUserInfo"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

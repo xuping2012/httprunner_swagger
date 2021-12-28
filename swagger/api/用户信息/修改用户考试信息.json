@@ -1,0 +1,33 @@
+{
+    "name": "修改用户考试信息",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "averageGrade": 0.0,
+            "examDate": "yyyy-MM-dd",
+            "examDateId": "",
+            "examType": "",
+            "listenGrade": 0.0,
+            "oralGrade": 0.0,
+            "readGrade": 0.0,
+            "targetAverageGrade": 0.0,
+            "targetListenGrade": 0.0,
+            "targetOralGrade": 0.0,
+            "targetReadGrade": 0.0,
+            "targetWriteGrade": 0.0,
+            "writeGrade": 0.0
+        },
+        "method": "POST",
+        "url": "/userInfo/updateUserExamInfo"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

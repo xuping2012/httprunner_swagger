@@ -1,0 +1,18 @@
+{
+    "name": "获取权益图片",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "url": "/user/rights/getRightsInfoImage"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

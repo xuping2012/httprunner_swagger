@@ -1,0 +1,23 @@
+{
+    "name": "保存复制微信记录",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "subjectId": "",
+            "subjectType": "",
+            "wechat": ""
+        },
+        "method": "POST",
+        "url": "/user/copyWechatRecord/save"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

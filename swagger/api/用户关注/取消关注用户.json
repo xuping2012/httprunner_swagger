@@ -1,0 +1,21 @@
+{
+    "name": "取消关注用户",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "attentionUserId": ""
+        },
+        "method": "POST",
+        "url": "/user/attention/notAttention"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

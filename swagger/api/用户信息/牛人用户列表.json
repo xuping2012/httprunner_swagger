@@ -1,0 +1,18 @@
+{
+    "name": "牛人用户列表",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "url": "/userInfo/geniusList/$top"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

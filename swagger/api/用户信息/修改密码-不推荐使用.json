@@ -1,0 +1,26 @@
+{
+    "name": "修改密码-不推荐使用",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "deviceid": "",
+            "newPassword": "",
+            "oldPassword": "",
+            "source": "",
+            "token": "",
+            "userId": ""
+        },
+        "method": "POST",
+        "url": "/userInfo/updatePassword"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

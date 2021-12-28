@@ -1,0 +1,29 @@
+{
+    "name": "保存",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "completeCount": "",
+            "content": "",
+            "id": "",
+            "parentId": "",
+            "status": "",
+            "totalCount": "",
+            "uncompleteCount": "",
+            "userId": "",
+            "userName": ""
+        },
+        "method": "POST",
+        "url": "/user/studyPlan/save"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

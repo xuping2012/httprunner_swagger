@@ -1,0 +1,26 @@
+{
+    "name": "修改用户推送token",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "appVersion": "",
+            "deviceName": "",
+            "deviceType": "",
+            "deviceUid": "",
+            "pushToken": "",
+            "systemVersion": ""
+        },
+        "method": "POST",
+        "url": "/userInfo/updateUserPushToken"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

@@ -1,0 +1,18 @@
+{
+    "name": "获取ai权益信息",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "url": "/user/rights/getAiRightInfo"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

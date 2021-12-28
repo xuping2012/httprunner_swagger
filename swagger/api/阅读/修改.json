@@ -1,0 +1,35 @@
+{
+    "name": "修改",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "catalog": "",
+            "createDate": "",
+            "device": "",
+            "id": "",
+            "ip": "",
+            "readBeginTime": "",
+            "readContentId": "",
+            "readEndTime": "",
+            "readLogId": "",
+            "readModule": "",
+            "readTime": "",
+            "topName": "",
+            "updateDate": "",
+            "userId": "",
+            "userName": ""
+        },
+        "method": "POST",
+        "url": "/user/readLog/update"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

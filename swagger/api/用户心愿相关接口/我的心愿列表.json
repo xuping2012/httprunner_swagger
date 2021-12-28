@@ -1,0 +1,39 @@
+{
+    "name": "我的心愿列表",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "appUserId": "",
+            "content": "",
+            "curPage": 1,
+            "doneWish": "",
+            "endTime": "",
+            "id": "",
+            "image": "",
+            "limit": "",
+            "order": "desc",
+            "orderFields": "id",
+            "originEndTime": "",
+            "originStartTime": "",
+            "relationWishId": "",
+            "relationWishIdList": "",
+            "startTime": "",
+            "tag": "",
+            "type": "",
+            "userId": "",
+            "wishId": ""
+        },
+        "method": "POST",
+        "url": "/user/wish/myWish"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

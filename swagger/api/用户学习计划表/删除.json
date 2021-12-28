@@ -1,0 +1,21 @@
+{
+    "name": "删除",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "id": ""
+        },
+        "method": "POST",
+        "url": "/user/studyPlan/delete"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

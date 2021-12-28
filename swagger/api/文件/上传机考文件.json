@@ -1,0 +1,21 @@
+{
+    "name": "上传机考文件",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "POST",
+        "params": {
+            "folderCode": "int32"
+        },
+        "url": "/user/file/uploadAudioForWeb"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

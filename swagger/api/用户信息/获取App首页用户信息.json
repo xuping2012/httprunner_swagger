@@ -1,0 +1,18 @@
+{
+    "name": "获取App首页用户信息",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "url": "/userInfo/getAppHomePageUserInfo"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

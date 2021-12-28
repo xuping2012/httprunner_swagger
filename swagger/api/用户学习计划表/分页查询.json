@@ -1,0 +1,38 @@
+{
+    "name": "分页查询",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "completeCount": "",
+            "content": "",
+            "curPage": 1,
+            "endTime": "",
+            "id": "",
+            "limit": "",
+            "order": "desc",
+            "orderFields": "id",
+            "originEndTime": "",
+            "originStartTime": "",
+            "parentId": "",
+            "parentIdNotEq": "",
+            "startTime": "",
+            "status": "",
+            "totalCount": "",
+            "uncompleteCount": "",
+            "userId": "",
+            "userName": ""
+        },
+        "method": "POST",
+        "url": "/user/studyPlan/page"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

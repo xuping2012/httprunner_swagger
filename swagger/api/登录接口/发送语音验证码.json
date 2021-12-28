@@ -1,0 +1,22 @@
+{
+    "name": "发送语音验证码",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "mobile": "string",
+            "zone": "string"
+        },
+        "url": "/apiLogin/sendVoiceCode"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

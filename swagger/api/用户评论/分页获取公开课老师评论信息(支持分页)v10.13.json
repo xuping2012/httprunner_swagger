@@ -1,0 +1,25 @@
+{
+    "name": "分页获取公开课老师评论信息(支持分页)v10.13",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "curPage": 1,
+            "limit": 10,
+            "order": "desc",
+            "orderFields": "id",
+            "subjectId": ""
+        },
+        "method": "POST",
+        "url": "/user/comment/getLessonTeacherCommentsPage"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

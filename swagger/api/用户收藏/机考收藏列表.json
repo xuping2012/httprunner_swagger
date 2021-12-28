@@ -1,0 +1,22 @@
+{
+    "name": "机考收藏列表",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "curPage": "int32",
+            "limit": "int32"
+        },
+        "url": "/user/collectRecord/collectionExamMemoryPageList"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

@@ -1,0 +1,23 @@
+{
+    "name": "单点验证",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "action": "string",
+            "token": "string",
+            "tokenType": "int32"
+        },
+        "url": "/sso/ssoCheck"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

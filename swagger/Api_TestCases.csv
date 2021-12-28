@@ -1,0 +1,197 @@
+﻿caseid,title,desc,method,host,port,uri,params
+TestCase_1,单点SSO-单点验证,,GET,47.112.120.135,9300,/hcp/sso/ssoCheck,action=string&token=string&tokenType=int32
+TestCase_2,单点SSO-根据来源应用与token转换应用token返回,,GET,47.112.120.135,9300,/sso/cvtSoTk/,$from/$fromToken/$to
+TestCase_3,单点SSO-检查Apptoken是否有效并返回一个根据传过来的source对应的token,,GET,47.112.120.135,9300,/sso/checkAPPTokenReturnLoginTypeToken/,$source/$token
+TestCase_4,单点SSO-检查token是否有效-所有token验证是否失效使用这个接口,,GET,47.112.120.135,9300,/sso/checkToken/,$source/$token
+TestCase_5,单点SSO-检查认证token是否有效-sso专用,,GET,47.112.120.135,9300,/sso/ssoTokenCheck/,$tokenType/$token
+TestCase_6,"单点SSO-注销,退出",,GET,47.112.120.135,9300,/hcp/sso/logout,source=int32&token=string
+TestCase_7,复制微信记录-保存复制微信记录,,POST,47.112.120.135,9300,/user/copyWechatRecord/save,"{""subjectId"": """", ""subjectType"": """", ""wechat"": """"}"
+TestCase_8,学习小组-全部已上架的小组列表,,GET,47.112.120.135,9300,/user/studyGroup/lis,
+TestCase_9,学习小组-小组详情,,GET,47.112.120.135,9300,/user/studyGroup/,$id
+TestCase_10,学习小组-用户已加入的小组,,GET,47.112.120.135,9300,/user/studyGroup/myGrou,
+TestCase_11,学习小组内容-保存内容,,POST,47.112.120.135,9300,/user/studyGroupContent/save,"{""content"": """", ""groupId"": """", ""imagesUrl"": """"}"
+TestCase_12,学习小组内容-内容详情,,GET,47.112.120.135,9300,/user/studyGroupContent/,$id
+TestCase_13,学习小组内容-分页查询内容,,POST,47.112.120.135,9300,/user/studyGroupContent/page,"{""curPage"": 1, ""groupId"": """", ""limit"": """"}"
+TestCase_14,学习小组用户-加入或退出组,,GET,47.112.120.135,9300,/user/studyGroupUser/,$type/$groupId
+TestCase_15,学习小组用户-获取已加入的组id,,GET,47.112.120.135,9300,/user/studyGroupUser/getJoi,
+TestCase_16,录音点赞表-保存,,POST,47.112.120.135,9300,/user/oralPraise/saveV2,"{""createDate"": """", ""fluent"": """", ""grammar"": """", ""id"": """", ""isFake"": """", ""oralPracticeId"": """", ""oralPracticeUserId"": """", ""oralPraisesId"": """", ""pronounce"": """", ""source"": """", ""updateDate"": """", ""updateId"": """", ""updateName"": """", ""userId"": """", ""userName"": """", ""vocab"": """"}"
+TestCase_17,我的优惠券-app用户领取优惠券,,GET,47.112.120.135,9300,/hcp/user/myCoupon/appReceiveCoupon,couponIds=string
+TestCase_18,我的优惠券-分页查询,,GET,47.112.120.135,9300,/hcp/user/myCoupon/page,status=int32
+TestCase_19,我的优惠券-手动添加用户优惠券,,POST,47.112.120.135,9300,/hcp/user/myCoupon/manuallyAddUserCoupon,couponId=int64&userId=string
+TestCase_20,"我的优惠券-用户领取优惠券,true表示领取成功,false表示失败",,GET,47.112.120.135,9300,/hcp/user/myCoupon/receiveCoupon,couponId=int64&salespersonId=int64&source=int32&unionId=string
+TestCase_21,我的优惠券-获取App优惠劵(只获取会员与口语点评类型优惠劵),,GET,47.112.120.135,9300,/hcp/user/myCoupon/appCoupon,status=int32
+TestCase_22,我的优惠券-获取用户到期新人优惠券信息,,GET,47.112.120.135,9300,/user/myCoupon/getExpiredRegisterCoupo,
+TestCase_23,我的优惠券-获取用户新人优惠券（返回优惠券弹框图片url）,,GET,47.112.120.135,9300,/hcp/user/myCoupon/getRegisterCoupon,deviceType=int32
+TestCase_24,文件-上传图片,,POST,47.112.120.135,9300,/hcp/user/file/uploadImage,folderCode=int32
+TestCase_25,文件-上传文件(返回url路径图片名称),,POST,47.112.120.135,9300,/hcp/user/file/upload,folderCode=int32
+TestCase_26,文件-上传文件(返回全路径url),,POST,47.112.120.135,9300,/hcp/user/file/uploadFile,folderCode=int32
+TestCase_27,文件-上传文件,,POST,47.112.120.135,9300,/hcp/user/file/uploadAudio,folderCode=int32
+TestCase_28,文件-上传机经图片(返回全路径url),,POST,47.112.120.135,9300,/hcp/user/file/uploadExperiencePic,code=string&folderCode=int32
+TestCase_29,文件-上传机考文件,,POST,47.112.120.135,9300,/hcp/user/file/uploadAudioForWeb,folderCode=int32
+TestCase_30,文件-批量上传文件,,POST,47.112.120.135,9300,/hcp/user/file/batchUpload,files=multi&folderCode=int32
+TestCase_31,比对雅思哥和易答的用户信息-获取差异列表,,GET,47.112.120.135,9300,/compare/getLis,
+TestCase_32,比对雅思哥和易答的用户信息-获取差异总数,,GET,47.112.120.135,9300,/compare/getCount,
+TestCase_33,比对雅思哥和易答的用户信息-获取更新易答的sql,,GET,47.112.120.135,9300,/compare/getUpdateYdSq,
+TestCase_34,比对雅思哥和易答的用户信息-获取空值列表，易答有雅思哥没有,,GET,47.112.120.135,9300,/compare/getNullLis,
+TestCase_35,注册接口-注册,,POST,47.112.120.135,9300,/apiRegister/register,"{""appVersion"": """", ""channel"": """", ""deviceName"": """", ""deviceType"": """", ""deviceid"": """", ""mobile"": """", ""password"": """", ""position"": """", ""pushToken"": """", ""source"": """", ""systemVersion"": """", ""unionId"": """", ""verifyCode"": """", ""wechatRegisterOrWechatBind"": """", ""zone"": """"}"
+TestCase_36,用户信息-App端修改密码,,POST,47.112.120.135,9300,/userInfo/appUpdatePassword,"{""deviceid"": """", ""mobile"": """", ""password"": """", ""verifyCode"": """", ""zone"": """"}"
+TestCase_37,用户信息-付费课直播进行绑定设备,,POST,47.112.120.135,9300,/userInfo/deviceBindLive,"{""appVersion"": """", ""deviceName"": """", ""deviceType"": """", ""deviceUid"": """", ""systemVersion"": """"}"
+TestCase_38,用户信息-修改密码-不推荐使用,,POST,47.112.120.135,9300,/userInfo/updatePassword,"{""deviceid"": """", ""newPassword"": """", ""oldPassword"": """", ""source"": """", ""token"": """", ""userId"": """"}"
+TestCase_39,用户信息-修改密码-推荐使用,,POST,47.112.120.135,9300,/userInfo/newUpdatePassword,"{""newPassword"": """", ""oldPassword"": """"}"
+TestCase_40,用户信息-修改户奋斗目标,,POST,47.112.120.135,9300,/userInfo/updateUserTarget,"{""destinationCountryId"": """", ""examDateId"": """", ""examType"": """", ""firstChoiceCollege"": """", ""ieltsScore"": """", ""stage"": """", ""targetAverageGrade"": 0.0, ""targetListenGrade"": 0.0, ""targetOralGrade"": 0.0, ""targetReadGrade"": 0.0, ""targetWriteGrade"": 0.0, ""weakness"": """"}"
+TestCase_41,用户信息-修改用户信息,,POST,47.112.120.135,9300,/userInfo/updateUserInfo,"{""avatar"": """", ""birthday"": """", ""id"": """", ""pushToken"": """", ""sex"": """", ""tmpUsername"": """", ""updateInvalid"": false, ""userName"": """", ""userType"": """"}"
+TestCase_42,用户信息-修改用户头像-不推荐使用，即将废弃,,POST,47.112.120.135,9300,/hcp/userInfo/updateAvatar,source=int32&token=string
+TestCase_43,用户信息-修改用户推送token,,POST,47.112.120.135,9300,/userInfo/updateUserPushToken,"{""appVersion"": """", ""deviceName"": """", ""deviceType"": """", ""deviceUid"": """", ""pushToken"": """", ""systemVersion"": """"}"
+TestCase_44,用户信息-修改用户简易基本信息更新QQ与英文名时同步更新第三方课程学员,,POST,47.112.120.135,9300,/userInfo/updateSimpleUserInfo,"{""birthday"": ""yyyy-MM-dd"", ""currentLocation"": """", ""nameEn"": """", ""qqNumber"": """", ""sex"": """", ""wxNickName"": """", ""wxNumber"": """"}"
+TestCase_45,用户信息-修改用户考试信息,,POST,47.112.120.135,9300,/userInfo/updateUserExamInfo,"{""averageGrade"": 0.0, ""examDate"": ""yyyy-MM-dd"", ""examDateId"": """", ""examType"": """", ""listenGrade"": 0.0, ""oralGrade"": 0.0, ""readGrade"": 0.0, ""targetAverageGrade"": 0.0, ""targetListenGrade"": 0.0, ""targetOralGrade"": 0.0, ""targetReadGrade"": 0.0, ""targetWriteGrade"": 0.0, ""writeGrade"": 0.0}"
+TestCase_46,用户信息-修改雅思哥用户个人信息,,POST,47.112.120.135,9300,/userInfo/updateYsgUserPersonalInfo,"{""averageGrade"": 0.0, ""birthday"": ""yyyy-MM-dd"", ""currentLocation"": """", ""destinationCountryId"": """", ""examDateId"": """", ""examLocationId"": """", ""examType"": """", ""listenGrade"": 0.0, ""nameEn"": """", ""oralGrade"": 0.0, ""qqNumber"": """", ""readGrade"": 0.0, ""sex"": """", ""targetAverageGrade"": 0.0, ""targetListenGrade"": 0.0, ""targetOralGrade"": 0.0, ""targetReadGrade"": 0.0, ""targetWriteGrade"": 0.0, ""writeGrade"": 0.0, ""wxNickName"": """", ""wxNumber"": """"}"
+TestCase_47,用户信息-减去该用户的抽奖次数,,POST,47.112.120.135,9300,/userInfo/minusLuckyDrawCoun,
+TestCase_48,用户信息-分页查用户关注列表(包括老师),,GET,47.112.120.135,9300,/hcp/userInfo/userAttentionPageListV2,curPage=int32&limit=int32&userId=string
+TestCase_49,用户信息-分页查用户关注列表,,GET,47.112.120.135,9300,/hcp/userInfo/userAttentionPageList,curPage=int32&limit=int32&userId=string
+TestCase_50,用户信息-分页查用户粉丝列表,,GET,47.112.120.135,9300,/hcp/userInfo/userFunPageList,curPage=int32&limit=int32&userId=string
+TestCase_51,用户信息-分页查询雅思哥简化用户信息,,POST,47.112.120.135,9300,/userInfo/ysgUserSimpleInfoPageList,"{""curPage"": 1, ""limit"": 10, ""order"": ""desc"", ""orderFields"": ""id"", ""userName"": """"}"
+TestCase_52,用户信息-封禁用户,,POST,47.112.120.135,9300,/userInfo/bannedUser,"{""reasonContent"": """", ""source"": """", ""userId"": """"}"
+TestCase_53,用户信息-开关上课悬浮框,,POST,47.112.120.135,9300,/userInfo/switchCoursePopUpWindo,
+TestCase_54,用户信息-开关推送通知-上课,,POST,47.112.120.135,9300,/userInfo/switchAcceptNotFactio,
+TestCase_55,用户信息-开关推送通知-任务,,POST,47.112.120.135,9300,/userInfo/switchAcceptTaskNotFactio,
+TestCase_56,用户信息-开关推送通知-留学,,POST,47.112.120.135,9300,/userInfo/switchPushNotic,
+TestCase_57,用户信息-手动解除付费课直播绑定设备,,POST,47.112.120.135,9300,/userInfo/manualUnbindUserDevice/,$id/$psw
+TestCase_58,用户信息-新增审批单,,POST,47.112.120.135,9300,/userInfo/addAudit,"{""auditType"": """", ""content"": """", ""refContent"": """"}"
+TestCase_59,用户信息-新增该用户的抽奖次数,,POST,47.112.120.135,9300,/userInfo/addLuckyDrawCoun,
+TestCase_60,用户信息-更换手机号,,POST,47.112.120.135,9300,/userInfo/userChangeMobile,"{""newCode"": """", ""newMobile"": """", ""newZone"": """", ""oldCode"": """", ""oldMobile"": """", ""oldZone"": """"}"
+TestCase_61,用户信息-更新用户设备信息,,POST,47.112.120.135,9300,/userInfo/updateUserDeviceInfo,"{""appVersion"": """", ""deviceName"": """", ""deviceType"": """", ""deviceUid"": """", ""pushToken"": """", ""systemVersion"": """"}"
+TestCase_62,用户信息-根据id获取用户信息-新接口，推荐使用,,GET,47.112.120.135,9300,/hcp/userInfo/getUserInfoByIdV2,userId=string
+TestCase_63,用户信息-根据id获取用户基础信息（推荐使用）,,GET,47.112.120.135,9300,/hcp/userInfo/getUserBaseInfoByIdV2,userId=string
+TestCase_64,用户信息-根据token获取用户信息-新接口，推荐使用,,GET,47.112.120.135,9300,/hcp/userInfo/getUserInfoByToken,source=int32&token=string
+TestCase_65,用户信息-根据token获取用户基础信息（推荐使用）,,GET,47.112.120.135,9300,/hcp/userInfo/getUserBaseInfoByToken,source=int32&token=string
+TestCase_66,用户信息-根据来源获取token-需要验证token,,GET,47.112.120.135,9300,/userInfo/getTokenBySource/,$source
+TestCase_67,用户信息-根据类型获取敏感词,,GET,47.112.120.135,9300,/userInfo/getBanWordsByType/,$type
+TestCase_68,用户信息-检查用户名称唯一性-不推荐使用，即将废弃,,POST,47.112.120.135,9300,/hcp/userInfo/checkUserNameUnique,userId=string&userName=string
+TestCase_69,用户信息-注销用户申请,,POST,47.112.120.135,9300,/userInfo/cancellationUserAppl,
+TestCase_70,用户信息-牛人用户列表,,GET,47.112.120.135,9300,/userInfo/geniusList/,$top
+TestCase_71,用户信息-用户头像审核,,POST,47.112.120.135,9300,/userInfo/userAvatarAudi,
+TestCase_72,用户信息-用户昵称审核,,POST,47.112.120.135,9300,/userInfo/userNameAudit,"{""userName"": """"}"
+TestCase_73,用户信息-用户注销后，恢复用户可登录,,GET,47.112.120.135,9300,/hcp/userInfo/resetCancelUserByUserIdOrMobile/$updateBy,mobile=string&userId=string
+TestCase_74,用户信息-获取ai口语练习次数,,GET,47.112.120.135,9300,/userInfo/getUserAiExerciseNumbe,
+TestCase_75,用户信息-获取App首页用户信息,,GET,47.112.120.135,9300,/userInfo/getAppHomePageUserInf,
+TestCase_76,用户信息-获取头部用户信息,,GET,47.112.120.135,9300,/userInfo/getHeadUserInf,
+TestCase_77,用户信息-获取头部用户信息v2,,GET,47.112.120.135,9300,/userInfo/getHeadUserInfoV,
+TestCase_78,用户信息-获取学霸榜头像集合-前3,,GET,47.112.120.135,9300,/userInfo/getUserAvatarCollectio,
+TestCase_79,"用户信息-获取当前手机号是否注册过其他雅思哥账号,并且绑了微信号,content为true的时候提示绑定了其他微信号,为false则走微信注册接口",,POST,47.112.120.135,9300,/userInfo/whetherBindOtherWeChat,"{""mobile"": """", ""source"": """", ""unionId"": """", ""zone"": """"}"
+TestCase_80,用户信息-获取微信绑定状态,,GET,47.112.120.135,9300,/userInfo/weChatBindStatu,
+TestCase_81,用户信息-获取抽奖用户名单,,POST,47.112.120.135,9300,/userInfo/getLuckyDrawUserName,
+TestCase_82,用户信息-获取用户信息（用户id或tokenandsource）-不推荐使用，即将废弃,,GET,47.112.120.135,9300,/hcp/userInfo/getUserInfoById,source=int32&token=string&userId=string
+TestCase_83,用户信息-获取用户基础信息（用户id或tokenandsource）-即将废弃接口，不推荐使用,,GET,47.112.120.135,9300,/hcp/userInfo/getUserBaseInfoById,source=int32&token=string&userId=string
+TestCase_84,用户信息-获取用户奋斗目标,,GET,47.112.120.135,9300,/userInfo/getUserTarge,
+TestCase_85,用户信息-获取用户学习时长,,GET,47.112.120.135,9300,/userInfo/getUserStudyTim,
+TestCase_86,用户信息-获取用户抽奖次数是否用完标记-true代表未用完false代表已经用完,,GET,47.112.120.135,9300,/userInfo/getLuckyDrawFla,
+TestCase_87,用户信息-获取用户推送通知状态-true开、false关,,GET,47.112.120.135,9300,/userInfo/getUserPushNoticeStat,
+TestCase_88,用户信息-获取用户推送通知状态-全部,,GET,47.112.120.135,9300,/userInfo/getUserPushStat,
+TestCase_89,用户信息-获取用户最新设备信息,,GET,47.112.120.135,9300,/userInfo/getUserClientDevic,
+TestCase_90,用户信息-获取用户权益信息,,GET,47.112.120.135,9300,/userInfo/getUserRightsInf,
+TestCase_91,用户信息-获取用户考试信息,,GET,47.112.120.135,9300,/userInfo/getUserExamInf,
+TestCase_92,用户信息-获取该用户的抽奖次数,,GET,47.112.120.135,9300,/userInfo/getLuckyDrawCoun,
+TestCase_93,用户信息-获取雅思哥个人主页信息,,GET,47.112.120.135,9300,/userInfo/getYsgUserHomePage/,$userId
+TestCase_94,用户信息-获取雅思哥用户个人信息,,GET,47.112.120.135,9300,/userInfo/getYsgUserPersonalInf,
+TestCase_95,用户信息-获取雅思哥用户基础信息,,GET,47.112.120.135,9300,/userInfo/getYsgUserBasicInf,
+TestCase_96,用户信息-解封用户,,POST,47.112.120.135,9300,/userInfo/unlockUser,"{""reasonContent"": """", ""userId"": """"}"
+TestCase_97,"用户信息-解绑微信或绑定微信,用于用户登录后的操作",,GET,47.112.120.135,9300,/hcp/userInfo/bindOrUnbindWeChat,source=string&unionId=string&weChatAvatar=string&weChatNickname=string
+TestCase_98,用户信息-重置密码,,POST,47.112.120.135,9300,/userInfo/resetPassword,"{""deviceid"": """", ""mobile"": """", ""password"": """", ""verifyCode"": """", ""zone"": """"}"
+TestCase_99,用户信息-验证手机号是不是自己的,,GET,47.112.120.135,9300,/userInfo/checkMyMobile/,$zone/$mobile
+TestCase_100,用户信息-验证手机号是否被使用,,GET,47.112.120.135,9300,/userInfo/checkMobileUse/,$zone/$mobile
+TestCase_101,"用户关注-关注用户,老师,栏目等等(支持多种关注类型)",,POST,47.112.120.135,9300,/user/attention/attentionV2,"{""attentionType"": """", ""targetId"": """"}"
+TestCase_102,用户关注-关注用户,,POST,47.112.120.135,9300,/user/attention/attention,"{""attentionUserId"": """"}"
+TestCase_103,用户关注-删除,,POST,47.112.120.135,9300,/user/attention/delet,
+TestCase_104,"用户关注-取消关注用户,老师,栏目等等(支持多种关注类型)",,POST,47.112.120.135,9300,/user/attention/notAttentionV2,"{""attentionType"": """", ""targetId"": """"}"
+TestCase_105,用户关注-取消关注用户,,POST,47.112.120.135,9300,/user/attention/notAttention,"{""attentionUserId"": """"}"
+TestCase_106,用户关注-校验用户是否有关注,,GET,47.112.120.135,9300,/user/attention/ha,
+TestCase_107,用户关注-获取对目标用户的关注状态,,GET,47.112.120.135,9300,/user/attention/getAttentionState/,$targetUserId
+TestCase_108,用户关注-获取对目标的关注状态(支持多种关注类型),,GET,47.112.120.135,9300,/user/attention/getAttentionStateV2/,$attentionType/$targetId
+TestCase_109,用户动态表-保存,,POST,47.112.120.135,9300,/user/studyActivity/save,"{""content"": """", ""id"": """", ""items"": """", ""userId"": """", ""userName"": """"}"
+TestCase_110,用户动态表-信息,,GET,47.112.120.135,9300,/user/studyActivity/,$id
+TestCase_111,用户动态表-修改,,POST,47.112.120.135,9300,/user/studyActivity/update,"{""content"": """", ""id"": """", ""items"": """", ""userId"": """", ""userName"": """"}"
+TestCase_112,用户动态表-分页查询,,POST,47.112.120.135,9300,/user/studyActivity/page,"{""content"": """", ""curPage"": 1, ""endTime"": """", ""id"": """", ""items"": """", ""limit"": """", ""order"": ""desc"", ""orderFields"": ""id"", ""originEndTime"": """", ""originStartTime"": """", ""startTime"": """", ""userId"": """", ""userName"": """"}"
+TestCase_113,用户动态表-删除,,POST,47.112.120.135,9300,/user/studyActivity/delete,"{""id"": """"}"
+TestCase_114,用户学习目标-完成目标,,POST,47.112.120.135,9300,/user/studyTarget/customTarget/,$id
+TestCase_115,用户学习目标-定制目标,,POST,47.112.120.135,9300,/user/studyTarget/customTarget,"{""targetDesc"": """"}"
+TestCase_116,用户学习目标-获取目标日期,,GET,47.112.120.135,9300,/user/studyTarget/getTargetDate/,$time
+TestCase_117,用户学习目标-获取目标记录-当天的,,GET,47.112.120.135,9300,/user/studyTarget/customTarge,
+TestCase_118,用户学习目标-获取连续打卡天数,,GET,47.112.120.135,9300,/user/studyTarget/getContinuedDay,
+TestCase_119,用户学习计划表-保存,,POST,47.112.120.135,9300,/user/studyPlan/save,"{""completeCount"": """", ""content"": """", ""id"": """", ""parentId"": """", ""status"": """", ""totalCount"": """", ""uncompleteCount"": """", ""userId"": """", ""userName"": """"}"
+TestCase_120,用户学习计划表-信息,,GET,47.112.120.135,9300,/user/studyPlan/,$id
+TestCase_121,用户学习计划表-修改,,POST,47.112.120.135,9300,/user/studyPlan/update,"{""completeCount"": """", ""content"": """", ""id"": """", ""parentId"": """", ""status"": """", ""totalCount"": """", ""uncompleteCount"": """", ""userId"": """", ""userName"": """"}"
+TestCase_122,用户学习计划表-分页查询,,POST,47.112.120.135,9300,/user/studyPlan/page,"{""completeCount"": """", ""content"": """", ""curPage"": 1, ""endTime"": """", ""id"": """", ""limit"": """", ""order"": ""desc"", ""orderFields"": ""id"", ""originEndTime"": """", ""originStartTime"": """", ""parentId"": """", ""parentIdNotEq"": """", ""startTime"": """", ""status"": """", ""totalCount"": """", ""uncompleteCount"": """", ""userId"": """", ""userName"": """"}"
+TestCase_123,用户学习计划表-删除,,POST,47.112.120.135,9300,/user/studyPlan/delete,"{""id"": """"}"
+TestCase_124,用户学习计划表-获取当前计划,,GET,47.112.120.135,9300,/user/studyPlan/selectCurrentPla,
+TestCase_125,用户心愿相关接口-心愿广场,,POST,47.112.120.135,9300,/user/wish/wishSquare,"{""appUserId"": """", ""content"": """", ""curPage"": 1, ""doneWish"": """", ""endTime"": """", ""id"": """", ""image"": """", ""limit"": """", ""order"": ""desc"", ""orderFields"": ""id"", ""originEndTime"": """", ""originStartTime"": """", ""relationWishId"": """", ""relationWishIdList"": """", ""startTime"": """", ""tag"": """", ""type"": """", ""userId"": """", ""wishId"": """"}"
+TestCase_126,用户心愿相关接口-我的心愿列表,,POST,47.112.120.135,9300,/user/wish/myWish,"{""appUserId"": """", ""content"": """", ""curPage"": 1, ""doneWish"": """", ""endTime"": """", ""id"": """", ""image"": """", ""limit"": """", ""order"": ""desc"", ""orderFields"": ""id"", ""originEndTime"": """", ""originStartTime"": """", ""relationWishId"": """", ""relationWishIdList"": """", ""startTime"": """", ""tag"": """", ""type"": """", ""userId"": """", ""wishId"": """"}"
+TestCase_127,用户心愿相关接口-点赞&取消点赞,,POST,47.112.120.135,9300,/user/wish/makeZan/,$wishId/$type
+TestCase_128,用户心愿相关接口-许愿&还愿,,POST,47.112.120.135,9300,/user/wish/makeWish,"{""content"": """", ""doneWish"": """", ""image"": """", ""relationWishId"": """", ""tag"": """", ""type"": """"}"
+TestCase_129,用户收藏-取消收藏,,POST,47.112.120.135,9300,/user/collectRecord/notCollection,"{""oralPracticeUserId"": """", ""subjectId"": """", ""subjectType"": """"}"
+TestCase_130,用户收藏-口语回忆收藏列表,,GET,47.112.120.135,9300,/hcp/user/collectRecord/collectionOralMemoryPageList,curPage=int32&limit=int32
+TestCase_131,用户收藏-录音收藏列表,,GET,47.112.120.135,9300,/hcp/user/collectRecord/collectionOralPracticePageList,curPage=int32&limit=int32
+TestCase_132,用户收藏-所有收藏分页列表,,GET,47.112.120.135,9300,/hcp/user/collectRecord/collectionAllPageList,curPage=int32&limit=int32
+TestCase_133,用户收藏-推文收藏列表,,GET,47.112.120.135,9300,/hcp/user/collectRecord/collectionTweetsPageList,curPage=int32&limit=int32
+TestCase_134,用户收藏-收藏,,POST,47.112.120.135,9300,/user/collectRecord/addCollection,"{""oralPracticeUserId"": """", ""subjectId"": """", ""subjectType"": """"}"
+TestCase_135,用户收藏-机考收藏列表,,GET,47.112.120.135,9300,/hcp/user/collectRecord/collectionExamMemoryPageList,curPage=int32&limit=int32
+TestCase_136,用户收藏-获取用户收藏数量,,GET,47.112.120.135,9300,/user/collectRecord/getUserCollectNumbe,
+TestCase_137,用户收藏-获取用户收藏状态,,GET,47.112.120.135,9300,/user/collectRecord/getUserCollectStatus/,$subjectId/$collectType
+TestCase_138,用户收藏-话题收藏列表,,GET,47.112.120.135,9300,/hcp/user/collectRecord/collectionStudyOralTopicPageList,curPage=int32&limit=int32
+TestCase_139,用户权益表-ruby检查权益,,GET,47.112.120.135,9300,/user/rights/rubyCheckRights/,$zone/$mobile/$serverCode
+TestCase_140,用户权益表-ruby获取权益生效日期,,GET,47.112.120.135,9300,/user/rights/rubyGetRightsEffectiveDate/,$zone/$mobile/$serverCode
+TestCase_141,用户权益表-导出,,POST,47.112.120.135,9300,/user/rights/expor,
+TestCase_142,用户权益表-新增红皮密卷权益,,GET,47.112.120.135,9300,/hcp/user/rights/addRedBookRights,id=int64
+TestCase_143,用户权益表-检查权益,,GET,47.112.120.135,9300,/user/rights/checkRights/,$serverCode
+TestCase_144,用户权益表-检查权益和新用户,,GET,47.112.120.135,9300,/user/rights/checkRightsAndUser/,$serverCode
+TestCase_145,用户权益表-检查独家题库权益,,GET,47.112.120.135,9300,/user/rights/checkExclusiveQuestionRight/,$subjectId
+TestCase_146,用户权益表-获取ai权益信息,,GET,47.112.120.135,9300,/user/rights/getAiRightInf,
+TestCase_147,用户权益表-获取我的已购,,GET,47.112.120.135,9300,/user/rights/getMyRightsInf,
+TestCase_148,用户权益表-获取权益到期内容,,GET,47.112.120.135,9300,/user/rights/getRightsExpireContent/,$serverCode
+TestCase_149,用户权益表-获取权益图片,,GET,47.112.120.135,9300,/user/rights/getRightsInfoImag,
+TestCase_150,用户权益表-通过ID天天口语活动赠送,,POST,47.112.120.135,9300,/user/rights/addRightById,
+TestCase_151,用户权益表-通过名称天天口语活动赠送,,POST,47.112.120.135,9300,/user/rights/addRightByName,
+TestCase_152,用户权益表-领取打卡权益,,POST,47.112.120.135,9300,/user/rights/receiveCardLiveRight,
+TestCase_153,用户权益表-领取新人限免权益,,GET,47.112.120.135,9300,/user/rights/receiveNewUserRight,
+TestCase_154,用户点赞-用户取消点赞,,POST,47.112.120.135,9300,/user/praiseRecord/userNotPraiseGeneral,"{""subjectId"": """", ""subjectType"": """"}"
+TestCase_155,用户点赞-用户点赞,,POST,47.112.120.135,9300,/user/praiseRecord/userPraiseGeneral,"{""subjectId"": """", ""subjectType"": """"}"
+TestCase_156,用户点赞-获取用户点赞状态,,GET,47.112.120.135,9300,/user/praiseRecord/getUserPraiseserStatus/,$subjectId/$praiseType
+TestCase_157,用户短信状态记录-新增短信状态回调接口-云片使用,,POST,47.112.120.135,9300,/hcp/user/userSmsStateRecord/smsStateCallback,sms_status=string
+TestCase_158,用户短信状态记录-新增语音状态回调接口-云片使用,,POST,47.112.120.135,9300,/hcp/user/userSmsStateRecord/voiceStateCallback,voice_status=string
+TestCase_159,用户评论-分页获取公开课老师评论信息(支持分页)v10.13,,POST,47.112.120.135,9300,/user/comment/getLessonTeacherCommentsPage,"{""curPage"": 1, ""limit"": 10, ""order"": ""desc"", ""orderFields"": ""id"", ""subjectId"": """"}"
+TestCase_160,用户评论-分页获取商品评论信息(支持分页),,POST,47.112.120.135,9300,/user/comment/getItemCommentsPage,"{""catalog"": """", ""curPage"": 1, ""itemCode"": """", ""limit"": 10, ""order"": ""desc"", ""orderFields"": ""id""}"
+TestCase_161,用户评论-回复分页查询,,POST,47.112.120.135,9300,/user/comment/subCommentsPageList,"{""catalog"": """", ""commentType"": """", ""curPage"": 1, ""examKey"": """", ""experienceIdSet"": """", ""firstCommentId"": ""0"", ""hostCommentLimit"": 3, ""limit"": 10, ""loginAppUserId"": """", ""order"": ""desc"", ""orderFields"": ""id"", ""score"": """", ""sortType"": """", ""subCommentLimit"": 5, ""subjectId"": """", ""topStatus"": """", ""writingIdSet"": """"}"
+TestCase_162,"用户评论-敏感词校验先校验本地,后校验阿里",,GET,47.112.120.135,9300,/hcp/user/comment/checkContent,content=string
+TestCase_163,用户评论-新增简易评论,,POST,47.112.120.135,9300,/user/comment/addSimpleComment,"{""commentType"": """", ""content"": """", ""score"": """", ""subjectId"": """"}"
+TestCase_164,用户评论-新增评论,,POST,47.112.120.135,9300,/user/comment/addComment,"{""bansType"": """", ""catalog"": """", ""commentContentType"": """", ""commentType"": """", ""content"": """", ""examKey"": """", ""fileNames"": """", ""firstCommentId"": """", ""parentId"": """", ""richText"": """", ""score"": """", ""subjectId"": """", ""toUserId"": """", ""userId"": """"}"
+TestCase_165,用户评论-根据id获取评论信息,,GET,47.112.120.135,9300,/user/comment/getCommentSimple/,$commentId/$commentTyp
+TestCase_166,用户评论-简易评论分页查询,,POST,47.112.120.135,9300,/user/comment/getSimpleCommentPage,"{""commentType"": """", ""curPage"": 1, ""limit"": 10, ""order"": ""desc"", ""orderFields"": ""id"", ""subjectId"": """"}"
+TestCase_167,用户评论-获取一级评论数,,POST,47.112.120.135,9300,/user/comment/firstCommentNums,"{""commentType"": """", ""curPage"": 1, ""limit"": 10, ""order"": ""desc"", ""orderFields"": ""id"", ""subjectId"": """"}"
+TestCase_168,用户评论-获取公开课老师评论信息,,GET,47.112.120.135,9300,/hcp/user/comment/getLessonTeacherComments,teacherId=string
+TestCase_169,用户评论-获取机经和作文的评论回复数,,POST,47.112.120.135,9300,/user/comment/getExperienceCommentsNums,"{""bansType"": """", ""catalog"": """", ""commentContentType"": """", ""commentType"": """", ""content"": """", ""examKey"": """", ""fileNames"": """", ""firstCommentId"": """", ""parentId"": """", ""richText"": """", ""score"": """", ""subjectId"": """", ""toUserId"": """", ""userId"": """"}"
+TestCase_170,用户评论-评论分页查询,,POST,47.112.120.135,9300,/user/comment/commentsPageList,"{""catalog"": """", ""commentType"": """", ""curPage"": 1, ""examKey"": """", ""experienceIdSet"": """", ""firstCommentId"": ""0"", ""hostCommentLimit"": 3, ""limit"": 10, ""loginAppUserId"": """", ""order"": ""desc"", ""orderFields"": ""id"", ""score"": """", ""sortType"": """", ""subCommentLimit"": 5, ""subjectId"": """", ""topStatus"": """", ""writingIdSet"": """"}"
+TestCase_171,用户评论举报-举报评论,,POST,47.112.120.135,9300,/user/commentReport/addCommentReport,"{""commentId"": """", ""commentType"": """", ""reason"": """"}"
+TestCase_172,登录接口-APP端修改扫码登陆状态,,POST,47.112.120.135,9300,/apiLogin/updateScanLoginStatus,"{""appVersion"": """", ""channel"": """", ""deviceId"": """", ""deviceName"": """", ""deviceType"": """", ""loginType"": """", ""systemVersion"": """", ""userId"": """", ""uuId"": """"}"
+TestCase_173,登录接口-关闭注册期间游客模式登录,,POST,47.112.120.135,9300,/apiLogin/visitorLogin,"{""appVersion"": """", ""channel"": """", ""deviceName"": """", ""deviceType"": """", ""deviceid"": """", ""loginType"": """", ""mobile"": """", ""password"": """", ""pushToken"": """", ""systemVersion"": """", ""unionId"": """", ""verifyCode"": """", ""visitorUserId"": """", ""weChatAvatar"": """", ""weChatNickname"": """", ""zone"": """"}"
+TestCase_174,登录接口-发送语音验证码,,GET,47.112.120.135,9300,/hcp/apiLogin/sendVoiceCode,mobile=string&zone=string
+TestCase_175,登录接口-发送验证码,,GET,47.112.120.135,9300,/hcp/apiLogin/sendMobileCode,mobile=string&zone=string
+TestCase_176,登录接口-密码登录,,POST,47.112.120.135,9300,/apiLogin/passwordLogin,"{""appVersion"": """", ""channel"": """", ""deviceName"": """", ""deviceType"": """", ""deviceid"": """", ""loginType"": """", ""mobile"": """", ""password"": """", ""pushToken"": """", ""systemVersion"": """", ""unionId"": """", ""verifyCode"": """", ""visitorUserId"": """", ""weChatAvatar"": """", ""weChatNickname"": """", ""zone"": """"}"
+TestCase_177,登录接口-小程序登录,,POST,47.112.120.135,9300,/apiLogin/wclApplets,"{""code"": """", ""encryptedData"": """", ""iv"": """", ""loginType"": """", ""weChatAvatar"": """", ""weChatNickname"": """", ""weChatPlatform"": """"}"
+TestCase_178,"登录接口-微信注册,如果已经注册过了则直接返回用户信息",,POST,47.112.120.135,9300,/apiLogin/weChatRegister,"{""appVersion"": """", ""channel"": """", ""deviceName"": """", ""deviceType"": """", ""deviceid"": """", ""loginType"": """", ""mobile"": """", ""password"": """", ""pushToken"": """", ""systemVersion"": """", ""unionId"": """", ""verifyCode"": """", ""visitorUserId"": """", ""weChatAvatar"": """", ""weChatNickname"": """", ""zone"": """"}"
+TestCase_179,登录接口-微信登录,,POST,47.112.120.135,9300,/apiLogin/weChatLogin,"{""appVersion"": """", ""channel"": """", ""deviceName"": """", ""deviceType"": """", ""deviceid"": """", ""loginType"": """", ""mobile"": """", ""password"": """", ""pushToken"": """", ""systemVersion"": """", ""unionId"": """", ""verifyCode"": """", ""visitorUserId"": """", ""weChatAvatar"": """", ""weChatNickname"": """", ""zone"": """"}"
+TestCase_180,登录接口-手机验证码登录,,POST,47.112.120.135,9300,/apiLogin/mobileCodeLogin,"{""appVersion"": """", ""channel"": """", ""deviceName"": """", ""deviceType"": """", ""deviceid"": """", ""loginType"": """", ""mobile"": """", ""password"": """", ""pushToken"": """", ""systemVersion"": """", ""unionId"": """", ""verifyCode"": """", ""visitorUserId"": """", ""weChatAvatar"": """", ""weChatNickname"": """", ""zone"": """"}"
+TestCase_181,登录接口-扫码登陆,,POST,47.112.120.135,9300,/apiLogin/scanCodeLogin,"{""deviceid"": """", ""loginType"": """", ""mobile"": """", ""password"": """", ""zone"": """"}"
+TestCase_182,登录接口-普通游客模式登录,,POST,47.112.120.135,9300,/apiLogin/visitorModeLogin,"{""appVersion"": """", ""channel"": """", ""deviceName"": """", ""deviceType"": """", ""deviceid"": """", ""loginType"": """", ""mobile"": """", ""password"": """", ""pushToken"": """", ""systemVersion"": """", ""unionId"": """", ""verifyCode"": """", ""visitorUserId"": """", ""weChatAvatar"": """", ""weChatNickname"": """", ""zone"": """"}"
+TestCase_183,登录接口-根据指定日期批量续期用户token,,GET,47.112.120.135,9300,/apiLogin/batchUpdateUserToke,
+TestCase_184,登录接口-检查手机验证码,,POST,47.112.120.135,9300,/apiLogin/checkMobileCode,"{""code"": """", ""mobile"": """"}"
+TestCase_185,登录接口-获取二维码,,GET,47.112.120.135,9300,/apiLogin/getQrCode/,$type
+TestCase_186,登录接口-获取扫码登陆结果,,GET,47.112.120.135,9300,/hcp/apiLogin/getScanLoginResult,uuId=string
+TestCase_187,"登录接口-通过app给的code拿到unionId,微信头像地址,微信昵称,sessoinKey",,GET,47.112.120.135,9300,/hcp/apiLogin/getWeChatUserInfo,appType=string&code=string
+TestCase_188,登录接口-重新登陆（后面会弃用）,,POST,47.112.120.135,9300,/apiLogin/newLogin,"{""deviceid"": """", ""loginType"": """", ""userId"": """"}"
+TestCase_189,销售人员-根据销售员id后去销售员信息,,GET,47.112.120.135,9300,/hcp/user/salesperson,salespersonId=int64
+TestCase_190,闪验一键登录-一键登录(只针对三大运营商的号码有效),,POST,47.112.120.135,9300,/user/flashMobile/login,"{""appId"": """", ""appKey"": """", ""appVersion"": """", ""channel"": """", ""deviceName"": """", ""deviceType"": """", ""deviceid"": """", ""loginType"": """", ""pushToken"": """", ""token"": """", ""visitorUserId"": """"}"
+TestCase_191,阅读-信息,,GET,47.112.120.135,9300,/user/readLog/,$id
+TestCase_192,阅读-修改,,POST,47.112.120.135,9300,/user/readLog/update,"{""catalog"": """", ""createDate"": """", ""device"": """", ""id"": """", ""ip"": """", ""readBeginTime"": """", ""readContentId"": """", ""readEndTime"": """", ""readLogId"": """", ""readModule"": """", ""readTime"": """", ""topName"": """", ""updateDate"": """", ""userId"": """", ""userName"": """"}"
+TestCase_193,阅读-分页,,GET,47.112.120.135,9300,/hcp/user/readLog/page,limit=int32&order=string&orderField=string&page=int32
+TestCase_194,阅读-分页查询-适用于大分页查询,,POST,47.112.120.135,9300,/user/readLog/pageList,"{""catalog"": """", ""createDate"": """", ""curPage"": 1, ""device"": """", ""id"": """", ""ip"": """", ""limit"": 10, ""order"": ""desc"", ""orderFields"": ""id"", ""readBeginTime"": """", ""readContentId"": """", ""readEndTime"": """", ""readLogId"": """", ""readModule"": """", ""readTime"": """", ""topName"": """", ""updateDate"": """", ""userId"": """", ""userName"": """"}"
+TestCase_195,阅读-导出,,POST,47.112.120.135,9300,/user/readLog/expor,
+TestCase_196,阅读-用户阅读次数保存,,POST,47.112.120.135,9300,/user/readLog/save,"{""catalog"": """", ""createDate"": """", ""device"": """", ""id"": """", ""ip"": """", ""readBeginTime"": """", ""readContentId"": """", ""readEndTime"": """", ""readLogId"": """", ""readModule"": """", ""readTime"": """", ""topName"": """", ""updateDate"": """", ""userId"": """", ""userName"": """"}"

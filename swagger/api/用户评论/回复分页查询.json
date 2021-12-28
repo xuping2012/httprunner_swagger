@@ -1,0 +1,37 @@
+{
+    "name": "回复分页查询",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "catalog": "",
+            "commentType": "",
+            "curPage": 1,
+            "examKey": "",
+            "experienceIdSet": "",
+            "firstCommentId": "0",
+            "hostCommentLimit": 3,
+            "limit": 10,
+            "loginAppUserId": "",
+            "order": "desc",
+            "orderFields": "id",
+            "score": "",
+            "sortType": "",
+            "subCommentLimit": 5,
+            "subjectId": "",
+            "topStatus": "",
+            "writingIdSet": ""
+        },
+        "method": "POST",
+        "url": "/user/comment/subCommentsPageList"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

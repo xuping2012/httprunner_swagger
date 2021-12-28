@@ -1,0 +1,21 @@
+{
+    "name": "app用户领取优惠券",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "couponIds": "string"
+        },
+        "url": "/user/myCoupon/appReceiveCoupon"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

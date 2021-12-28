@@ -1,0 +1,139 @@
+{
+    "config": {
+        "base_url": "http://47.112.120.135:9300",
+        "name": "HCP",
+        "variables": {}
+    },
+    "testcases": [
+        {
+            "name": "用户收藏",
+            "testcase": "testcases/用户收藏.json",
+            "variables": {}
+        },
+        {
+            "name": "登录接口",
+            "testcase": "testcases/登录接口.json",
+            "variables": {}
+        },
+        {
+            "name": "用户学习计划表",
+            "testcase": "testcases/用户学习计划表.json",
+            "variables": {}
+        },
+        {
+            "name": "闪验一键登录",
+            "testcase": "testcases/闪验一键登录.json",
+            "variables": {}
+        },
+        {
+            "name": "我的优惠券",
+            "testcase": "testcases/我的优惠券.json",
+            "variables": {}
+        },
+        {
+            "name": "文件",
+            "testcase": "testcases/文件.json",
+            "variables": {}
+        },
+        {
+            "name": "单点SSO",
+            "testcase": "testcases/单点SSO.json",
+            "variables": {}
+        },
+        {
+            "name": "用户评论举报",
+            "testcase": "testcases/用户评论举报.json",
+            "variables": {}
+        },
+        {
+            "name": "学习小组用户",
+            "testcase": "testcases/学习小组用户.json",
+            "variables": {}
+        },
+        {
+            "name": "学习小组内容",
+            "testcase": "testcases/学习小组内容.json",
+            "variables": {}
+        },
+        {
+            "name": "用户心愿相关接口",
+            "testcase": "testcases/用户心愿相关接口.json",
+            "variables": {}
+        },
+        {
+            "name": "用户短信状态记录",
+            "testcase": "testcases/用户短信状态记录.json",
+            "variables": {}
+        },
+        {
+            "name": "比对雅思哥和易答的用户信息",
+            "testcase": "testcases/比对雅思哥和易答的用户信息.json",
+            "variables": {}
+        },
+        {
+            "name": "用户评论",
+            "testcase": "testcases/用户评论.json",
+            "variables": {}
+        },
+        {
+            "name": "用户点赞",
+            "testcase": "testcases/用户点赞.json",
+            "variables": {}
+        },
+        {
+            "name": "用户动态表",
+            "testcase": "testcases/用户动态表.json",
+            "variables": {}
+        },
+        {
+            "name": "用户关注",
+            "testcase": "testcases/用户关注.json",
+            "variables": {}
+        },
+        {
+            "name": "用户学习目标",
+            "testcase": "testcases/用户学习目标.json",
+            "variables": {}
+        },
+        {
+            "name": "销售人员",
+            "testcase": "testcases/销售人员.json",
+            "variables": {}
+        },
+        {
+            "name": "用户权益表",
+            "testcase": "testcases/用户权益表.json",
+            "variables": {}
+        },
+        {
+            "name": "学习小组",
+            "testcase": "testcases/学习小组.json",
+            "variables": {}
+        },
+        {
+            "name": "录音点赞表",
+            "testcase": "testcases/录音点赞表.json",
+            "variables": {}
+        },
+        {
+            "name": "注册接口",
+            "testcase": "testcases/注册接口.json",
+            "variables": {}
+        },
+        {
+            "name": "复制微信记录",
+            "testcase": "testcases/复制微信记录.json",
+            "variables": {}
+        },
+        {
+            "name": "用户信息",
+            "testcase": "testcases/用户信息.json",
+            "variables": {}
+        },
+        {
+            "name": "阅读",
+            "testcase": "testcases/阅读.json",
+            "variables": {}
+        }
+    ]
+}

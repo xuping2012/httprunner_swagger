@@ -1,0 +1,64 @@
+{
+    "config": {
+        "base_url": "http://47.112.120.135:9300",
+        "name": "阅读",
+        "variables": {}
+    },
+    "teststeps": [
+        {
+            "api": "api/阅读/导出.json",
+            "extract": [],
+            "name": "导出",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/阅读/分页.json",
+            "extract": [],
+            "name": "分页",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/阅读/分页查询-适用于大分页查询.json",
+            "extract": [],
+            "name": "分页查询-适用于大分页查询",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/阅读/用户阅读次数保存.json",
+            "extract": [],
+            "name": "用户阅读次数保存",
+            "output": [],
+            "validate": [
+                {
+                    "eq": [
+                        "content.content",
+                        false
+                    ]
+                }
+            ],
+            "variables": {}
+        },
+        {
+            "api": "api/阅读/修改.json",
+            "extract": [],
+            "name": "修改",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/阅读/信息.json",
+            "extract": [],
+            "name": "信息",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        }
+    ]
+}

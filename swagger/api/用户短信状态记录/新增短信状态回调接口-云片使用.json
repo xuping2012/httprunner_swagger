@@ -1,0 +1,21 @@
+{
+    "name": "新增短信状态回调接口-云片使用",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "POST",
+        "params": {
+            "sms_status": "string"
+        },
+        "url": "/user/userSmsStateRecord/smsStateCallback"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

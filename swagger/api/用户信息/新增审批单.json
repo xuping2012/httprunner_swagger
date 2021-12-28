@@ -1,0 +1,23 @@
+{
+    "name": "新增审批单",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "auditType": "",
+            "content": "",
+            "refContent": ""
+        },
+        "method": "POST",
+        "url": "/userInfo/addAudit"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

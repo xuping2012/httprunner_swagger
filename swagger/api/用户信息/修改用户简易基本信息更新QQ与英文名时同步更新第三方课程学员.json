@@ -1,0 +1,27 @@
+{
+    "name": "修改用户简易基本信息更新QQ与英文名时同步更新第三方课程学员",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "birthday": "yyyy-MM-dd",
+            "currentLocation": "",
+            "nameEn": "",
+            "qqNumber": "",
+            "sex": "",
+            "wxNickName": "",
+            "wxNumber": ""
+        },
+        "method": "POST",
+        "url": "/userInfo/updateSimpleUserInfo"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

@@ -1,0 +1,21 @@
+{
+    "name": "根据销售员id后去销售员信息",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "salespersonId": "int64"
+        },
+        "url": "/user/salesperson"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

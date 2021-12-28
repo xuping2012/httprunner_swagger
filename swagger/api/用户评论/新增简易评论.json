@@ -1,0 +1,24 @@
+{
+    "name": "新增简易评论",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "commentType": "",
+            "content": "",
+            "score": "",
+            "subjectId": ""
+        },
+        "method": "POST",
+        "url": "/user/comment/addSimpleComment"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

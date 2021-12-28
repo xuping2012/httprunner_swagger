@@ -1,0 +1,18 @@
+{
+    "name": "获取二维码",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "url": "/apiLogin/getQrCode/$type"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

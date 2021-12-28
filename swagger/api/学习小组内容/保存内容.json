@@ -1,0 +1,23 @@
+{
+    "name": "保存内容",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "content": "",
+            "groupId": "",
+            "imagesUrl": ""
+        },
+        "method": "POST",
+        "url": "/user/studyGroupContent/save"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

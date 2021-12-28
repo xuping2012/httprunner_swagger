@@ -1,0 +1,21 @@
+{
+    "name": "获取扫码登陆结果",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "uuId": "string"
+        },
+        "url": "/apiLogin/getScanLoginResult"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

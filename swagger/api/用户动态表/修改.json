@@ -1,0 +1,25 @@
+{
+    "name": "修改",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "content": "",
+            "id": "",
+            "items": "",
+            "userId": "",
+            "userName": ""
+        },
+        "method": "POST",
+        "url": "/user/studyActivity/update"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

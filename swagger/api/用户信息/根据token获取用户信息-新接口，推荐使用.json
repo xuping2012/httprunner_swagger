@@ -1,0 +1,22 @@
+{
+    "name": "根据token获取用户信息-新接口，推荐使用",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "source": "int32",
+            "token": "string"
+        },
+        "url": "/userInfo/getUserInfoByToken"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

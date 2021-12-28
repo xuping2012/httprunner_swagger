@@ -1,0 +1,22 @@
+{
+    "name": "检查用户名称唯一性-不推荐使用，即将废弃",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "POST",
+        "params": {
+            "userId": "string",
+            "userName": "string"
+        },
+        "url": "/userInfo/checkUserNameUnique"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

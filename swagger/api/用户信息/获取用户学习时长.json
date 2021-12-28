@@ -1,0 +1,18 @@
+{
+    "name": "获取用户学习时长",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "url": "/userInfo/getUserStudyTime"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

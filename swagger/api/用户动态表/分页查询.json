@@ -1,0 +1,33 @@
+{
+    "name": "分页查询",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "content": "",
+            "curPage": 1,
+            "endTime": "",
+            "id": "",
+            "items": "",
+            "limit": "",
+            "order": "desc",
+            "orderFields": "id",
+            "originEndTime": "",
+            "originStartTime": "",
+            "startTime": "",
+            "userId": "",
+            "userName": ""
+        },
+        "method": "POST",
+        "url": "/user/studyActivity/page"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

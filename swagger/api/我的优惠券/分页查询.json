@@ -1,0 +1,21 @@
+{
+    "name": "分页查询",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "status": "int32"
+        },
+        "url": "/user/myCoupon/page"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

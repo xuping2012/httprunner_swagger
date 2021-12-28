@@ -1,0 +1,23 @@
+{
+    "name": "获取用户基础信息（用户id或tokenandsource）-即将废弃接口，不推荐使用",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "source": "int32",
+            "token": "string",
+            "userId": "string"
+        },
+        "url": "/userInfo/getUserBaseInfoById"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

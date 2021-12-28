@@ -1,0 +1,22 @@
+{
+    "name": "录音收藏列表",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "curPage": "int32",
+            "limit": "int32"
+        },
+        "url": "/user/collectRecord/collectionOralPracticePageList"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

@@ -1,0 +1,18 @@
+{
+    "name": "根据id获取评论信息",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "url": "/user/comment/getCommentSimple/$commentId/$commentTyp"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

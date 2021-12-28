@@ -1,0 +1,22 @@
+{
+    "name": "用户取消点赞",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "subjectId": "",
+            "subjectType": ""
+        },
+        "method": "POST",
+        "url": "/user/praiseRecord/userNotPraiseGeneral"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

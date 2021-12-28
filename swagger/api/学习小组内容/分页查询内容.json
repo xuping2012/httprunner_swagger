@@ -1,0 +1,23 @@
+{
+    "name": "分页查询内容",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "curPage": 1,
+            "groupId": "",
+            "limit": ""
+        },
+        "method": "POST",
+        "url": "/user/studyGroupContent/page"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

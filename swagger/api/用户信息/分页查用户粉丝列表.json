@@ -1,0 +1,23 @@
+{
+    "name": "分页查用户粉丝列表",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "curPage": "int32",
+            "limit": "int32",
+            "userId": "string"
+        },
+        "url": "/userInfo/userFunPageList"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

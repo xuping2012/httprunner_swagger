@@ -1,0 +1,24 @@
+{
+    "name": "解绑微信或绑定微信,用于用户登录后的操作",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "source": "string",
+            "unionId": "string",
+            "weChatAvatar": "string",
+            "weChatNickname": "string"
+        },
+        "url": "/userInfo/bindOrUnbindWeChat"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

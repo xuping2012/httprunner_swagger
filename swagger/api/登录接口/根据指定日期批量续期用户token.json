@@ -1,0 +1,18 @@
+{
+    "name": "根据指定日期批量续期用户token",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "url": "/apiLogin/batchUpdateUserToken"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

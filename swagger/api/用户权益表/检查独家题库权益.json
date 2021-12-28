@@ -1,0 +1,18 @@
+{
+    "name": "检查独家题库权益",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "url": "/user/rights/checkExclusiveQuestionRight/$subjectId"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

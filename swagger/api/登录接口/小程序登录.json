@@ -1,0 +1,27 @@
+{
+    "name": "小程序登录",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "code": "",
+            "encryptedData": "",
+            "iv": "",
+            "loginType": "",
+            "weChatAvatar": "",
+            "weChatNickname": "",
+            "weChatPlatform": ""
+        },
+        "method": "POST",
+        "url": "/apiLogin/wclApplets"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

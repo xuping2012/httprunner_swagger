@@ -1,7 +1,8 @@
 eclipse.preferences.version=1
 encoding//common/dir_config.py=utf-8
-encoding//swaggerLib/Swagger.py=utf-8
-encoding//swaggerLib/SwaggerTestSuites.py=utf-8
+encoding//swaggerLib/SwaggerForHttprunnerManager.py=utf-8
+encoding//swaggerLib/swagger2.py=utf-8
+encoding//swaggerLib/swagger3.py=utf-8
 encoding//utils/DiffExcelFile.py=utf-8
 encoding//utils/HandleExcel.py=utf-8
 encoding//utils/HandleJson.py=utf-8

@@ -1,0 +1,26 @@
+{
+    "name": "更新用户设备信息",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "appVersion": "",
+            "deviceName": "",
+            "deviceType": "",
+            "deviceUid": "",
+            "pushToken": "",
+            "systemVersion": ""
+        },
+        "method": "POST",
+        "url": "/userInfo/updateUserDeviceInfo"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

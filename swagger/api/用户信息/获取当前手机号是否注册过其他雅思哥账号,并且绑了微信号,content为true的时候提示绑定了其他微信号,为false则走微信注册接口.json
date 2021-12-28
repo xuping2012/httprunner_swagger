@@ -1,0 +1,24 @@
+{
+    "name": "获取当前手机号是否注册过其他雅思哥账号,并且绑了微信号,content为true的时候提示绑定了其他微信号,为false则走微信注册接口",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "mobile": "",
+            "source": "",
+            "unionId": "",
+            "zone": ""
+        },
+        "method": "POST",
+        "url": "/userInfo/whetherBindOtherWeChat"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

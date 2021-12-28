@@ -1,0 +1,23 @@
+{
+    "name": "举报评论",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "commentId": "",
+            "commentType": "",
+            "reason": ""
+        },
+        "method": "POST",
+        "url": "/user/commentReport/addCommentReport"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

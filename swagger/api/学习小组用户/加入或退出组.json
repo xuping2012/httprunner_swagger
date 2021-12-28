@@ -1,0 +1,18 @@
+{
+    "name": "加入或退出组",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "url": "/user/studyGroupUser/$type/$groupId"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

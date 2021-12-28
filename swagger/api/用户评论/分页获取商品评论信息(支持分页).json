@@ -1,0 +1,26 @@
+{
+    "name": "分页获取商品评论信息(支持分页)",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "catalog": "",
+            "curPage": 1,
+            "itemCode": "",
+            "limit": 10,
+            "order": "desc",
+            "orderFields": "id"
+        },
+        "method": "POST",
+        "url": "/user/comment/getItemCommentsPage"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

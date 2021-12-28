@@ -1,0 +1,22 @@
+{
+    "name": "根据token获取用户基础信息（推荐使用）",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "source": "int32",
+            "token": "string"
+        },
+        "url": "/userInfo/getUserBaseInfoByToken"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

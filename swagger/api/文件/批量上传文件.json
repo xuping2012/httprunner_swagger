@@ -1,0 +1,22 @@
+{
+    "name": "批量上传文件",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "POST",
+        "params": {
+            "files": "multi",
+            "folderCode": "int32"
+        },
+        "url": "/user/file/batchUpload"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

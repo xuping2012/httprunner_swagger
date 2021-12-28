@@ -1,0 +1,41 @@
+{
+    "config": {
+        "base_url": "http://47.112.120.135:9300",
+        "name": "比对雅思哥和易答的用户信息",
+        "variables": {}
+    },
+    "teststeps": [
+        {
+            "api": "api/比对雅思哥和易答的用户信息/获取差异总数.json",
+            "extract": [],
+            "name": "获取差异总数",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/比对雅思哥和易答的用户信息/获取差异列表.json",
+            "extract": [],
+            "name": "获取差异列表",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/比对雅思哥和易答的用户信息/获取空值列表，易答有雅思哥没有.json",
+            "extract": [],
+            "name": "获取空值列表，易答有雅思哥没有",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/比对雅思哥和易答的用户信息/获取更新易答的sql.json",
+            "extract": [],
+            "name": "获取更新易答的sql",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        }
+    ]
+}

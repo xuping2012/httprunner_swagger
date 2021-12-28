@@ -1,0 +1,22 @@
+{
+    "name": "取消关注用户,老师,栏目等等(支持多种关注类型)",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "attentionType": "",
+            "targetId": ""
+        },
+        "method": "POST",
+        "url": "/user/attention/notAttentionV2"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

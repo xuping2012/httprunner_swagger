@@ -1,0 +1,49 @@
+{
+    "config": {
+        "base_url": "http://47.112.120.135:9300",
+        "name": "用户动态表",
+        "variables": {}
+    },
+    "teststeps": [
+        {
+            "api": "api/用户动态表/删除.json",
+            "extract": [],
+            "name": "删除",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/用户动态表/分页查询.json",
+            "extract": [],
+            "name": "分页查询",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/用户动态表/保存.json",
+            "extract": [],
+            "name": "保存",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/用户动态表/修改.json",
+            "extract": [],
+            "name": "修改",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/用户动态表/信息.json",
+            "extract": [],
+            "name": "信息",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        }
+    ]
+}

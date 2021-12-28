@@ -1,0 +1,171 @@
+{
+    "config": {
+        "base_url": "http://47.112.120.135:9300",
+        "name": "用户权益表",
+        "variables": {}
+    },
+    "teststeps": [
+        {
+            "api": "api/用户权益表/新增红皮密卷权益.json",
+            "extract": [],
+            "name": "新增红皮密卷权益",
+            "output": [],
+            "validate": [
+                {
+                    "eq": [
+                        "content.content",
+                        false
+                    ]
+                }
+            ],
+            "variables": {}
+        },
+        {
+            "api": "api/用户权益表/通过ID天天口语活动赠送.json",
+            "extract": [],
+            "name": "通过ID天天口语活动赠送",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/用户权益表/通过名称天天口语活动赠送.json",
+            "extract": [],
+            "name": "通过名称天天口语活动赠送",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/用户权益表/检查独家题库权益.json",
+            "extract": [],
+            "name": "检查独家题库权益",
+            "output": [],
+            "validate": [
+                {
+                    "eq": [
+                        "content.content",
+                        false
+                    ]
+                }
+            ],
+            "variables": {}
+        },
+        {
+            "api": "api/用户权益表/检查权益.json",
+            "extract": [],
+            "name": "检查权益",
+            "output": [],
+            "validate": [
+                {
+                    "eq": [
+                        "content.content",
+                        false
+                    ]
+                }
+            ],
+            "variables": {}
+        },
+        {
+            "api": "api/用户权益表/检查权益和新用户.json",
+            "extract": [],
+            "name": "检查权益和新用户",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/用户权益表/导出.json",
+            "extract": [],
+            "name": "导出",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/用户权益表/获取ai权益信息.json",
+            "extract": [],
+            "name": "获取ai权益信息",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/用户权益表/获取我的已购.json",
+            "extract": [],
+            "name": "获取我的已购",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/用户权益表/获取权益到期内容.json",
+            "extract": [],
+            "name": "获取权益到期内容",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/用户权益表/获取权益图片.json",
+            "extract": [],
+            "name": "获取权益图片",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/用户权益表/领取打卡权益.json",
+            "extract": [],
+            "name": "领取打卡权益",
+            "output": [],
+            "validate": [
+                {
+                    "eq": [
+                        "content.content",
+                        false
+                    ]
+                }
+            ],
+            "variables": {}
+        },
+        {
+            "api": "api/用户权益表/领取新人限免权益.json",
+            "extract": [],
+            "name": "领取新人限免权益",
+            "output": [],
+            "validate": [
+                {
+                    "eq": [
+                        "content.content",
+                        false
+                    ]
+                }
+            ],
+            "variables": {}
+        },
+        {
+            "api": "api/用户权益表/ruby检查权益.json",
+            "extract": [],
+            "name": "ruby检查权益",
+            "output": [],
+            "validate": [
+                {
+                    "eq": [
+                        "content.content",
+                        false
+                    ]
+                }
+            ],
+            "variables": {}
+        },
+        {
+            "api": "api/用户权益表/ruby获取权益生效日期.json",
+            "extract": [],
+            "name": "ruby获取权益生效日期",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        }
+    ]
+}

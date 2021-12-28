@@ -1,0 +1,18 @@
+{
+    "name": "获取用户考试信息",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "url": "/userInfo/getUserExamInfo"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

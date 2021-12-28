@@ -1,0 +1,18 @@
+{
+    "name": "删除",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "POST",
+        "url": "/user/attention/delete"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

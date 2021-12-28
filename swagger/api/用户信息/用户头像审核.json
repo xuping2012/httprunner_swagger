@@ -1,0 +1,18 @@
+{
+    "name": "用户头像审核",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "POST",
+        "url": "/userInfo/userAvatarAudit"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

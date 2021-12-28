@@ -1,0 +1,21 @@
+{
+    "name": "关注用户",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "attentionUserId": ""
+        },
+        "method": "POST",
+        "url": "/user/attention/attention"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

@@ -1,0 +1,32 @@
+{
+    "name": "修改户奋斗目标",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "destinationCountryId": "",
+            "examDateId": "",
+            "examType": "",
+            "firstChoiceCollege": "",
+            "ieltsScore": "",
+            "stage": "",
+            "targetAverageGrade": 0.0,
+            "targetListenGrade": 0.0,
+            "targetOralGrade": 0.0,
+            "targetReadGrade": 0.0,
+            "targetWriteGrade": 0.0,
+            "weakness": ""
+        },
+        "method": "POST",
+        "url": "/userInfo/updateUserTarget"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

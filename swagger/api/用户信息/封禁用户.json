@@ -1,0 +1,23 @@
+{
+    "name": "封禁用户",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "reasonContent": "",
+            "source": "",
+            "userId": ""
+        },
+        "method": "POST",
+        "url": "/userInfo/bannedUser"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

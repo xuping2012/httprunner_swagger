@@ -1,0 +1,21 @@
+{
+    "name": "获取用户新人优惠券（返回优惠券弹框图片url）",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "deviceType": "int32"
+        },
+        "url": "/user/myCoupon/getRegisterCoupon"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

@@ -1,0 +1,23 @@
+{
+    "name": "收藏",
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {
+            "oralPracticeUserId": "",
+            "subjectId": "",
+            "subjectType": ""
+        },
+        "method": "POST",
+        "url": "/user/collectRecord/addCollection"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

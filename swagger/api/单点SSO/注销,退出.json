@@ -1,0 +1,22 @@
+{
+    "name": "注销,退出",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "params": {
+            "source": "int32",
+            "token": "string"
+        },
+        "url": "/sso/logout"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

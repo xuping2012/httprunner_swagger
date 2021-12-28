@@ -1,0 +1,18 @@
+{
+    "name": "获取雅思哥用户基础信息",
+    "output": [],
+    "request": {
+        "headers": {},
+        "method": "GET",
+        "url": "/userInfo/getYsgUserBasicInfo"
+    },
+    "validate": [
+        {
+            "eq": [
+                "status_code",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}
