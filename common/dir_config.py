@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # @File    : dir_config.py
 import os
+import sys
 import time
 
 
@@ -15,33 +16,42 @@ now = time.strftime('%Y-%m-%d_%H-%m')
 report_dir = baseth.replace("common", "reports")    
 
 # 配置文件中心：脚本读取配置路径
-config_dir = baseth.replace("common", "properties\\")   
+config_dir = baseth.replace("common", "properties")   
 # 日志目录：日志的配置信息
-log_dir = baseth.replace("common", "logs\\")
+log_dir = baseth.replace("common", "logs")
    
 # 解析接口文档之后存放的目录
-swagger_dir = baseth.replace("common", "swagger\\")    
+swagger_dir = baseth.replace("common", "swagger")    
 
 # 备份路径
 back_dir = swagger_dir.replace("swagger", "swaggerbak")    
 # 初始化测试用例套件目录
-testsuites_dir = os.path.join(swagger_dir + "testsuites")
+testsuites_dir = os.path.join(swagger_dir + "/testsuites")
 # 初始化测试用例目录
-testcases_dir = os.path.join(swagger_dir + "testcases")
+testcases_dir = os.path.join(swagger_dir + "/testcases")
 # 生成的新测试用例api目录
-case_dir = os.path.join(swagger_dir + "api")
-# swagger生成xlsx测试用例文件
-xlsCase_file_path = os.path.join(swagger_dir + "Api_TestCases.xlsx")
-# 备份文件名称
-bakCase_file_path = os.path.join(swagger_dir + "Api_TestCases_bak_{}.xlsx".format(now))
-# 目录list
-dir_lis = [report_dir, config_dir, log_dir, swagger_dir, back_dir]
+case_dir = os.path.join(swagger_dir + "/api")
 
-# csv文件地址
-csv_file_path = os.path.join(swagger_dir + "Api_TestCases.csv")
-for dir_path in dir_lis: # 文件夹如果不存在则创建
-    if not os.path.exists(dir_path):
+# 目录list
+dir_lis = [report_dir, config_dir, log_dir, swagger_dir, back_dir, testsuites_dir, testcases_dir, case_dir]
+
+for dir_path in dir_lis:    # 文件夹如果不存在则创建
+    if "linux" in sys.platform and not os.path.exists(dir_path):
+        os.makedirs(dir_path)
+    elif "win" in sys.platform and not os.path.exists(dir_path):
         os.makedirs(dir_path)
 
+# 日志文件地址
+log_file_path = os.path.join(log_dir+"/AllServer")
+# 配置文件地址
+config_file_path = os.path.join(config_dir+"/config.ini")
+# csv文件地址
+csv_file_path = os.path.join(swagger_dir + "/Api_TestCases.csv")
+# swagger生成xlsx测试用例文件
+xlsCase_file_path = os.path.join(swagger_dir + "/Api_TestCases.xlsx")
+# 备份文件名称
+bakCase_file_path = os.path.join(swagger_dir + "/Api_TestCases_bak_{}.xlsx".format(now))
+
+
 if __name__ == '__main__':
-    print(testcases_dir)
+    print(swagger_dir)

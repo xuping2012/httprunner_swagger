@@ -8,13 +8,13 @@ import os
 import time
 
 from common import dir_config
+from common.dir_config import log_file_path
 from utils.handle_config import HandleConfig
 
 
-conf = HandleConfig(file_path=dir_config.config_dir + "config.ini")
+conf = HandleConfig(file_path=dir_config.config_file_path)
 # By default, all output log records are encapsulated by the log module name
 # os.path.splitext(os.path.basename(__file__))[0]
-FILENAME = conf.get_value("logger","logname")
 logformat = conf.get_value("logger", "logformat")
 LEVEL = conf.get_value("logger", "level")
 
@@ -39,7 +39,7 @@ class HandleLogging(object):
         self.logger.addHandler(out_console)
 
         # Define log output path _ file
-        path = dir_config.log_dir + self.file_name + '_' + time.strftime('%Y-%m-%d') + '.log'
+        path = self.file_name + '_' + time.strftime('%Y-%m-%d') + '.log'
         if not os.path.exists(dir_config.log_dir):
             os.mkdir(dir_config.log_dir)
         # Set log output channel
@@ -57,7 +57,7 @@ class HandleLogging(object):
         return self.logger
 
 
-log = HandleLogging(file_name=FILENAME).getlog()
+log = HandleLogging(file_name=log_file_path).getlog()
 
 if __name__ == '__main__':
-    log.error("test log....{}".format(FILENAME))
+    log.error("test log....{}".format(log_file_path))

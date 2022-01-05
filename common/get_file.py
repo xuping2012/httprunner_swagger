@@ -2,10 +2,12 @@
 # -*- coding: utf-8 -*-
 # @File    : get_file.py
 
-from common.get_values import *
-import json
 import copy
+import json
+
 import jsonpath
+
+from common.get_values import create_base_case
 
 
 #获取要变更参数的json

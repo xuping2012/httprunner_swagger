@@ -12,8 +12,8 @@ import re
 
 import requests
 
-from common.dir_config import testsuites_dir, config_dir, xlsCase_file_path, testcases_dir, case_dir, \
-    swagger_dir
+from common.dir_config import testsuites_dir, xlsCase_file_path, testcases_dir, case_dir, \
+    swagger_dir, config_file_path
 from utils.handle_config import HandleConfig
 from utils.handle_excel import Writexcel
 from utils.handle_folder import HandleDirFile
@@ -22,7 +22,7 @@ from utils.logger import log
 
 
 # 创建可操作配置文件的对象
-conf = HandleConfig(config_dir + "\config.ini")
+conf = HandleConfig(config_file_path)
 # 创建可操作目录及文件的对象
 handlefile = HandleDirFile()
 # 创建可操作xlsx文件的对象
@@ -65,7 +65,7 @@ class AnalysisSwaggerJson(object):
         host = self.url + '/v2/api-docs?group=全量接口' if "9527" in self.url else self.url + '/v2/api-docs'
         try:
             res = requests.get(host).json()
-            write_data(res, swagger_dir+'swagger-api.json')
+            write_data(res, swagger_dir+'/swagger-api.json')
         except Exception as e:
             log.error('Error requesting swagger address The exceptions are as follows: {}'.format(e))
             raise e
@@ -273,7 +273,7 @@ class AnalysisSwaggerJson(object):
             del http_interface['request']['params']
             
         # 定义接口测试用例
-        tags_path = os.path.join(case_dir, tag).replace("/", "_").replace(" ", "_")
+        tags_path = os.path.join(case_dir, tag).replace(" ", "_")
         # 创建不存在的文件目录,递归创建
         if not os.path.exists(tags_path):
             os.makedirs(tags_path)

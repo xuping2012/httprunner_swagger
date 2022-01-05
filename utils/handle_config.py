@@ -4,9 +4,11 @@ Created on 2019年9月29日
 @author: qguan
 @File: handle_config.py
 """
+from configparser import ConfigParser
 import configparser
 
-from common.dir_config import *
+from common.dir_config import config_dir, config_file_path
+
 
 class HandleConfig(object):
     """
@@ -69,7 +71,6 @@ class HandleConfig(object):
             print("{}not in ！".format(section))
 
 
-from configparser import ConfigParser
 
 
 class SimplerConfig(ConfigParser):
@@ -87,6 +88,6 @@ class SimplerConfig(ConfigParser):
 
 
 if __name__ == '__main__':
-    conf = SimplerConfig(config_file=config_dir + "config.ini")
+    conf = SimplerConfig(config_file=config_file_path)
     text = conf.get("logger", "level")
     print(text)

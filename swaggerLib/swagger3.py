@@ -6,13 +6,16 @@ Library import order: priority basic library \ third party library \ custom enca
 Format suggestion: import one line at a time
 From import can be separated by commas after import
 """
+import json
 import os
 import re
 
+import jsonpath
 import requests
 
-from common.dir_config import testsuites_dir, config_dir, xlsCase_file_path, testcases_dir, case_dir
-from  common.get_file import *
+from common.dir_config import testsuites_dir, xlsCase_file_path, testcases_dir, case_dir, \
+    config_file_path
+from common.get_file import original_data, change_data
 from utils.handle_config import HandleConfig
 from utils.handle_excel import Writexcel
 from utils.handle_folder import HandleDirFile
@@ -21,7 +24,7 @@ from utils.logger import log
 
 
 # 创建可操作配置文件的对象
-conf = HandleConfig(config_dir + "\config.ini")
+conf = HandleConfig(config_file_path)
 # 创建可操作目录及文件的对象
 handlefile = HandleDirFile()
 # 创建可操作xlsx文件的对象
@@ -75,7 +78,7 @@ class AnalysisSwaggerJson(object):
         # swagger接口文档地址,其中运营后台的接口地址,请求分模块,全量或者其他服务菜单
         try:
             res = requests.get(self.url+"/v3/api-docs").json()
-            write_data(res, 'swagger-api.json')
+            write_data(res, '/swagger-api.json')
         except Exception as e:
             log.error('Error requesting swagger address The exceptions are as follows: {}'.format(e))
             raise e
@@ -254,7 +257,7 @@ class AnalysisSwaggerJson(object):
             del http_interface['request']['params']
 
         # 定义接口测试用例
-        tags_path = os.path.join(case_dir, tag).replace("/", "_").replace(" ", "_")
+        tags_path = os.path.join(case_dir, tag).replace(" ", "_")
         # 创建不存在的文件目录,递归创建
         if not os.path.exists(tags_path):
             os.makedirs(tags_path)
