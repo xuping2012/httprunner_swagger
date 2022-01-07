@@ -17,7 +17,7 @@ conf = HandleConfig(file_path=dir_config.config_file_path)
 # os.path.splitext(os.path.basename(__file__))[0]
 logformat = conf.get_value("logger", "logformat")
 LEVEL = conf.get_value("logger", "level")
-
+OUTLEVEL = conf.get_value("logger","outLevel")
 
 class HandleLogging(object):
     '''
@@ -47,7 +47,7 @@ class HandleLogging(object):
         # Log split processor
         # logging.handlers.RotatingFileHandler(self.__file, maxBytes=1024*1024, backupCount=5)
         # The level of logs is collected according to what logs are transmitted. It is not default
-        out_file.setLevel(LEVEL)
+        out_file.setLevel(OUTLEVEL)
         out_file.setFormatter(logging.Formatter(logformat))
         # Which channel is log output connected to
         self.logger.addHandler(out_file)
