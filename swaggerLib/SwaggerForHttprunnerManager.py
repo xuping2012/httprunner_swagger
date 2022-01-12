@@ -11,14 +11,10 @@ import json
 
 import requests
 
-from utils.handle_config import HandleConfig
+from utils.handle_config import conf
 from utils.handle_json import write_data
 from utils.logger import log
-from common.dir_config import config_dir
 
-
-# 创建可操作配置文件的对象
-conf = HandleConfig(config_dir + "\config.ini")
 
 def re_pattern(content,pattern=r'[^\*" /:?\\|<>]'):
     """
@@ -39,82 +35,77 @@ class AnalysisSwaggerJson(object):
         """
         Initialize the class and specify the address of the requested swagger interface
         """
-        self.url = url    # 初始化解析swagger接口文档地址
-        self.interface = {}    # json接口测试用例类型
-        self.case_list = []    # 测试用例名称
-        self.tags_list = []    # 测试模块标签
+        self.url = url    # Initialize and resolve swagger interface document address
+        self.interface = {}    # JSON interface test case type
+        self.case_list = []    # Test case name
+        self.tags_list = []    # Test module label
         self.testcase_steps = {"tests":[]}
-        # 定义测试用例集格式
+        # Define test case set format
         self.http_suite = {"config": {"name": "", "base_url": "", "variables": {}},
                            "testcases": []}
-        # 定义测试用例格式
+        # Define test case format
         self.http_testcase = {"name": "", "testcase": "", "variables": {}}
 
-    def analysis_json_data(self, isDuplicated=False):
+    def analysis_json_data(self):
         """
         Main function for parsing JSON format data
         :return:
         """
-        # swagger接口文档地址,其中运营后台的接口地址,请求分模块,全量或者其他服务菜单
-        host = self.url + '/v2/api-docs?group=全量接口' if "9527" in self.url else self.url + '/v2/api-docs'
+        # Swagger interface document address, including the interface address of the operation background, request sub module, full volume or other service menus
+        host = self.url
         try:
             res = requests.get(host).json()
             write_data(res, 'swagger-api.json')
         except Exception as e:
-            log.error('请求swagger地址错误. 异常如下: {}'.format(e))
+            log.error('Error requesting swagger address The exceptions are as follows: {}'.format(e))
             raise e
 
-        # 生成完整的json测试用例之后,开始备份接口数据 ,以备作为接口变更的依据
-        # if isDuplicated:
-        #     # 备份文件,如果不存在备份目录则备份,否则的实现方案在其他方法内
-        #     if not os.path.exists(dir_config.back_path):
-        #         handlefile.copy_dir(dir_config.case_path, dir_config.back_path)
-
-        self.data = res['paths']    # 取接口地址返回的path数据,包括了请求的路径
-        self.basePath = res['basePath']    # 获取接口的根路径
-        # 第一错，swagger文档是ip地址，使用https协议会错误,注意接口地址的请求协议
+        self.data = res['paths']    # Take the path data returned from the interface address, including the requested path
+        self.basePath = res['basePath']    # Gets the root path of the interface
+        # First, the swagger document is an IP address. If you use HTTPS protocol, you will make an error. Pay attention to the request protocol of the interface address
         self.url = 'http://' + res['host']
-        self.title = res['info']['title']    # 获取接口的标题
-        self.http_suite['config']['name'] = self.title    # 在初始化用例集字典更新值
-        self.http_suite['config']['base_url'] = self.url    # 全局url
+        self.title = res['info']['title']    # Gets the title of the interface
+        self.http_suite['config']['name'] = self.title    # Update values in the initialization case set dictionary
+        self.http_suite['config']['base_url'] = self.url    # GLOBAL url
 
-        self.definitions = res['definitions']    # body参数
+        self.definitions = res['definitions']    # Body parameter
         
-        # 追加模块名
+        # Append module name
         for tag_dict in res['tags']:
-            # 友情提示，在开发不注意的时候会使用一些特殊符号，如空格、冒号、美元符、反斜杠
+            # Friendly tips: when you don't pay attention to development, you will use some special symbols, such as space, colon, dollar sign and backslash
             tag_name = tag_dict.get("name")#.replace('/', '_').replace(" ", "_").replace(":", "_")
             tag = re_pattern(tag_name)
             self.tags_list.append(tag)
 
         i = 0
         for tag in self.tags_list:
-            # 丰富测试套件
+            # Rich test suite
             self.http_suite['testcases'].append({"name": "", "testcase": "", "variables": {}})
             self.http_suite['testcases'][i]['name'] = tag
             self.http_suite['testcases'][i]['testcase'] = 'testcases/' + tag + '.json'
             i += 1
 
-        # 解析用例参数
-        if isinstance(self.data, dict):    # 判断接口返回的paths数据类型是否dict类型
-            # 前面已经把接口返回的结果tags分别写入了tags_list空列表,再从json对应的tag往里面插入数据
+        # Parse case parameters
+        if isinstance(self.data, dict):    # Judge whether the paths data type returned by the interface is dict type
+            # Previously, the result tags returned by the interface have been written into tags respectively_ List empty list, \ 
+            # and then insert data from the tag corresponding to JSON
             for tag in self.tags_list:
-                # 测试用例json格式初始化
+                # Test case JSON format initialization
                 self.http_case = {"config": {"name": "", "base_url": "", "variables": {}}, "teststeps": []}
                 for key, value in self.data.items():
                     for method in list(value.keys()):
-                        # 从初始数据解析，通过tag标识找到对应的api
+                        # Analyze the initial data and find the corresponding API through tag identification
                         params = value[method]
-                        # 过滤，特殊符号替换成连接符
+                        # Filter, replace special symbols with connectors
                         p_tag = params['tags'][0]#.replace('/', '_').replace(" ", "_").replace(":", "_")
                         p_tag = re_pattern(p_tag)
-                        # deprecated字段标识：接口是否被弃用，暂时无法判断，使用consumes偷换
+                        # Identifier of the deprecated field: whether the interface is abandoned or not can not be determined temporarily. Use consumers to steal it
                         if not 'deprecated' in value.keys():
                             if p_tag == tag:
                                 self.http_case['config'][
                                     'name'] = params['tags'][0]
                                 self.http_case['config']['base_url'] = self.url
-                                # 参数清洗，生成测试用例
+                                # Parameter cleaning and test case generation
                                 self.wash_params(params, key, method, tag)
         
                         else:
@@ -124,7 +115,7 @@ class AnalysisSwaggerJson(object):
 
 
         else:
-            log.error('解析接口数据异常！url 返回值 paths 中不是dict.')
+            log.error('Exception parsing interface data! The URL return value is not dict in paths.')
             return 'error'
 
     def wash_params(self, params, api, method, tag):
@@ -137,39 +128,39 @@ class AnalysisSwaggerJson(object):
         :return:
         replace('false', 'False').replace('true', 'True').replace('null','None')
         """
-        # 定义接口数据格式
+        # Define interface data format
         http_interface = {"name": "", "variables": {},
                           "request": {"url": "", "method": "", "headers": {}, "json": {}, "params": {}}, "validate": []}
-        # 测试用例的数据格式:
+        # Data format of test case:
         http_api_testcase = {"name": "", "api": "", "variables": {
         }, "validate": [], "extract": []}
 
-        # 这里的问题需要具体来分析,开发有时概要使用其他符号分割///分割符号需要替换
+        # The problems here need to be analyzed in detail. Sometimes the development outline uses other symbols to split / / the split symbols need to be replaced
         case_name = params['summary']#.replace('/', '_').replace(" ", "_").replace(":", "_")
         case_name=re_pattern(case_name)
-        # 用例名称
+        # Case name
         http_interface['name'] = case_name
         http_api_testcase['name'] = case_name
-        # 这是写入testcasejson下的名字,不是生成api的目录
+        # This is the name written under testcasejson, not the directory where the API is generated
         http_api_testcase['api'] = 'api/{}/{}.json'.format(tag, case_name)
-        # 所有方法大写
+        # All methods capitalize
         http_interface['request']['method'] = method.upper()
-        # 这个是替换uri中的/get请求的拼接方式,有些是?参数=&参数拼接,需要另外解析
+        # This is the splicing method of replacing the / get request in the URI. Some are? Parameter = &amp; parameter splicing, need additional parsing
         http_interface['request']['url'] = api.replace(
             '{', '$').replace('}', '')
-        parameters = params.get('parameters')    # 未解析的请求参数
-        responses = params.get('responses')    # 未解析的响应参数
-        if not parameters:    # 确保参数字典存在
+        parameters = params.get('parameters')    # Unresolved request parameters
+        responses = params.get('responses')    # Unresolved response parameters
+        if not parameters:    # Add the parsed parameters to the test case dictionary
             parameters = {}
             
-        # 给测试用例字典,加入解析出来的参数
+        # Add the parsed parameters to the test case dictionary
         for each in parameters:
-            if each.get('in') == 'body':    # body 和 query 不会同时出现
+            if each.get('in') == 'body':    # Body and query will not appear at the same time
                 schema = each.get('schema')
                 if schema:
                     ref = schema.get('$ref')
                     if ref:
-                        # 这个uri拆分，根据实际情况来取第几个/反斜杠
+                        # This URI is split and the number of / backslashes is taken according to the actual situation
                         param_key = ref.split('/', 2)[-1]
                         param = self.definitions[param_key]['properties']
                         for key, value in param.items():
@@ -180,15 +171,15 @@ class AnalysisSwaggerJson(object):
                                 http_interface['request'][
                                     'json'].update({key: ''})
             
-            # 实际是请求方法或者是请求参数的格式
+            # It is actually the request method or the format of the request parameter
             elif each.get('in') == 'query':
                 name = each.get('name')
                 for key in each.keys():
-                    if not 'example' in key:    # 取反，要把在query的参数写入json测试用例
+                    if not 'example' in key:    # Take the inverse, and write the parameters in query into the JSON test case
                         http_interface['request'][
                             'params'].update({name: each[key]})
         
-        # 解析接口文档请求参数
+        # Parsing interface document request parameters
         for each in parameters:
             if each.get('in') == 'header':
                 name = each.get('name')
@@ -204,13 +195,13 @@ class AnalysisSwaggerJson(object):
                             http_interface['request'][
                                 'headers'].update({name: ''})
                                 
-        # 解析接口文档响应参数
+        # Resolve interface document response parameters
         for key, value in responses.items():
             schema = value.get('schema')
             if schema:
                 ref = schema.get('$ref')
                 if ref:
-                    param_key = ref.split('/')[-1]
+                    param_key = ref.split('/',2)[-1]
                     res = self.definitions[param_key]['properties']
                     i = 0
                     for k, v in res.items():
@@ -233,17 +224,17 @@ class AnalysisSwaggerJson(object):
                 if len(http_interface['validate']) != 1:
                     http_interface['validate'].append({"eq": []})
         
-        # 判断如果断言为空，则默认添加http状态断言
+        # Judge that if the assertion is empty, the HTTP status assertion will be added by default
         if http_interface.get("validate"):
             http_interface.get("validate")[0].update({"eq":["status_code", 200]})
         
-        # 测试用例的请求参数为空字典，则删除这些key
+        # If the request parameter of the test case is an empty dictionary, delete these keys
         if http_interface['request']['json'] == {}:
             del http_interface['request']['json']
         if http_interface['request']['params'] == {}:
             del http_interface['request']['params']
 
-        # 在这里写一个方法将所有http_interface写入一个tests列表集：testcases={"tests":[{},{}]};{}就是一个个的http_interface
+        # Write a method here to put all http_ Interface writes a test list set: testcases = {"tests": [{}, {}]}; {} is HTTP one by one_ interface
         self.testcase_steps.get("tests").append(http_interface)
         with open("httprunnerManager_api.json", "w+", encoding="utf8") as pf:
             pf.write(json.dumps(self.testcase_steps, indent=4, ensure_ascii=False))

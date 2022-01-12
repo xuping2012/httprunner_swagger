@@ -4,20 +4,17 @@
 @File: logger.py
 """
 import logging
-import os
-import time
+from logging.handlers import TimedRotatingFileHandler 
 
-from common import dir_config
-from common.dir_config import log_file_path
-from utils.handle_config import HandleConfig
+from utils.handle_config import conf
+from common.dir_config import LOGFILEPATH
 
 
-conf = HandleConfig(file_path=dir_config.config_file_path)
 # By default, all output log records are encapsulated by the log module name
 # os.path.splitext(os.path.basename(__file__))[0]
-logformat = conf.get_value("logger", "logformat")
+FORMATTER = conf.get_value("logger", "formatter")
 LEVEL = conf.get_value("logger", "level")
-OUTLEVEL = conf.get_value("logger","outLevel")
+OUTLEVEL = conf.get_value("logger", "outLevel")
 
 class HandleLogging(object):
     '''
@@ -35,20 +32,17 @@ class HandleLogging(object):
         #  Print log in console       
         out_console = logging.StreamHandler()
         out_console.setLevel(LEVEL)
-        out_console.setFormatter(logging.Formatter(logformat))
+        out_console.setFormatter(logging.Formatter(FORMATTER))
         self.logger.addHandler(out_console)
 
         # Define log output path _ file
-        path = self.file_name + '_' + time.strftime('%Y-%m-%d') + '.log'
-        if not os.path.exists(dir_config.log_dir):
-            os.mkdir(dir_config.log_dir)
         # Set log output channel
-        out_file = logging.FileHandler(path, encoding='utf-8')
+        out_file = TimedRotatingFileHandler(filename=LOGFILEPATH, when="D", interval=1, backupCount=3, encoding='utf-8')
         # Log split processor
         # logging.handlers.RotatingFileHandler(self.__file, maxBytes=1024*1024, backupCount=5)
         # The level of logs is collected according to what logs are transmitted. It is not default
         out_file.setLevel(OUTLEVEL)
-        out_file.setFormatter(logging.Formatter(logformat))
+        out_file.setFormatter(logging.Formatter(FORMATTER))
         # Which channel is log output connected to
         self.logger.addHandler(out_file)
         self.logger.removeFilter(out_file)
@@ -57,7 +51,4 @@ class HandleLogging(object):
         return self.logger
 
 
-log = HandleLogging(file_name=log_file_path).getlog()
-
-if __name__ == '__main__':
-    log.error("test log....{}".format(log_file_path))
+log = HandleLogging(file_name=LOGFILEPATH).getlog()

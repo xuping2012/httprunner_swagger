@@ -1,13 +1,11 @@
 #!/usr/bin/python3
 """
-Created on 2019年9月29日
-@author: qguan
 @File: handle_config.py
 """
 from configparser import ConfigParser
 import configparser
 
-from common.dir_config import config_dir, config_file_path
+from common.dir_config import PROFILEPATH
 
 
 class HandleConfig(object):
@@ -25,7 +23,7 @@ class HandleConfig(object):
 
     def get_value(self, section, option):
         """Gets the value of the INI \ conf configuration file"""
-        return self.conf.get(section, option,raw=True)
+        return self.conf.get(section, option, raw=True)
 
     def get_boolean(self, section, option):
         """gets the value of the ini\conf configuration file"""
@@ -87,7 +85,9 @@ class SimplerConfig(ConfigParser):
         self.read(self.config_file, encoding=self.encoding)
 
 
+conf = HandleConfig(file_path=PROFILEPATH)
+
 if __name__ == '__main__':
-    conf = SimplerConfig(config_file=config_file_path)
+    conf = SimplerConfig(config_file=PROFILEPATH)
     text = conf.get("logger", "level")
     print(text)

@@ -8,8 +8,8 @@ import time
 import xlrd
 import xlwt
 
-from common import dir_config
 from utils.logger import log
+from common.dir_config import LOGDIR
 
 
 class DiffExcelFile():
@@ -19,7 +19,7 @@ class DiffExcelFile():
 
     def __init__(self, wb_name="Excel_Workbook.xlsx", sheet_name="Sheet1"):
         # Create workbook object
-        self.workbook = xlwt.Workbook()  # encoding = 'ascii' default
+        self.workbook = xlwt.Workbook()    # encoding = 'ascii' default
         # Instance properties        
         self.wb_name = wb_name
         self.sheet_name = sheet_name
@@ -49,24 +49,24 @@ def write_file(filename, content):
     if not isinstance(content, str):
         content = str(content)
 
-    with open(filename, 'a', encoding='utf-8') as file:  # Open log file in append modes
-        time_now = time.strftime("%Y-%m-%d", time.localtime())  # System time formatting
-        file.write(time_now + ':Changed interfaces and parameters==>' + content + '\n')  # Write content
+    with open(filename, 'a', encoding='utf-8') as file:    # Open log file in append modes
+        time_now = time.strftime("%Y-%m-%d", time.localtime())    # System time formatting
+        file.write(time_now + ':Changed interfaces and parameters==>' + content + '\n')    # Write content
 
 
 def read_excel(file_path, sheet_name="Sheet1"):
     """Read excel table"""
-    datas = []  # Store all data of xlsx file
-    xlsx_file = {}  # Store source XLS files
-    wb = xlrd.open_workbook(file_path)  # open the target file
+    datas = []    # Store all data of xlsx file
+    xlsx_file = {}    # Store source XLS files
+    wb = xlrd.open_workbook(file_path)    # open the target file
     #     sheet_num = len(wb.sheets())     #Get xlsx number of forms
-    sheet_name_list = wb.sheet_names()  # Get xlsx form name
+    sheet_name_list = wb.sheet_names()    # Get xlsx form name
 
     if sheet_name in sheet_name_list:
         sheet_name = wb.sheet_by_name(sheet_name)
         for rows in range(0, sheet_name.nrows):
-            orign_list = sheet_name.row_values(rows)  # Source table I row data
-            xlsx_file[rows] = orign_list  # Source table write dictionary
+            orign_list = sheet_name.row_values(rows)    # Source table I row data
+            xlsx_file[rows] = orign_list    # Source table write dictionary
     else:
         log.info("{}The child table name does not exist in the {} file！".format(sheet_name, file_path))
 
@@ -79,7 +79,7 @@ def read_excel(file_path, sheet_name="Sheet1"):
 
 def diff_excel(src_file, des_file, check="caseid,url,params"):
     """The value of a field in the data of the reference file，sheet_name default Sheet1"""
-    fail = 0  # Record changed data
+    fail = 0    # Record changed data
     res1 = read_excel(src_file)
     res2 = read_excel(des_file)
 
@@ -101,7 +101,7 @@ def diff_excel(src_file, des_file, check="caseid,url,params"):
             case_id = str(res1[r1][index])
             content = "".join([case_id, str(case)])
             datas.append(content)
-            write_file(dir_config.log_dir + "diff_data.log", content)
+            write_file(LOGDIR + "diff_data.log", content)
 
     for i in range(len(datas)):
         DiffExcelFile.write_excel(i + 1, 0, datas[i])

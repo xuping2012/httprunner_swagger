@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-Created on 2019年9月29日
-@author: qguan
 @File: handle_json.py
 """
 

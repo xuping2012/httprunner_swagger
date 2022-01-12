@@ -4,13 +4,12 @@
 
 import copy
 import json
-
 import jsonpath
 
 from common.get_values import create_base_case
 
 
-#获取要变更参数的json
+# Get the JSON to change the parameter
 change_json = []
 def original_data(path):
     with open(path, 'r', encoding='utf-8') as f:
@@ -18,7 +17,7 @@ def original_data(path):
     return info_dict
 
 
-#生成不同参数类型的测试用例
+# Generate test cases with different parameter types
 def change_data(original_data,path):
     copy_data=copy.deepcopy(original_data)
     if jsonpath.jsonpath(copy_data,"$..json"):

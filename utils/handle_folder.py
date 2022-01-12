@@ -1,22 +1,26 @@
 #!/usr/bin/python3
 """
-Created on 2019年9月29日
-@author: qguan
 @File: handle_folder.py
 """
 
 import difflib
+from hashlib import md5
 import os
 import shutil
 import sys
-from hashlib import md5
 
-from common import dir_config
+from common.dir_config import REPORTDIR, BACKUPDIR, SWAGGERDIR
 from utils.logger import log
 
 
-diffFile = os.path.join(dir_config.report_dir, 'Compare_the_file_diff.html')
-backupDiffFile = os.path.join(dir_config.report_dir, 'Compare_the_file_diff_back.html')
+# If the directory does not exist, create a folder
+if not os.path.exists(REPORTDIR):
+    os.makedirs(REPORTDIR)
+if not os.path.exists(SWAGGERDIR):
+    os.makedirs(SWAGGERDIR)
+    
+diffFile = os.path.join(REPORTDIR, 'Compare_the_file_diff.html')
+backupDiffFile = os.path.join(REPORTDIR, 'Compare_the_file_diff_back.html')
 
 
 class HandleDirFile(object):
@@ -37,49 +41,51 @@ class HandleDirFile(object):
                 text = fileHandle.read().splitlines()
             return text
         except IOError as e:
-            log.error("文件读取失败:" + e)
+            log.error("File read failed:" + e)
             sys.exit()
 
     def md5_file(self, filename):
         """
-        通过比较两个文件内容的md5值，来生成html异同
+        Generate HTML by comparing the MD5 values of the contents of the two files
         """
         m = md5()
         try:
-            with open(filename, 'rb') as a_file:  # 需要使用二进制格式读取文件内容
+            with open(filename, 'rb') as a_file:    # The contents of the file need to be read in binary format
                 m.update(a_file.read())
         except Exception as e:
-            log.error("文件读取失败:" + e)
+            log.error("File read failed:" + e)
         return m.hexdigest()
 
     def diff_json(self, filename1, filename2):
         """
-        比较两个文件内容的md5值；比较两个文件并输出到html文件中
+        Compare the MD5 values of the contents of the two files; Compare the two files and output them to an HTML file
         """
         file1Md5 = self.md5_file(filename1)
         file2Md5 = self.md5_file(filename2)
 
         if file1Md5 != file2Md5:
-            #             log.info('两个json数据文件md5不一样:')
+            # log.info('The two JSON data files MD5 are different:')
             text1_lines = self.read_json(filename1)
             text2_lines = self.read_json(filename2)
             d = difflib.HtmlDiff()
-            # context=True时只显示差异的上下文，默认显示5行，由numlines参数控制，context=False显示全文，差异部分颜色高亮，默认为显示全文
+            # When context = true, only the context of the difference is displayed. By default, 5 lines are displayed, \
+            # controlled by the numlines parameter. When context = false, the full text is displayed, and the color of the difference part is highlighted. \
+            # By default, the full text is displayed
             result = d.make_file(
                 text1_lines, text2_lines, filename1, filename2, context=True)
 
-            # 内容保存到result.html文件中
+            # Save the content to result HTML file
             try:
                 with open(diffFile, 'a', encoding='utf-8') as result_file:
                     result_file.write(result)
             except Exception as e:
-                log.error("写入文件失败:" + e)
+                log.error("fail to write to file:" + e)
 
     def move_file(self, srcPath, destPath):
         """
-        move文件(夹)移动，可覆盖
-        srcPath:源文件(夹)路径
-        destPath:目标文件(夹)路径
+        Move files (folders) can be moved and overwritten
+        Srcpath: source file (folder) path
+        Destpath: destination file (folder) path
         return:
         """
         try:
@@ -89,14 +95,14 @@ class HandleDirFile(object):
 
     def copy_dir(self, srcPath, destPath):
         """
-        copytree:文件(夹)移动，不可覆盖
-        srcPath:源文件(夹)路径
-        destPath:目标文件(夹)路径,必须不存在
+        Copytree: the file (folder) is moved and cannot be overwritten
+        Srcpath: source file (folder) path
+        Destpath: the destination file (folder) path must not exist
         return: 
         """
-        #         判断目录是否存在
+        # Determine whether the directory exists
         if os.path.isdir(destPath):
-            log.info("{}存在则删除".format(destPath))
+            log.info("{}Delete if EXIT".format(destPath))
             shutil.rmtree(destPath)
         try:
             shutil.copytree(srcPath, destPath)
@@ -105,8 +111,8 @@ class HandleDirFile(object):
 
     def copy_file(self, srcPath, destPath):
         """
-        srcPath:源文件(夹)路径
-        destPath:目标文件(夹)路径,必须不存在
+        Srcpath: source file (folder) path
+        Destpath: the destination file (folder) path must not exist
         return: 
         """
 
@@ -120,9 +126,9 @@ class HandleDirFile(object):
         for sf in srcfile:
             if sf.split("\\")[len(sf.split("\\")) - 1] not in file_list:
                 log.info(
-                    "{}文件不存在于备份目录才执行".format(sf.split("\\")[len(sf.split("\\")) - 1]))
+                    "{}The file does not exist in the backup directory".format(sf.split("\\")[len(sf.split("\\")) - 1]))
                 #                 print(config.back_path + sf.split("\\")[len(sf.split("\\")) - 2] + '\\' + sf.split("\\")[len(sf.split("\\")) - 1])
-                destDir = dir_config.back_dir + \
+                destDir = BACKUPDIR + \
                           sf.split("\\")[len(sf.split("\\")) - 2] + "\\"
                 if not os.path.exists(destDir):
                     os.makedirs(destDir)
@@ -131,21 +137,20 @@ class HandleDirFile(object):
 
     def diff_dir_file(self, srcPath, destPath):
         """
-        比较两个文件夹及子目录下的文件
+        Compare the files in two folders and subdirectories
         """
-
         if os.path.isfile(diffFile):
             try:
-                #                 删除文件前先备份文件
+                # Back up files before deleting them
                 shutil.copyfile(diffFile, backupDiffFile)
                 os.remove(diffFile)
             except Exception as e:
-                log.error("备份/删除文件:%s,失败!" % diffFile)
+                log.error("Backup OR delete file:%s, failed!" % diffFile)
                 raise e
         else:
             log.info("no such file:%s" % diffFile)
 
-        #         获取目录下的所有文件,返回list
+        # Get all the files in the directory and return list
         srcfile = self.get_file_list(srcPath)
         destfile = self.get_file_list(destPath)
 
@@ -171,3 +176,6 @@ class HandleDirFile(object):
                 filepath_list.append(root_dir + "\\" + files[i])
 
         return filepath_list
+
+# INIT OBJ
+handlefile = HandleDirFile()

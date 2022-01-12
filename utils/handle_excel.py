@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 """
-Created on 2019年9月29日
-@author: qguan
 @File: handle_excel.py
 """
 
@@ -9,12 +7,11 @@ from collections import namedtuple
 import os
 import platform
 
-import pandas as pd
-
 from openpyxl import load_workbook, Workbook
 from openpyxl.styles import Font, colors
 
-from common.dir_config import bakCase_file_path, csv_file_path
+from common.dir_config import BACKTESTCASEPATH, CSVFILEPATH, EXCELFILEPATH
+import pandas as pd
 
 
 class HandleExcel(object):
@@ -66,14 +63,14 @@ class Writexcel(object):
         """Initializing file object"""
         self.filename = filename
         # If excel backup exists, delete it
-        if os.path.exists(bakCase_file_path):
-            os.remove(bakCase_file_path)
+        if os.path.exists(BACKTESTCASEPATH):
+            os.remove(BACKTESTCASEPATH)
         # Get the current system operation file
         if platform.system() == "Windows" and os.path.exists(self.filename):
-            os.renames(self.filename, bakCase_file_path)
+            os.renames(self.filename, BACKTESTCASEPATH)
             
         if platform.system() == "Linux" and os.path.exists(self.filename):
-            os.renames(self.filename, bakCase_file_path)
+            os.renames(self.filename, BACKTESTCASEPATH)
 
         self.wb = Workbook()
         self.ws = self.wb.active    # activate sheet
@@ -100,7 +97,11 @@ class Writexcel(object):
     def xlsx_to_csv_pd(self):
         """xlsx to csv"""
         data_xls = pd.read_excel(self.filename, index_col=0)
-        data_xls.to_csv(csv_file_path, encoding='utf-8_sig') # encoding,utf-8
+        data_xls.to_csv(CSVFILEPATH, encoding='utf-8_sig')    # encoding,utf-8
     
     def save(self):
         self.wb.save(self.filename)
+
+
+# INIT OBJ
+w = Writexcel(EXCELFILEPATH)
