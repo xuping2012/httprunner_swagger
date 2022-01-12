@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+encoding//common/dir_config.py=utf-8
+encoding//swaggerLib/SwaggerForHttprunnerManager.py=utf-8
+encoding//swaggerLib/swagger2.py=utf-8
+encoding//swaggerLib/swagger3.py=utf-8
+encoding//utils/DiffExcelFile.py=utf-8
+encoding//utils/HandleExcel.py=utf-8
+encoding//utils/HandleJson.py=utf-8
+encoding//utils/HandleLogging.py=utf-8
+encoding//utils/diff_file_tools.py=utf-8
+encoding//utils/handle_excel.py=utf-8
+encoding//utils/handle_json.py=utf-8
+encoding//utils/logger.py=utf-8
+encoding/config.py=utf-8
+
