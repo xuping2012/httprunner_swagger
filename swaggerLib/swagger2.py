@@ -12,7 +12,7 @@ import re
 
 import requests
 
-from common.dir_config import APIDIR, SWAGGERDIR, BACKUPDIR, TESTSUITEDIR,\
+from common.dir_config import APIDIR, SWAGGERDIR, BACKUPDIR, TESTSUITEDIR, \
     TESTCASEDIR
 from utils.handle_config import conf
 from utils.handle_excel import w
@@ -48,8 +48,8 @@ class AnalysisSwaggerJson(object):
         self.tags_list = []    
         
         # Define test case set format
-        self.http_suite = {"config": {"name": "", "base_url": "", "variables": {}},
-                           "testcases": []}
+        self.http_suite = {"config": {"name": "", "base_url": "", "variables": {}}, "testcases": []}
+        
         # Define test case format
         self.http_testcase = {"name": "", "testcase": "", "variables": {}}
 
@@ -72,7 +72,7 @@ class AnalysisSwaggerJson(object):
         if isDuplicated:
             # Backup files. If there is no backup directory, backup them. Otherwise, the implementation scheme is in other methods
             if not os.path.exists(BACKUPDIR):
-                handlefile.copy_dir(SWAGGERDIR,BACKUPDIR)
+                handlefile.copy_dir(SWAGGERDIR, BACKUPDIR)
 
         self.data = res['paths']    # Take the path data returned from the interface address, including the requested path
         self.basePath = res['basePath']    # Gets the root path of the interface
@@ -127,24 +127,20 @@ class AnalysisSwaggerJson(object):
                         # Identifier of the deprecated field: whether the interface is abandoned or not can not be determined temporarily. Use consumers to steal it
                         if not 'deprecated' in value.keys():
                             if p_tag == tag:
-                                self.http_case['config'][
-                                    'name'] = params['tags'][0]
+                                self.http_case['config']['name'] = params['tags'][0]
                                 self.http_case['config']['base_url'] = self.url
                                 # Parameter cleaning and test case generation
                                 case = self.wash_params(params, key, method, tag)
                                 self.http_case['teststeps'].append(case)
                         else:
-                            log.info(
-                                'interface path: {}, if name: {}, is deprecated.'.format(key, params['operationId']))
+                            log.info('interface path: {}, if name: {}, is deprecated.'.format(key, params['operationId']))
                             break
 
 
                 # Splicing test case path
-                testcase_json_path = os.path.join(
-                    TESTCASEDIR, tag + '.json')
+                testcase_json_path = os.path.join(TESTCASEDIR, tag + '.json')
                 # Generate JSON use case file
-                write_data(
-                    self.http_case, testcase_json_path)
+                write_data(self.http_case, testcase_json_path)
 
         else:
             log.error('Exception parsing interface data! The URL return value is not dict. In paths')
@@ -161,12 +157,9 @@ class AnalysisSwaggerJson(object):
         replace('false', 'False').replace('true', 'True').replace('null','None')
         """
         # Define interface data format
-        http_interface = {"name": "", "variables": {},
-                          "request": {"url": "", "method": "", "headers": {}, "json": {}, "params": {}}, "validate": [],
-                          "output": []}
+        http_interface = {"name": "", "variables": {}, "request": {"url": "", "method": "", "headers": {}, "json": {}, "params": {}}, "validate": [], "output": []}
         # Data format of test case:
-        http_api_testcase = {"name": "", "api": "", "variables": {
-        }, "validate": [], "extract": [], "output": []}
+        http_api_testcase = {"name": "", "api": "", "variables": {}, "validate": [], "extract": [], "output": []}
 
         # The problems here need to be analyzed in detail. Sometimes the development outline uses other symbols to split / / the split symbols need to be replaced
         case_name = params['summary']    # .replace('/', '_').replace(" ", "_").replace(":", "_")
@@ -179,8 +172,7 @@ class AnalysisSwaggerJson(object):
         # All methods capitalize
         http_interface['request']['method'] = method.upper()
         # This is the splicing method of replacing the / get request in the URI. Some are? Parameter = &amp; parameter splicing, need additional parsing
-        http_interface['request']['url'] = api.replace(
-            '{', '$').replace('}', '')
+        http_interface['request']['url'] = api.replace('{', '$').replace('}', '')
         parameters = params.get('parameters')    # Unresolved request parameters
         responses = params.get('responses')    # Unresolved response parameters
         if not parameters:    # Ensure that the parameter dictionary exists
@@ -200,19 +192,16 @@ class AnalysisSwaggerJson(object):
                         if param:
                             for key, value in param.items():
                                 if 'example' in value.keys():
-                                    http_interface['request']['json'].update(
-                                        {key: value['example']})
+                                    http_interface['request']['json'].update({key: value['example']})
                                 else:
-                                    http_interface['request'][
-                                        'json'].update({key: ''})
+                                    http_interface['request']['json'].update({key: ''})
             
             # It is actually the request method or the format of the request parameter
             elif each.get('in') == 'query':
                 name = each.get('name')
                 for key in each.keys():
                     if not 'example' in key:    # Take the inverse, and write the parameters in query into the JSON test case
-                        http_interface['request'][
-                            'params'].update({name: each[key]})
+                        http_interface['request']['params'].update({name: each[key]})
         
         # Parsing interface document request header parameters
         for each in parameters:
@@ -220,15 +209,12 @@ class AnalysisSwaggerJson(object):
                 name = each.get('name')
                 for key in each.keys():
                     if 'example' in key:
-                        http_interface['request'][
-                            'headers'].update({name: each[key]})
+                        http_interface['request']['headers'].update({name: each[key]})
                     else:
                         if name == 'token':
-                            http_interface['request'][
-                                'headers'].update({name: '$token'})
+                            http_interface['request']['headers'].update({name: '$token'})
                         else:
-                            http_interface['request'][
-                                'headers'].update({name: ''})
+                            http_interface['request']['headers'].update({name: ''})
                                 
         # Analyze interface document response parameters
         for key, value in responses.items():
@@ -243,15 +229,11 @@ class AnalysisSwaggerJson(object):
                     for k, v in res.items():
                         if 'example' in v.keys():
                             http_interface['validate'].append({"eq": []})
-                            http_interface['validate'][i][
-                                'eq'].append('content.' + k)
-                            http_interface['validate'][i][
-                                'eq'].append(v['example'])
+                            http_interface['validate'][i]['eq'].append('content.' + k)
+                            http_interface['validate'][i]['eq'].append(v['example'])
                             http_api_testcase['validate'].append({"eq": []})
-                            http_api_testcase['validate'][i][
-                                'eq'].append('content.' + k)
-                            http_api_testcase['validate'][
-                                i]['eq'].append(v['example'])
+                            http_api_testcase['validate'][i]['eq'].append('content.' + k)
+                            http_api_testcase['validate'][i]['eq'].append(v['example'])
                             i += 1
                 else:
                     if len(http_interface['validate']) != 1:
@@ -319,13 +301,11 @@ class AnalysisSwaggerJson(object):
                 elif 'params' in text['request'].keys():    # Interface parameter write of get request
                     url = text['request']['url']
                     jsonp = str(text['request']['params'])
-                    join_text = jsonp.replace("{", "").replace("}", "").replace(
-                        ":", "=").replace("'", "").replace(",", "&").replace(" ", "")
+                    join_text = jsonp.replace("{", "").replace("}", "").replace(":", "=").replace("'", "").replace(",", "&").replace(" ", "")
                     w.write(count, 7, uri + url)
                     w.write(count, 8, join_text)
                 else:    # Extract the parameters of the get request containing the $symbol in the URL separately and write them to params
-                    url = text['request']['url'].replace(
-                        '{', '$').replace('}', '')
+                    url = text['request']['url'].replace('{', '$').replace('}', '')
                     start_index = url.find("$")
                     url1 = url[:start_index]
                     params = url[start_index:]
