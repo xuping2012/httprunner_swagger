@@ -19,6 +19,7 @@ from utils.handle_excel import w
 from utils.handle_folder import handlefile
 from utils.handle_json import write_data
 from utils.logger import log
+import yaml
 
 
 def re_pattern(content, pattern=r'[^\*" /:?\\|<>]'):
@@ -34,12 +35,15 @@ class AnalysisSwaggerJson(object):
     Swagger automatically generates tool classes for interface test cases, which are used to generate test cases in JSON format
     """
 
-    def __init__(self, url):
+    def __init__(self, url, formatter="json"):
         """
         Initialize the class and specify the address of the requested swagger interface
+        :param formatter: default json format，maybe yaml or yml
+        :return:
         """
         # Initialize and resolve swagger interface document address
         self.url = url    
+        self.formatter = formatter
         # JSON interface test case type
         self.interface = {}    
         # Test case name
@@ -110,9 +114,9 @@ class AnalysisSwaggerJson(object):
             os.makedirs(TESTCASEDIR)
             
         # Splice case suite path
-        testsuite_json_path = os.path.join(TESTSUITEDIR, '{}_testsuites.json'.format(self.title))
+        TESTSUITEPATH = os.path.join(TESTSUITEDIR, '{}_testsuites'.format(self.title))
         # Write test suite data to JSON
-        write_data(self.http_suite, testsuite_json_path)
+        write_data(self.http_suite, TESTSUITEPATH, formatter=self.formatter)
         
         # Parse case parameters
         if isinstance(self.data, dict):    # Judge whether the paths data type returned by the interface is dict type
@@ -141,9 +145,9 @@ class AnalysisSwaggerJson(object):
 
 
                 # Splicing test case path
-                testcase_json_path = os.path.join(TESTCASEDIR, tag + '.json')
+                TESTCASEPATH = os.path.join(TESTCASEDIR, tag)
                 # Generate JSON use case file
-                write_data(self.http_case, testcase_json_path)
+                write_data(self.http_case, TESTCASEPATH, formatter=self.formatter)
 
         else:
             log.error('Exception parsing interface data! The URL return value is not dict. In paths')
@@ -263,10 +267,10 @@ class AnalysisSwaggerJson(object):
             os.makedirs(tags_path)
             
         # Splicing API use case path
-        json_path = os.path.join(tags_path, case_name + '.json')
+        APIPATH = os.path.join(tags_path, case_name)
         
         # Testcases / write data
-        write_data(http_interface, json_path)
+        write_data(http_interface, APIPATH, formatter=self.formatter)
         
         return http_api_testcase
 
@@ -277,7 +281,7 @@ class AnalysisSwaggerJson(object):
         split_url = self.url.split(":")
         host = "http:" + split_url[1]    # .replace("/", "")
         port = split_url[2]
-
+        
         count = 1
         caseId = 0
 
@@ -286,41 +290,49 @@ class AnalysisSwaggerJson(object):
             count += 1
             # Get the name of the parent directory of the interface test case: the case title of the name tag
             inter_name = file.split("\\")[-2]
-            with open(file, 'r+', encoding='utf8') as rdfile:
-                text = json.load(rdfile)
-                title = inter_name + '-' + text['name']
-                method = text['request']['method'].upper()
-                w.write(count, 1, "TestCase_" + str(caseId))
-                w.write(count, 2, title)
-                w.write(count, 4, method)
-                w.write(count, 5, host)
-                w.write(count, 6, port)
-                if 'json' in text['request'].keys():    # The interface related data requested by post is written into excel
-                    self.url = text['request']['url']
-                    params = text['request']['json']
-                    w.write(count, 7, self.url)
-                    w.write(count, 8, json.dumps(params))
-                elif 'params' in text['request'].keys():    # Interface parameter write of get request
-                    url = text['request']['url']
-                    jsonp = str(text['request']['params'])
-                    join_text = jsonp.replace("{", "").replace("}", "").replace(":", "=").replace("'", "").replace(",", "&").replace(" ", "")
-                    w.write(count, 7, url)
-                    w.write(count, 8, join_text)
-                else:    # Extract the parameters of the get request containing the $symbol in the URL separately and write them to params
-                    url = text['request']['url'].replace('{', '$').replace('}', '')
-                    start_index = url.find("$")
-                    url1 = url[:start_index]
-                    params = url[start_index:]
-                    w.write(count, 7, url1)
-                    if "$" in params:
-                        w.write(count, 8, params)
+            if file.endswith("yml") or file.endswith("yaml"):
+                with open(file, 'r', encoding='utf8') as rdfile:
+                    text = yaml.load(rdfile, Loader=yaml.FullLoader)
+            elif file.endswith("json"):
+                with open(file, 'r', encoding='utf8') as rdfile:
+                    text = json.load(rdfile)
+                    
+            title = inter_name + '-' + text['name']
+            
+            method = text['request']['method'].upper()
+            
+            w.write(count, 1, "TestCase_" + str(caseId))
+            w.write(count, 2, title)
+            w.write(count, 4, method)
+            w.write(count, 5, host)
+            w.write(count, 6, port)
+            
+            if 'json' in text['request'].keys():    # The interface related data requested by post is written into excel
+                self.url = text['request']['url']
+                params = text['request']['json']
+                w.write(count, 7, self.basePath + self.url)
+                w.write(count, 8, json.dumps(params))
+            elif 'params' in text['request'].keys():    # Interface parameter write of get request
+                url = text['request']['url']
+                jsonp = str(text['request']['params'])
+                join_text = jsonp.replace("{", "").replace("}", "").replace(":", "=").replace("'", "").replace(",", "&").replace(" ", "")
+                w.write(count, 7, self.basePath + url)
+                w.write(count, 8, join_text)
+            else:    # Extract the parameters of the get request containing the $symbol in the URL separately and write them to params
+                url = text['request']['url'].replace('{', '$').replace('}', '')
+                start_index = url.find("$")
+                url1 = url[:start_index]
+                params = url[start_index:]
+                w.write(count, 7, self.basePath + url1)
+                if "$" in params:
+                    w.write(count, 8, params)
         # last save file
         w.save()
 
 
 if __name__ == '__main__':
     url = conf.get_value("swaggerUrl", "baseSever_url")
-    js = AnalysisSwaggerJson(url)
+    js = AnalysisSwaggerJson(url,formatter="json")
     js.analysis_json_data(isDuplicated=True)
     js.write_excel(handlefile.get_file_list(APIDIR))
     w.xlsx_to_csv_pd()

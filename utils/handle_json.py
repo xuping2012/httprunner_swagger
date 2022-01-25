@@ -27,26 +27,29 @@ def get_json(path, field=''):
             return json_data
 
 
-def write_data(res, json_path):
+def write_data(res, json_path, formatter="json"):
     """
     handle params write data to json file
     :param res:
     :param json_path:
+    :param formatter: default json format
     :return:
     """
-    if isinstance(res, dict) or isinstance(res, list):
-        with open(json_path, 'w', encoding='utf-8') as f:
+    if formatter == "json":
+        with open(json_path + ".json", 'w', encoding='utf-8') as f:
             json.dump(res, f, ensure_ascii=False, sort_keys=True, indent=4)
         logger.info('Interface Params Total：{} ,write to json file successfully!'.format(len(res)))
-    else:
-        logger.error('\n:{} Params is not dict.\n'.format(write_data.__name__))
+    elif formatter in ["yaml", "yml"]:
+        with open(json_path + ".yml", "w", encoding="utf-8") as f:
+            yaml.safe_dump(res, stream=f, allow_unicode=True, default_flow_style=False)
+        logger.info('Interface Params Total：{} ,write to yaml file successfully!'.format(len(res)))
 
 
 def json_to_yaml(json_file):
     """
     supported json to yaml file
     """
-    if json_file.endswith("json"):
+    if json_file.endswith(".json"):
         with open(json_file, "r") as pf:
             json_to_dict = json.loads(pf.read())
         yaml_file = json_file.replace(".json", ".yaml")
@@ -61,8 +64,8 @@ def yaml_to_json(yaml_file):
     """
     yaml to json file
     """
-    if yaml_file.endswith("yaml"):
-        with open(yaml_file, "r") as pf:
+    if yaml_file.endswith(".yml"):
+        with open(yaml_file, "r", encoding="utf8") as pf:
             # First convert yaml to dict format
             yaml_to_dict = yaml.load(pf, Loader=yaml.FullLoader)
             dict_to_json = json.dumps(yaml_to_dict, sort_keys=False, indent=4, separators=(',', ': '))
