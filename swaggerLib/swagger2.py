@@ -52,8 +52,6 @@ class AnalysisSwaggerJson(object):
         
         # Define test case format
         self.http_testcase = {"name": "", "testcase": "", "variables": {}}
-        # url
-        self.url = None
 
     def analysis_json_data(self, isDuplicated=False):
         """
@@ -61,9 +59,8 @@ class AnalysisSwaggerJson(object):
         :return:
         """
         # Swagger interface document address, including the interface address of the operation background, request sub module, full volume or other service menus
-        host = self.url
         try:
-            res = requests.get(host).json()
+            res = requests.get(self.url).json()
             write_data(res, os.path.join(SWAGGERDIR, 'swagger-api.json'))
         except Exception as e:
             log.error('Error requesting swagger address The exceptions are as follows: {}'.format(e))
