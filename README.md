@@ -5,6 +5,11 @@
 @[swagger] 仅支持swagger2.0版本，3.0部分数据存在解析错误
 
 #### 使用说明
+```
+该开源项目使用python3解析swagger2.x版本的接口文档，可生成格式为：JSON、YAML、CVS、XLSX的数据文件。为接口自动化测试提供的自动生成用例解决方案，
+并适用于HTTPRUNNER2.x版本的接口自动化测试框架；可针对任何测试套件或单个api的接口测试用例进行调用，可以快速实现企业级接口自动化测试解决方案。
+默认生成json格式的数据文件，框架支持切换到yaml格式，写入excel文件，并支持转换为csv格式的数据文件，csv文件还支持jmeter数据驱动接口自动化测试解决方案。
+```
 - 本地安装python开发环境
 - 克隆项目到本地：git clone
 - 安装项目依赖:pip install -r requirements.txt
