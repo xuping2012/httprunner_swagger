@@ -52,6 +52,8 @@ class AnalysisSwaggerJson(object):
         
         # Define test case format
         self.http_testcase = {"name": "", "testcase": "", "variables": {}}
+        # url
+        self.url = None
 
     def analysis_json_data(self, isDuplicated=False):
         """
@@ -66,7 +68,11 @@ class AnalysisSwaggerJson(object):
         except Exception as e:
             log.error('Error requesting swagger address The exceptions are as follows: {}'.format(e))
             raise e
-        
+
+        # Swagger interface document parsing and exporting JSON text
+#         with open("./jiexi_swagger.json", "r", encoding="utf-8") as pf:
+#             r = pf.read()
+#             res = json.loads(r)
 
         # After generating the complete JSON test case, start to back up the interface data as the basis for interface change
         if isDuplicated:
@@ -267,14 +273,13 @@ class AnalysisSwaggerJson(object):
         
         return http_api_testcase
 
-    def write_excel(self, url, filelist):
+    def write_excel(self, filelist):
         """
         Convert the generated JSON format data into xlsx and write it to a file
         """
-        li1 = url.split(":")
-        host = li1[1].replace("/", "")
-        port = li1[2][:4]
-        uri = li1[2][4:]
+        split_url = self.url.split(":")
+        host = "http:" + split_url[1]    # .replace("/", "")
+        port = split_url[2]
 
         count = 1
         caseId = 0
@@ -294,15 +299,15 @@ class AnalysisSwaggerJson(object):
                 w.write(count, 5, host)
                 w.write(count, 6, port)
                 if 'json' in text['request'].keys():    # The interface related data requested by post is written into excel
-                    url = text['request']['url']
+                    self.url = text['request']['url']
                     params = text['request']['json']
-                    w.write(count, 7, url)
+                    w.write(count, 7, self.url)
                     w.write(count, 8, json.dumps(params))
                 elif 'params' in text['request'].keys():    # Interface parameter write of get request
                     url = text['request']['url']
                     jsonp = str(text['request']['params'])
                     join_text = jsonp.replace("{", "").replace("}", "").replace(":", "=").replace("'", "").replace(",", "&").replace(" ", "")
-                    w.write(count, 7, uri + url)
+                    w.write(count, 7, url)
                     w.write(count, 8, join_text)
                 else:    # Extract the parameters of the get request containing the $symbol in the URL separately and write them to params
                     url = text['request']['url'].replace('{', '$').replace('}', '')
@@ -320,5 +325,5 @@ if __name__ == '__main__':
     url = conf.get_value("swaggerUrl", "baseSever_url")
     js = AnalysisSwaggerJson(url)
     js.analysis_json_data(isDuplicated=True)
-    js.write_excel(url, handlefile.get_file_list(APIDIR))
+    js.write_excel(handlefile.get_file_list(APIDIR))
     w.xlsx_to_csv_pd()
