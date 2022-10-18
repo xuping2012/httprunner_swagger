@@ -13,7 +13,7 @@
 - 本地安装python开发环境
 - 克隆项目到本地：git clone
 - 安装项目依赖:pip install -r requirements.txt
-- 因为项目中swagger.py脚本已经引用了`dirConfig`工程结构，会先创建目录对应目录
+- 因为项目中swagger.py脚本已经引用了`dirConfig`工程结构，会先创建对应的目录
 - 确认config.ini配置文件需要解析的接口文档地址
 - 执行程序入口在swagger脚本main代码块，也可以使用单独抽取出来放在项目根路径
 - SwaggerTestSuites生成json格式数据是给httprunnermanager这个项目批量导入接口使用的
